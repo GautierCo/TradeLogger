@@ -1,0 +1,19 @@
+.app {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    color: #ffffff;
+}
+
+.active-link {
+    color: yellow;
+    font-weight: 600;
+}
+
+a {
+    color: white;
+}
+
+a:hover {
+    color: yellowgreen;
+}

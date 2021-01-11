@@ -1,0 +1,119 @@
+.tradelogger {
+    .trade {
+        display: flex;
+        justify-content: space-between;
+        padding: 1em;
+
+        &-infos {
+            width: 49%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+
+            &_session {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-content: center;
+                align-items: center;
+                font-size: 0.8em;
+
+                .session-left {
+                    display: flex;
+                    justify-content: flex-end;
+                    width: 75%;
+                }
+                .session-right {
+                    width: 15%;
+                }
+
+                .session-container {
+                    display: flex;
+                    justify-content: space-between;
+                    width: 75%;
+                }
+
+                .session-entrydate {
+                    width: 36%;
+                }
+
+                .session-exitdate {
+                    width: 45%;
+                }
+                .duration-container {
+                    width: 15%;
+                }
+            }
+
+            &_details {
+                padding: 2em 0;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                flex: 1;
+            }
+        }
+
+        &-setup {
+            width: 49%;
+        }
+
+        &-screenshot {
+            width: 100% !important;
+            margin: auto;
+        }
+
+        .note {
+            color: white;
+        }
+    }
+}
+
+.slider {
+    width: 100%;
+    max-width: 100%;
+    display: block;
+
+    &__thumb {
+        color: white !important;
+        top: 32px;
+        width: 15px;
+        text-align: center;
+        cursor: grab;
+    }
+    &__mark {
+        background-color: white;
+        text-align: center;
+        padding: 0.3em;
+        color: rgb(0, 0, 0);
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        border-radius: 50%;
+    }
+    &__track {
+        color: white !important;
+        background-color: rgb(58, 64, 73);
+
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        top: 12px;
+        height: 10px;
+    }
+
+    &__track-1 {
+        background: rgba(43, 47, 54, 0.5);
+    }
+
+    &__active {
+        background-color: yellow;
+    }
+}
+
+.react-slider {
+    display: block;
+    margin: auto;
+}
