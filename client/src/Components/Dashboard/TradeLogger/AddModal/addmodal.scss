@@ -1,0 +1,36 @@
+.addmodal {
+    &-header {
+        background-color: #18191ae6 !important;
+        color: white !important;
+    }
+
+    &-content {
+        background-color: #18191a !important;
+        color: white !important;
+    }
+    &-actions {
+        background-color: #18191ae6 !important;
+        color: white !important;
+    }
+
+    .content-container {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        align-content: center;
+
+        .divider {
+            color: white !important;
+            border-color: white !important;
+        }
+        .ui.horizontal.divider:after {
+            color: white !important;
+        }
+    }
+}
+
+.modalform {
+    // app.scss
+}

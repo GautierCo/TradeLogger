@@ -17,3 +17,67 @@ a {
 a:hover {
     color: yellowgreen;
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #1d1d1d;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #4e4646;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #fd9903;
+}
+
+/* Semantic UI modification */
+
+label {
+    color: white !important;
+}
+
+input {
+    color: #d8cfcf !important;
+    background-color: #282929 !important;
+    border-bottom: 1px solid #9ebbbb !important;
+}
+
+.dropdown {
+    background-color: #282929 !important;
+    color: white !important;
+}
+
+.text {
+    color: white !important;
+}
+
+.ui.form .selection.dropdown > .menu,
+.ui.dropdown .menu .selected.item {
+    background-color: #282929 !important;
+    border: none !important;
+    border-radius: 0 !important;
+}
+
+.ui.selection.active.dropdown,
+.ui.selection.active.dropdown .menu {
+    background-color: #282929 !important;
+    border: none;
+}
+.ui.selection.dropdown .menu > .item {
+    border-top: 1px solid #6f6f6f;
+}
+.ui.selection.dropdown:focus {
+    border: none;
+}
+
+.field {
+    min-width: 234px;
+}

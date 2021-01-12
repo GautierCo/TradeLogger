@@ -10,6 +10,7 @@ import "./app.scss";
 import HomeDashboard from "./Components/Dashboard/HomeDashboard/HomeDashboard";
 import TradeLogger from "./Components/Dashboard/TradeLogger/TradeLogger";
 import HomeSite from "./Components/Site/HomeSite/HomeSite";
+import Login from "./Components/Site/Login/Login";
 
 const App = () => {
     return (
@@ -18,6 +19,9 @@ const App = () => {
                 <Switch>
                     <Route exact path="/">
                         <HomeSite />
+                    </Route>
+                    <Route exact path="/login">
+                        <Login />
                     </Route>
                     <Route exact path="/dashboard">
                         <HomeDashboard />

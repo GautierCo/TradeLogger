@@ -1,0 +1,39 @@
+.login {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+
+    &-form {
+        width: 600px;
+        height: 600px;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        align-items: center;
+        justify-content: center;
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            align-items: center;
+            justify-content: space-around;
+            height: 250px;
+        }
+
+        .form-error {
+            color: red;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .form-logo {
+            margin-bottom: 2em;
+        }
+
+        .form-submit {
+            width: 100%;
+        }
+    }
+}
