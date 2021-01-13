@@ -47,6 +47,17 @@ userSchema.pre("save", async function (next) {
     next();
 });
 
+// On compare le mot de passe et le mot de passe encrypté
+userSchema.statics.login = async function (email, password) {
+    const user = await this.findOne({ email });
+    if (user) {
+        const auth = await bcrypt.compare(password, user.password);
+        if (auth) return user;
+        throw Error("Mot de passe incorrect");
+    }
+    throw Error("Email incorrect");
+};
+
 const UserModel = mongoose.model("users", userSchema);
 
 module.exports = UserModel;

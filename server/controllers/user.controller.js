@@ -7,6 +7,7 @@ const { checkId } = require("../utils/utils");
 
 // Get all users
 module.exports.getAllUsers = async (_, res) => {
+    console.log("getAll");
     try {
         const users = await UserModel.find().select("-password");
         res.status(200).json(users);
@@ -18,9 +19,9 @@ module.exports.getAllUsers = async (_, res) => {
 // Get one user by ID
 module.exports.getUserById = async (req, res) => {
     const userId = req.params.id;
+    if (checkId(userId)) return res.status(400).send(`Unknow ID ${userId}.`);
 
     try {
-        await checkId(userId, res);
         UserModel.findById(userId, (err, docs) => {
             if (!err) res.json(docs);
             else res.status(400).send(`Unknow ID ${userId}`);
@@ -34,7 +35,7 @@ module.exports.getUserById = async (req, res) => {
 module.exports.udapteUser = async (req, res) => {
     const userId = req.params.id;
     const userData = req.body;
-    await checkId(userId, res);
+    if (checkId(userId)) return res.status(400).send(`Unknow ID ${userId}.`);
 
     //if (!userId) return res.status(500).send("For udpate an user, you need to provide an ID");
 
@@ -58,7 +59,7 @@ module.exports.udapteUser = async (req, res) => {
 
 module.exports.deleteUser = async (req, res) => {
     const userId = req.params.id;
-    await checkId(userId, res);
+    if (checkId(userId)) return res.status(400).send(`Unknow ID ${userId}.`);
 
     try {
         await UserModel.deleteOne({ _id: userId }).exec();

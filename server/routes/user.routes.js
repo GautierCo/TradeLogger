@@ -1,9 +1,10 @@
 const router = require("express").Router();
 const userController = require("../controllers/user.controller");
+const { checkUserToken } = require("../middlewares/auth.middlewares");
 
-router.get("/", userController.getAllUsers);
-router.get("/:id", userController.getUserById);
-router.put("/:id", userController.udapteUser);
-router.delete("/:id", userController.deleteUser);
+router.get("/", checkUserToken, userController.getAllUsers);
+router.get("/:id", checkUserToken, userController.getUserById);
+router.put("/:id", checkUserToken, userController.udapteUser);
+router.delete("/:id", checkUserToken, userController.deleteUser);
 
 module.exports = router;
