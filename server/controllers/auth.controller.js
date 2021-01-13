@@ -30,7 +30,7 @@ module.exports.login = async (req, res) => {
         const token = createToken(user._id);
         res.setHeader("Authorization", token);
         //res.cookie("jwt", token, { httpOnly: true, maxAge });
-        res.status(200).json({ user: user._id, token: token });
+        res.status(200).json({ id: user._id, token: token });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Connexion impossible", error });
@@ -46,3 +46,4 @@ module.exports.logout = async (req, res) => {
 
 // Ressources intéressante sur JWT, il est préfèrable d'utililiser les headers couplé avec le local storage plutôt que les cookies
 // Pour ce protéger des deux types d'attaques :  CSRF & XSS
+// Source : https://www.youtube.com/watch?t=2100&v=67mezK3NzpU

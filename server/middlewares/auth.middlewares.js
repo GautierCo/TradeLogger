@@ -18,9 +18,8 @@ module.exports.checkUserToken = (req, res, next) => {
             if (err) {
                 res.locals.user = null;
                 res.setHeader("Authorization", "");
-                //res.cookie("jwt", "", { maxAge: 1 });
-                console.log("Erreur lors de la vérification du token", err);
-                res.status(401).json("Your token is invalid");
+                console.log("Erreur lors de la vérification du token");
+                return res.status(401).json("Your token is invalid");
             } else {
                 const user = await UserModel.findById(decodedToken.id).select("-password"); // decodedToken = ID de l'utilisateur { id: '5ffcffbbfbc307273c2f78dd', iat: 1610500363, exp: 1837300363 }
                 res.locals.user = user;

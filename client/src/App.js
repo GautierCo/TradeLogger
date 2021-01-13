@@ -1,16 +1,16 @@
 import React from "react";
+
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { Button } from "semantic-ui-react";
 
 /* Styles */
 import "semantic-ui-less/semantic.less";
 import "./app.scss";
 
-/* Components */
-import HomeDashboard from "./Components/Dashboard/HomeDashboard/HomeDashboard";
-import TradeLogger from "./Components/Dashboard/TradeLogger/TradeLogger";
-import HomeSite from "./Components/Site/HomeSite/HomeSite";
-import Login from "./Components/Site/Login/Login";
+/* Containers */
+import HomeDashboard from "./Containers/Dashboard/HomeDashboard.container";
+import TradeLogger from "./Containers/Dashboard/TradeLogger.container";
+import HomeSite from "./Containers/Site/HomeSite.container";
+import Login from "./Containers/Site/Login.container";
 
 const App = () => {
     return (
