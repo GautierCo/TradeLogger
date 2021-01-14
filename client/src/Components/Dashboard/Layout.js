@@ -43,7 +43,9 @@ const Layout = (props) => {
                     <NavLink exact to="/dashboard/market" activeClassName="active-link" className="layout-menu--link">
                         Marché
                     </NavLink>
-                    <Button onClick={() => logout()}>Logout</Button>
+                    <Button size="mini" color={"red"} onClick={() => logout()}>
+                        Logout
+                    </Button>
                 </div>
 
                 <div className="layout-right">

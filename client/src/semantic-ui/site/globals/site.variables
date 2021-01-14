@@ -12,8 +12,8 @@
 
 
 /* COLORS */
-@primaryColor: #fd9903;
+@primaryColor: #fc9901c2;
 @secondaryColor: #0094D3;
 @pageBackground: #18191A;
 @headerColor: #ffffff;
-@orange: #fd9903;
+@orange: #fc9901c2;

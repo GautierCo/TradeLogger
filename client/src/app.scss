@@ -3,6 +3,7 @@
     flex-direction: column;
     flex: 1;
     color: #ffffff;
+    background-color: #18191a;
 }
 
 .active-link {
@@ -47,12 +48,27 @@ label {
 input {
     color: #d8cfcf !important;
     background-color: #282929 !important;
-    border-bottom: 1px solid #9ebbbb !important;
+    border-bottom: none !important;
+}
+
+input:focus {
+    outline: 0.15em solid #666666 !important;
+}
+
+textarea {
+    color: #d8cfcf !important;
+    background-color: #242526 !important;
+    border: none !important;
+    outline: 0.15em solid #666666 !important;
 }
 
 .dropdown {
     background-color: #282929 !important;
     color: white !important;
+}
+
+.ui.selection.dropdown .menu > .item:hover {
+    background-color: #fc9901c2 !important;
 }
 
 .text {
@@ -75,6 +91,10 @@ input {
     border-top: 1px solid #6f6f6f;
 }
 .ui.selection.dropdown:focus {
+    border: none;
+}
+
+.ui.form .selection.dropdown {
     border: none;
 }
 

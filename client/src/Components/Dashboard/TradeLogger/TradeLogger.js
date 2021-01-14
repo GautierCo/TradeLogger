@@ -55,9 +55,9 @@ const SliderComp = ({ leverage }) => {
     );
 };
 
-const AllDataOfTrade = ({ trade }) => {
+const AllDataOfTrade = ({ trade, isAnimate }) => {
     return (
-        <div className="trade">
+        <div className={`trade ${isAnimate ? "animate-trade" : "animate-exit-trade"}`}>
             <div className="trade-infos">
                 <div className="trade-infos_session">
                     <div className="session-right">
@@ -116,7 +116,9 @@ const AllDataOfTrade = ({ trade }) => {
                     </List>
 
                     <div className="">
-                        Note:
+                        <Label color="teal" horizontal size="large" style={{ marginBottom: "1em" }}>
+                            Note:
+                        </Label>
                         <Form>
                             <TextArea
                                 className="note"
@@ -193,7 +195,7 @@ const TradeLogger = () => {
                                 {selectedRow && selectedRow.id === trade.id && (
                                     <Table.Row textAlign="left">
                                         <Table.Cell colSpan={9}>
-                                            <AllDataOfTrade trade={trade} />
+                                            <AllDataOfTrade isAnimate={true} trade={trade} />
                                         </Table.Cell>
                                     </Table.Row>
                                 )}

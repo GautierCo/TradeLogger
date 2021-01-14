@@ -1,17 +1,9 @@
 import React, { useEffect } from "react";
 import { Form, Input, Label, Button, Image } from "semantic-ui-react";
-//import history from "../../../Utils/history";
-
 import "./login.scss";
 
 const Login = (props) => {
     const { loginData, loginErrors, loginLoading, setLoginData, loginSubmit, user } = props;
-
-    useEffect(() => {
-        // if (user.connected) {
-        //     history.push("/dashboard");
-        // }
-    }, [user.connected]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -46,6 +38,7 @@ const Login = (props) => {
                             value={loginData.email}
                         />
                     </Form.Field>
+                    <Form.Field>{loginErrors.email && <div className="form-error">Email incorrect</div>}</Form.Field>
                     <Form.Field>
                         <label>Password</label>
                         <Form.Input
@@ -57,7 +50,7 @@ const Login = (props) => {
                         />
                     </Form.Field>
                     <Form.Field>
-                        <div className="form-error">Erreur</div>
+                        {loginErrors.password && <div className="form-error">Mot de passe incorrect</div>}
                     </Form.Field>
                     <Button primary className="form-submit" type="submit" loading={loginLoading}>
                         Connexion

@@ -29,8 +29,7 @@ export const refreshTokenMiddleware = (store) => (next) => (action) => {
         })
             .then((res) => {
                 console.log(res);
-                //localStorage.removeItem("auth");
-                //localStorage.setItem("auth", JSON.stringify({ ...res.data, refreshToken }));
+                axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.accessToken}`;
                 store.dispatch(setAccessToken(res.data.accessToken));
             })
             .catch((err) => {

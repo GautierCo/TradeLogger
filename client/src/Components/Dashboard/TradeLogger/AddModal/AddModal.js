@@ -90,16 +90,16 @@ const AddModal = ({ showModal, setShowModal, setupList }) => {
             trigger={
                 <Button icon labelPosition="left" size="small" secondary>
                     <Icon name="add" />
-                    Ajouter
+                    Add trade
                 </Button>
             }
         >
             <Modal.Header className="addmodal-header">Add a new Trade</Modal.Header>
             <Modal.Content image scrolling className="addmodal-content">
                 <div className="content-container">
-                    <Image size="medium" src="https://www.tradingview.com/x/gFRYCH3B/" wrapped />
+                    {/* <Image size="medium" src="https://www.tradingview.com/x/gFRYCH3B/" wrapped /> */}
                     <Input type="file" style={{ display: "none" }} />
-                    <Button>Upload screenshot</Button>
+                    <Button secondary>Upload screenshot</Button>
                     <Divider className="divider" horizontal inverted>
                         Or
                     </Divider>

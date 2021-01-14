@@ -23,13 +23,9 @@ export const authMiddleware = (store) => (next) => (action) => {
                 data: loginData,
             })
                 .then((res) => {
-                    console.log(res);
                     const { data } = res;
                     if (res.status !== 201) return store.dispatch(loginSubmitError());
 
-                    //localStorage.setItem("auth", JSON.stringify(data));
-
-                    console.log("data.accessToken", data.accessToken);
                     axios.defaults.headers.common["Authorization"] = `Bearer ${data.accessToken}`;
 
                     store.dispatch(loginSubmitSuccess(data));
@@ -42,15 +38,9 @@ export const authMiddleware = (store) => (next) => (action) => {
             break;
         }
         case LOGOUT: {
-            const { accessToken } = store.getState().authReducer.user;
-
             axios({
                 method: "GET",
                 url: `${process.env.REACT_APP_API_URL}/auth/logout`,
-
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
             })
                 .then((res) => {
                     console.log(res);

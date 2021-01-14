@@ -5,7 +5,8 @@
     justify-content: center;
 
     &-form {
-        width: 600px;
+        margin: 2em;
+        width: 400px;
         height: 600px;
         display: flex;
         flex-direction: column;
@@ -20,6 +21,7 @@
             align-items: center;
             justify-content: space-around;
             height: 250px;
+            width: 100%;
         }
 
         .form-error {
@@ -34,6 +36,10 @@
 
         .form-submit {
             width: 100%;
+        }
+
+        .field {
+            width: 100% !important;
         }
     }
 }

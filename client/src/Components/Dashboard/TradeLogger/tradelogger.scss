@@ -8,6 +8,7 @@
         justify-content: flex-end;
     }
     .trade {
+        opacity: 0;
         display: flex;
         justify-content: space-between;
         padding: 1em;
@@ -71,8 +72,8 @@
 
             .ui.form textarea:focus {
                 color: rgba(255, 255, 255, 0.767);
-                border-color: #fc9903;
-                background: #18191a96;
+                outline: 0.15em solid #666666 !important;
+                border: none !important;
             }
         }
 
@@ -162,11 +163,37 @@
     }
 
     &__active {
-        background-color: #fc9901;
+        background-color: #fc9901c2;
     }
 }
 
 .react--slider {
     display: block;
     margin: auto;
+}
+
+.animate-trade {
+    animation: animateTrade 1s forwards;
+}
+
+.animate-exit-trade {
+    animation: animateExitTrade 1s forwards;
+}
+
+@keyframes animateTrade {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes animateExitTrade {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
