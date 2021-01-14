@@ -47,7 +47,7 @@ module.exports.udapteUser = async (req, res) => {
                     pseudo: userData.pseudo,
                 },
             },
-            { new: true, upsert: true, setDefaultsOnInsert: true },
+            { new: true, setDefaultsOnInsert: true },
             (err, docs) => {
                 if (!err) return res.status(201).json(docs);
             }

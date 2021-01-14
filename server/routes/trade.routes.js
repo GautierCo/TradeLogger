@@ -1,11 +1,11 @@
 const router = require("express").Router();
 const tradeController = require("../controllers/trade.controller");
-const { checkUserToken } = require("../middlewares/auth.middlewares");
+const { checkAuth } = require("../middlewares/auth.middlewares");
 
-router.get("/", checkUserToken, tradeController.getAllTrades);
-router.get("/:id", checkUserToken, tradeController.getAllTradesByUserId);
-router.post("/:userId", checkUserToken, tradeController.addTrade);
-router.put("/:id", checkUserToken, tradeController.updateTrade);
-router.delete("/:id", checkUserToken, tradeController.deleteTrade);
+router.get("/", checkAuth, tradeController.getAllTrades);
+router.get("/:id", checkAuth, tradeController.getAllTradesByUserId);
+router.post("/:userId", checkAuth, tradeController.addTrade);
+router.put("/:id", checkAuth, tradeController.updateTrade);
+router.delete("/:id", checkAuth, tradeController.deleteTrade);
 
 module.exports = router;

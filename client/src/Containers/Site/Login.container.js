@@ -6,6 +6,7 @@ const mapStateToProps = (state) => ({
     loginData: state.authReducer.loginData,
     loginErrors: state.authReducer.loginErrors,
     loginLoading: state.authReducer.loginLoading,
+    user: state.authReducer.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,7 +1,9 @@
 import App from "../App";
 import { connect } from "react-redux";
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+    user: state.authReducer.user,
+});
 
 const mapDispatchToProps = (dispatch) => ({});
 

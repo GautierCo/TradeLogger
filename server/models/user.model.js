@@ -34,6 +34,12 @@ const userSchema = new mongoose.Schema(
         trades: {
             type: [String], // Un tableau avec une série d'ID de chaque trade associé à l'utilisateur
         },
+        accessToken: {
+            type: String,
+        },
+        refreshToken: {
+            type: String,
+        },
     },
     {
         timestamps: true,

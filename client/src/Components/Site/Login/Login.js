@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Input, Label, Button, Image } from "semantic-ui-react";
+//import history from "../../../Utils/history";
+
 import "./login.scss";
 
 const Login = (props) => {
-    const { loginData, loginErrors, loginLoading, setLoginData, loginSubmit } = props;
+    const { loginData, loginErrors, loginLoading, setLoginData, loginSubmit, user } = props;
+
+    useEffect(() => {
+        // if (user.connected) {
+        //     history.push("/dashboard");
+        // }
+    }, [user.connected]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;

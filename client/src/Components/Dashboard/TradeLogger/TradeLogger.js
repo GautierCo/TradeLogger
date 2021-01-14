@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Dropdown, Table, Image, Icon, Label, TextArea, Form, List, Button } from "semantic-ui-react";
-import Layout from "../Layout";
+import Layout from "../../../Containers/Dashboard/Layout.container";
 import "./tradelogger.scss";
 
 import ReactSlider from "react-slider";

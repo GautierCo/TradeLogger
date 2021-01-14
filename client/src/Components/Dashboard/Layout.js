@@ -1,11 +1,11 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
-import { Divider, Header, Icon, Image } from "semantic-ui-react";
+import { NavLink } from "react-router-dom";
+import { Button, Divider, Header, Icon, Image } from "semantic-ui-react";
 import "./layout.scss";
 import Logo from "../../Assets/logo.png";
 
 const Layout = (props) => {
-    const { children, title = "NoTitle" } = props;
+    const { children, title = "NoTitle", logout } = props;
 
     return (
         <div className="layout">
@@ -43,6 +43,7 @@ const Layout = (props) => {
                     <NavLink exact to="/dashboard/market" activeClassName="active-link" className="layout-menu--link">
                         Marché
                     </NavLink>
+                    <Button onClick={() => logout()}>Logout</Button>
                 </div>
 
                 <div className="layout-right">

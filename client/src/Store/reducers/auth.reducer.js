@@ -1,4 +1,11 @@
-import { SET_LOGIN_DATA, LOGIN_SUBMIT, LOGIN_SUBMIT_SUCCESS, LOGIN_SUBMIT_ERROR } from "../actions/auth.actions";
+import {
+    SET_ACCESS_TOKEN,
+    SET_LOGIN_DATA,
+    LOGIN_SUBMIT,
+    LOGIN_SUBMIT_SUCCESS,
+    LOGIN_SUBMIT_ERROR,
+    LOGOUT_SUCCESS,
+} from "../actions/auth.actions";
 
 const initialState = {
     loginData: {
@@ -7,7 +14,9 @@ const initialState = {
     },
     user: {
         id: "",
-        token: "",
+        accessToken: "",
+        refreshToken: "",
+        connected: false,
     },
     loginLoading: false,
     loginErrors: {
@@ -49,6 +58,22 @@ export const authReducer = (state = initialState, action = {}) => {
                     ...action.payload,
                 },
                 loginLoading: false,
+            };
+        case SET_ACCESS_TOKEN:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    accessToken: action.payload,
+                },
+            };
+        case LOGOUT_SUCCESS:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    ...action.payload,
+                },
             };
         default:
             return state;
