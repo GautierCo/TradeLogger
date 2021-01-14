@@ -1,8 +1,16 @@
-import Signup from "../../Components/Site/Signup";
+import Signup from "../../Components/Site/Auth/Signup/Signup";
 import { connect } from "react-redux";
+import { setSignupData, signupSubmit } from "../../Store/actions/auth.actions";
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+    signupData: state.authReducer.signupData,
+    signupErrors: state.authReducer.signupErrors,
+    signupLoading: state.authReducer.signupLoading,
+});
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+    setSignupData: (signupData) => dispatch(setSignupData(signupData)),
+    signupSubmit: () => dispatch(signupSubmit()),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signup);

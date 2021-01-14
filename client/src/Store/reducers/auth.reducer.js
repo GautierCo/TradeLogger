@@ -5,21 +5,35 @@ import {
     LOGIN_SUBMIT_SUCCESS,
     LOGIN_SUBMIT_ERROR,
     LOGOUT_SUCCESS,
+    SET_SIGNUP_DATA,
+    SIGNUP_SUBMIT,
+    SIGNUP_SUBMIT_SUCCESS,
+    SIGNUP_SUBMIT_ERROR,
 } from "../actions/auth.actions";
 
 const initialState = {
-    loginData: {
-        email: "gautiear.colasse@gmail.com",
-        password: "123456",
-    },
     user: {
         id: "",
         accessToken: "",
         refreshToken: "",
         connected: false,
     },
+    loginData: {
+        email: "gautiear.colasse@gmail.com",
+        password: "123456",
+    },
     loginLoading: false,
     loginErrors: {
+        message: "",
+    },
+    signupData: {
+        email: "",
+        pseudo: "",
+        password: "",
+        confirmPassword: "",
+    },
+    signupLoading: false,
+    signupErrors: {
         message: "",
     },
 };
@@ -55,8 +69,7 @@ export const authReducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 loginErrors: {
-                    ...state.loginErrors,
-                    ...action.payload,
+                    message: action.payload.message,
                 },
                 loginLoading: false,
             };
@@ -76,6 +89,47 @@ export const authReducer = (state = initialState, action = {}) => {
                     ...action.payload,
                 },
             };
+        case SET_SIGNUP_DATA: {
+            return {
+                ...state,
+                signupData: {
+                    ...state.signupData,
+                    ...action.payload,
+                },
+            };
+        }
+        case SIGNUP_SUBMIT: {
+            return {
+                ...state,
+                signupLoading: true,
+                signupErrors: {
+                    message: "",
+                },
+            };
+        }
+        case SIGNUP_SUBMIT_SUCCESS: {
+            return {
+                ...state,
+                signupLoading: false,
+                /*
+                signupData: {
+                    email: "",
+                    pseudo: "",
+                    password: "",
+                    confirmPassword: "",
+                },
+                */
+            };
+        }
+        case SIGNUP_SUBMIT_ERROR: {
+            return {
+                ...state,
+                signupLoading: false,
+                signupErrors: {
+                    ...action.payload,
+                },
+            };
+        }
         default:
             return state;
     }

@@ -13,6 +13,8 @@ import HomeDashboard from "./Containers/Dashboard/HomeDashboard.container";
 import TradeLogger from "./Containers/Dashboard/TradeLogger.container";
 import HomeSite from "./Containers/Site/HomeSite.container";
 import Login from "./Containers/Site/Login.container";
+import Signup from "./Containers/Site/Signup.container";
+import Auth from "./Components/Site/Auth/index";
 
 const App = ({ user }) => {
     const [isAuth, setIsAuth] = useState(false);
@@ -32,6 +34,12 @@ const App = ({ user }) => {
                 </Route>
                 <Route exact path="/login">
                     <Login />
+                </Route>
+                <Route exact path="/signup">
+                    <Signup />
+                </Route>
+                <Route exact path="/auth">
+                    <Auth />
                 </Route>
                 <ProtectedRoute isAuth={user.connected} exact path="/dashboard" component={HomeDashboard} />
                 <ProtectedRoute isAuth={user.connected} exact path="/dashboard/tradelogger" component={TradeLogger} />

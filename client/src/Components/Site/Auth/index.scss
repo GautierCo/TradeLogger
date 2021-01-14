@@ -1,0 +1,40 @@
+.auth {
+    display: flex;
+    height: 80vh;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 2em;
+
+    &-container {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        align-items: center;
+        justify-content: flex-start;
+        height: 600px;
+        margin: 1.5em;
+    }
+
+    &-selector {
+        width: 100%;
+        margin: 2em 0;
+        height: 80px;
+        //border: 1px solid white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        align-content: space-between;
+
+        .selector__signup {
+            width: 48%;
+            text-align: center;
+        }
+
+        .selector__login {
+            width: 48%;
+            text-align: center;
+        }
+    }
+}

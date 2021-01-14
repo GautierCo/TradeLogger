@@ -1,4 +1,4 @@
-import Login from "../../Components/Site/Login/Login";
+import Login from "../../Components/Site/Auth/Login/Login";
 import { connect } from "react-redux";
 import { setLoginData, loginSubmit } from "../../Store/actions/auth.actions";
 

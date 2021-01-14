@@ -67,6 +67,7 @@ module.exports.refresh = async (req, res) => {
 // Signup
 module.exports.signUp = async (req, res) => {
     const { pseudo, email, password } = req.body;
+
     try {
         const user = await UserModel.create({ pseudo, email, password });
         res.status(201).json({ user: user._id });
@@ -106,7 +107,7 @@ module.exports.login = async (req, res) => {
         console.log("Client connected " + user._id);
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: "Connexion impossible", error });
+        res.status(200).json({ message: "Email ou mot de passe incorrect", error });
     }
 };
 

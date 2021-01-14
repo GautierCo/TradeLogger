@@ -6,6 +6,9 @@ import {
     LOGOUT,
     logoutError,
     logoutSuccess,
+    signupSubmitError,
+    signupSubmitSuccess,
+    SIGNUP_SUBMIT,
 } from "../actions/auth.actions";
 import { push } from "connected-react-router";
 
@@ -24,6 +27,13 @@ export const authMiddleware = (store) => (next) => (action) => {
             })
                 .then((res) => {
                     const { data } = res;
+
+                    console.log(data.message);
+
+                    if (data.message) {
+                        return store.dispatch(loginSubmitError({ message: data.message }));
+                    }
+
                     if (res.status !== 201) return store.dispatch(loginSubmitError());
 
                     axios.defaults.headers.common["Authorization"] = `Bearer ${data.accessToken}`;
@@ -32,8 +42,8 @@ export const authMiddleware = (store) => (next) => (action) => {
                     store.dispatch(push("/dashboard"));
                 })
                 .catch((err) => {
-                    console.log(err);
-                    store.dispatch(loginSubmitError());
+                    console.log("err", err);
+                    store.dispatch(loginSubmitError(err));
                 });
             break;
         }
@@ -50,6 +60,33 @@ export const authMiddleware = (store) => (next) => (action) => {
                 .catch((err) => {
                     console.log(err);
                     store.dispatch(logoutError());
+                });
+            break;
+        }
+        case SIGNUP_SUBMIT: {
+            const signupData = store.getState().authReducer.signupData;
+
+            axios({
+                method: "POST",
+                url: `${process.env.REACT_APP_API_URL}/auth/signup`,
+                withCredentials: true,
+                data: signupData,
+            })
+                .then((res) => {
+                    const { data } = res;
+
+                    if (data.errors) {
+                        return store.dispatch(signupSubmitError(data.errors));
+                    }
+
+                    if (res.status !== 201) return;
+
+                    store.dispatch(signupSubmitSuccess(data));
+                    store.dispatch(push("/dashboard"));
+                })
+                .catch((err) => {
+                    console.log(err);
+                    store.dispatch(signupSubmitError());
                 });
             break;
         }

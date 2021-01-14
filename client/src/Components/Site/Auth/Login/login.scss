@@ -1,0 +1,44 @@
+.login {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+
+    &-form {
+        width: 400px;
+        //height: 600px;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        align-items: center;
+        justify-content: center;
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            align-items: center;
+            justify-content: space-around;
+            height: 250px;
+            width: 100%;
+        }
+
+        .form-error {
+            color: red;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .form-logo {
+            margin-bottom: 2em;
+        }
+
+        .form-submit {
+            width: 100%;
+        }
+
+        .field {
+            width: 100% !important;
+        }
+    }
+}
