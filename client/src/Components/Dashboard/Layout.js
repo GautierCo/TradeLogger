@@ -53,7 +53,7 @@ const Layout = (props) => {
                             activeClassName="active-link"
                             className="layout-menu--link"
                         >
-                            Journal de bord
+                            Journal
                         </NavLink>
                         <NavLink
                             exact
@@ -61,7 +61,7 @@ const Layout = (props) => {
                             activeClassName="active-link"
                             className="layout-menu--link"
                         >
-                            Trading plan
+                            Plan
                         </NavLink>
                         <NavLink
                             exact
@@ -69,7 +69,7 @@ const Layout = (props) => {
                             activeClassName="active-link"
                             className="layout-menu--link"
                         >
-                            Trade Logger
+                            Trades
                         </NavLink>
                         <NavLink
                             exact
@@ -77,7 +77,7 @@ const Layout = (props) => {
                             activeClassName="active-link"
                             className="layout-menu--link"
                         >
-                            Investissements
+                            Invests
                         </NavLink>
                         <NavLink
                             exact
@@ -85,7 +85,7 @@ const Layout = (props) => {
                             activeClassName="active-link"
                             className="layout-menu--link"
                         >
-                            Marché
+                            Market
                         </NavLink>
                     </div>
                 </div>

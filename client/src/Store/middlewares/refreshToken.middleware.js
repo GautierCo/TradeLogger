@@ -4,6 +4,7 @@ import { setAccessToken } from "../actions/auth.actions";
 
 export const refreshTokenMiddleware = (store) => (next) => (action) => {
     next(action);
+
     const { accessToken, refreshToken, connected, id } = store.getState().authReducer.user;
 
     if (!connected) return;
@@ -13,8 +14,6 @@ export const refreshTokenMiddleware = (store) => (next) => (action) => {
     const timestamp = Date.now() / 1000;
 
     if (decodedToken.exp <= timestamp) {
-        console.log("Faire une requête pour refresh le token");
-
         const data = {
             id,
             accessToken,
@@ -28,12 +27,14 @@ export const refreshTokenMiddleware = (store) => (next) => (action) => {
             data,
         })
             .then((res) => {
-                console.log(res);
                 axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.accessToken}`;
                 store.dispatch(setAccessToken(res.data.accessToken));
             })
             .catch((err) => {
                 console.log(err);
             });
+    } else {
+        // Si jamais le token est valide, que l'on est connecté, mais on refresh la page, on souhaite quand même ajouter le header
+        axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
     }
 };

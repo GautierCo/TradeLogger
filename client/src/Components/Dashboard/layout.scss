@@ -8,11 +8,8 @@
     }
 
     &-title {
-        font-size: 2.2em;
-        line-height: 1em;
-        font-weight: 600;
         width: 100px;
-        margin-right: 2.3em;
+        margin-right: 4.3em;
     }
 
     &-container {
@@ -24,13 +21,14 @@
     &-menu {
         display: flex;
         width: 100%;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: center;
         align-content: center;
 
         &--link {
-            font-size: 0.9rem;
+            font-size: 1rem;
             padding-bottom: 0.2em;
+            margin-right: 1.3em;
         }
     }
 
