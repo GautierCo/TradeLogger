@@ -1,40 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { Button, Divider, Header, Icon, Image, Dropdown } from "semantic-ui-react";
+import { Divider, Icon, Image, Dropdown } from "semantic-ui-react";
 import "./layout.scss";
 import Logo from "../../Assets/logo.png";
 
 const Layout = (props) => {
     const { children, title = "NoTitle", logout } = props;
 
-    const trigger = (
-        <span>
-            <Icon name="settings" />
-        </span>
-    );
+    useEffect(() => {
+        document.title = title;
+    }, [title]);
 
-    const options = [
-        {
-            key: "user",
-            text: (
-                <span>
-                    Signed in as <strong>Bob Smith</strong>
-                </span>
-            ),
-            disabled: true,
-        },
-        { key: "profile", text: "Your Profile" },
-        { key: "stars", text: "Your Stars" },
-        { key: "explore", text: "Explore" },
-        { key: "integrations", text: "Integrations" },
-        { key: "help", text: "Help" },
-        { key: "settings", text: "Settings" },
-        { key: "sign-out", text: "Sign Out" },
-    ];
-
-    const renderDropDownMenu = () => {
-        return <Dropdown trigger={trigger} options={options} />;
-    };
     return (
         <div className="layout">
             <div className="layout-header">
@@ -49,18 +25,13 @@ const Layout = (props) => {
                         </NavLink>
                         <NavLink
                             exact
-                            to="/dashboard/booklog"
+                            to="/dashboard/journal"
                             activeClassName="active-link"
                             className="layout-menu--link"
                         >
                             Journal
                         </NavLink>
-                        <NavLink
-                            exact
-                            to="/dashboard/tradingplan"
-                            activeClassName="active-link"
-                            className="layout-menu--link"
-                        >
+                        <NavLink exact to="/dashboard/plan" activeClassName="active-link" className="layout-menu--link">
                             Plan
                         </NavLink>
                         <NavLink
@@ -113,9 +84,7 @@ const Layout = (props) => {
                     </div>
                 </div>
             </div>
-
             <Divider />
-
             <div className="layout-main">{children}</div>
         </div>
     );
