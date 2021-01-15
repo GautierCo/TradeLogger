@@ -8,6 +8,7 @@ module.exports.checkAuth = async (req, res, next) => {
 
     jwt.verify(accessToken, process.env.JWT_SECRET_TOKEN, async (err, user) => {
         if (user) {
+            console.log("Middleware checkAuth ", user);
             req.user = user;
             next();
         } else {

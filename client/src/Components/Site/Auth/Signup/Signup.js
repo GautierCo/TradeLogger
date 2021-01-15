@@ -1,22 +1,18 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Form, Input, Label, Button, Image } from "semantic-ui-react";
+import React, { useEffect, useRef } from "react";
+import { Form, Button } from "semantic-ui-react";
 import Auth from "../index";
 import { useForm } from "react-hook-form";
 import "./signup.scss";
 
 const Signup = (props) => {
-    const { signupData, signupErrors, signupSubmit, setSignupData } = props;
+    const { signupErrors, signupSubmit, setSignupData } = props;
 
     const { register, errors, handleSubmit, setValue, trigger, watch } = useForm();
 
     const password = useRef({});
     password.current = watch("password", "");
-    console.log(watch("password", ""));
-    console.log(watch("confirmPassword", ""));
 
     const onSubmit = (data, e) => {
-        console.log("Submit event", e);
-        console.log(JSON.stringify(data));
         setSignupData(data);
         signupSubmit();
     };

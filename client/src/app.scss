@@ -6,11 +6,6 @@
     background-color: #18191a;
 }
 
-.active-link {
-    color: yellow;
-    font-weight: 600;
-}
-
 a {
     color: white;
 }
@@ -62,12 +57,45 @@ textarea {
     outline: 0.15em solid #666666 !important;
 }
 
+.ui.segment {
+    background: #18191a;
+}
+
+.ui.attached.segment {
+    border: none !important;
+}
+
+.ui.vertical.tabular.menu .item {
+    color: white;
+    border: none !important;
+}
+
+.ui.vertical.tabular.menu .active.item {
+    background: #18191a;
+    color: white;
+}
+
+.ui.vertical.tabular.menu {
+    border: none !important;
+}
+
 .dropdown {
     background-color: #282929 !important;
+    //background-color: #18191a !important;
     color: white !important;
 }
 
 .ui.selection.dropdown .menu > .item:hover {
+    background-color: #fc9901c2 !important;
+}
+
+.ui.dropdown .menu > .item {
+    background-color: #282929 !important;
+    color: white !important;
+    font-size: 1rem;
+}
+
+.ui.dropdown .menu > .item:hover {
     background-color: #fc9901c2 !important;
 }
 

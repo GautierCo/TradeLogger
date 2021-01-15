@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Form, Input, Label, Button, Image } from "semantic-ui-react";
+import { Button, Image } from "semantic-ui-react";
 import "./index.scss";
 
 const Auth = (props) => {

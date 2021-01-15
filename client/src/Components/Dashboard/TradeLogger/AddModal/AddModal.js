@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal, Image, Button, Icon, Form, Input, Checkbox, Select, Divider } from "semantic-ui-react";
 import "./addmodal.scss";
 
@@ -14,6 +14,12 @@ const platformSelect = [
 ];
 
 const FormModal = ({ setupList }) => {
+    const [leverageValue, setLeverageValue] = useState(1);
+
+    const handleChangeLeverage = (e) => {
+        setLeverageValue(e.target.value);
+    };
+
     return (
         <div className="modalform">
             <Form>
@@ -61,8 +67,16 @@ const FormModal = ({ setupList }) => {
                     </Form.Field>
                 </Form.Group>
                 <Form.Field>
-                    <label>Leverage</label>
-                    <Input placeholder="15" />
+                    <Form.Input
+                        label={`Levier: x${leverageValue} `}
+                        min={1}
+                        max={125}
+                        name="leverage"
+                        step={1}
+                        type="range"
+                        onChange={handleChangeLeverage}
+                        value={leverageValue}
+                    />
                 </Form.Field>
 
                 <Form.Field>
@@ -112,7 +126,7 @@ const AddModal = ({ showModal, setShowModal, setupList }) => {
             <Modal.Actions className="addmodal-actions">
                 <Button onClick={() => setShowModal(false)} primary>
                     {/* Submit here */}
-                    Sauvegarder <Icon name="chevron right" />
+                    Ajouter <Icon name="chevron right" />
                 </Button>
             </Modal.Actions>
         </Modal>

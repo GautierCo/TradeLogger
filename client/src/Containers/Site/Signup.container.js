@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { setSignupData, signupSubmit } from "../../Store/actions/auth.actions";
 
 const mapStateToProps = (state) => ({
-    signupData: state.authReducer.signupData,
     signupErrors: state.authReducer.signupErrors,
     signupLoading: state.authReducer.signupLoading,
 });

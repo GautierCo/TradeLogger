@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Dropdown, Table, Image, Icon, Label, TextArea, Form, List, Button } from "semantic-ui-react";
+import { Dropdown, Table, Image, Icon, Label, TextArea, Form, List, Button, Tab, Divider } from "semantic-ui-react";
 import Layout from "../../../Containers/Dashboard/Layout.container";
 import "./tradelogger.scss";
 
@@ -22,47 +22,12 @@ const setupList = [
     },
 ];
 
-const SliderComp = ({ leverage }) => {
-    return (
-        <ReactSlider
-            defaultValue={leverage}
-            className="horizontal-slider slider"
-            marks={[1, 25, 50, 75, 100, 125]}
-            min={1}
-            max={125}
-            withTracks
-            markClassName="slider__mark slider__active"
-            thumbClassName="slider__thumb"
-            trackClassName="slider__track"
-            renderThumb={(props, state) => {
-                return (
-                    <div className="slider__thumb" {...props}>
-                        {state.valueNow}x
-                    </div>
-                );
-            }}
-            renderTrack={(props, state) => {
-                return (
-                    <div className="slider__track" {...props}>
-                        {props.value}
-                    </div>
-                );
-            }}
-            renderMark={(props) => {
-                return <div {...props}>{props.key}</div>;
-            }}
-        />
-    );
-};
-
-const AllDataOfTrade = ({ trade, isAnimate }) => {
-    return (
-        <div className={`trade ${isAnimate ? "animate-trade" : "animate-exit-trade"}`}>
-            <div className="trade-infos">
+const panes = [
+    {
+        menuItem: "Infos",
+        render: ({ trade }) => (
+            <Tab.Pane>
                 <div className="trade-infos_session">
-                    <div className="session-right">
-                        <Image src={trade.platformLogo} size="big" style={{ display: "block", width: "100%" }} />
-                    </div>
                     <div className="session-left">
                         <div className="session-container">
                             <div className="session-entrydate">{trade.entryDate}</div>
@@ -74,68 +39,70 @@ const AllDataOfTrade = ({ trade, isAnimate }) => {
                             {trade.sessionDuration}
                         </div>
                     </div>
-                </div>
-                <div className="trade-infos_details">
-                    <List divided relaxed>
-                        <List.Item className="trade-infos__item" style={{ display: "flex" }}>
-                            <div className="" style={{ marginRight: "2em", display: "flex", alignItems: "center" }}>
-                                <Label color="blue" horizontal size="large">
-                                    Capital
-                                </Label>
-                                <div className="capital">{trade.capital}$</div>
-                            </div>
-                            <div className="" style={{ marginRight: "2em", display: "flex", alignItems: "center" }}>
-                                <Label color="red" horizontal size="large">
-                                    Risk Ratio
-                                </Label>
-                                <div className="risk">{trade.riskRatio}</div>
-                            </div>
-                        </List.Item>
-
-                        <List.Item className="trade-infos__item" style={{ display: "flex" }}>
-                            <Label color="violet" horizontal size="large">
-                                Levier
-                            </Label>
-                            <SliderComp leverage={trade.leverage} />
-                        </List.Item>
-
-                        <List.Item className="trade-infos__item">
-                            <Label color="green" horizontal size="large">
-                                Setup
-                            </Label>
-                            <Dropdown
-                                style={{ fontSize: ".7em" }}
-                                placeholder="Select Setup"
-                                defaultValue={trade.setup}
-                                size=""
-                                scrolling
-                                selection
-                                options={setupList}
-                            />
-                        </List.Item>
-                    </List>
-
-                    <div className="">
-                        <Label color="teal" horizontal size="large" style={{ marginBottom: "1em" }}>
-                            Note:
-                        </Label>
-                        <Form>
-                            <TextArea
-                                className="note"
-                                rows={2}
-                                rows={10}
-                                placeholder="Dans quel état d'esprit êtes-vous ? Est-ce que vous êtes confiant à l'idée de prendre ce trade ? Ce trade respect-il votre trading plan?"
-                            />
-                        </Form>
+                    <div className="session-right">
+                        <Image src={trade.platformLogo} size="big" style={{ display: "block", width: "100%" }} />
                     </div>
                 </div>
-            </div>
-            <div className="trade-setup">
-                <div className="trade-edit">
-                    <Icon name="edit" style={{ cursor: "pointer" }} />
+                <Divider />
+                <div className="trade-infos_data">
+                    <div className="">
+                        <label className="trade-label">Capital</label>
+                        <div className="">1100 $</div>
+                    </div>
+                    <div className="">
+                        <label className="trade-label">Leverage</label>
+                        <div className="">x 125</div>
+                    </div>
+                    <div className="">
+                        <label className="trade-label">Setup</label>
+                        <div className="">Ichimoku</div>
+                    </div>
+                    <div className="">
+                        <label className="trade-label">Risk</label>
+                        <div className="">2.0</div>
+                    </div>
+                    <div className="">
+                        <label className="trade-label">Fees</label>
+                        <div className="">1%</div>
+                    </div>
                 </div>
+            </Tab.Pane>
+        ),
+    },
+    {
+        menuItem: "Screenshot",
+        render: ({ trade }) => (
+            <Tab.Pane>
+                <label className="trade-label">Screen :</label>
                 <Image src={trade.screenshotUrl} className="trade-screenshot" size="large" />
-            </div>
+            </Tab.Pane>
+        ),
+    },
+    {
+        menuItem: "Notes",
+        render: () => (
+            <Tab.Pane>
+                <Form>
+                    <Form.Field>
+                        <label>Notes :</label>
+                        <Form.TextArea
+                            className="note"
+                            rows={2}
+                            rows={10}
+                            placeholder="Dans quel état d'esprit êtes-vous ? Est-ce que vous êtes confiant à l'idée de prendre ce trade ? Ce trade respect-il votre trading plan?"
+                        />
+                    </Form.Field>
+                    <Button size="mini">Sauvegarder</Button>
+                </Form>
+            </Tab.Pane>
+        ),
+    },
+];
+
+const AllDataOfTrade = ({ trade, isAnimate }) => {
+    return (
+        <div className={`trade ${isAnimate ? "animate-trade" : "animate-exit-trade"}`}>
+            <Tab trade={trade} menu={{ fluid: true, vertical: true, tabular: true }} panes={panes} className="tab" />
         </div>
     );
 };

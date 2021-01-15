@@ -1,10 +1,6 @@
 const UserModel = require("../models/user.model");
 const { checkId } = require("../utils/utils");
 
-// https://www.youtube.com/watch?v=SUPDFHuvhRc&list=PLEiMYEzpB4QsZIxBeWo9T1fCnii0XHfHP
-// 1h32
-// selected("-password") => n'inclus pas le password dans la response
-
 // Get all users
 module.exports.getAllUsers = async (_, res) => {
     console.log("getAll");

@@ -8,10 +8,27 @@
         justify-content: flex-end;
     }
     .trade {
+        width: 100%;
         opacity: 0;
         display: flex;
         justify-content: space-between;
-        padding: 1em;
+        padding: 2em 1em;
+        margin: -1em 0;
+        background-color: #242526;
+
+        .trade-label {
+            display: block;
+            margin: 0em 0em 0.28571429rem 0em;
+            color: rgba(0, 0, 0, 0.8);
+            font-size: 0.78571429em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .trade-infos_data {
+            display: flex;
+            justify-content: space-around;
+        }
 
         &-infos {
             width: 49%;
@@ -30,8 +47,8 @@
 
                 .session-left {
                     display: flex;
-                    justify-content: flex-end;
-                    width: 75%;
+                    justify-content: flex-start;
+                    width: 60%;
                 }
                 .session-right {
                     width: 15%;
@@ -54,59 +71,21 @@
                     width: 15%;
                 }
             }
-
-            &_details {
-                padding: 2em 0 0.3em 0;
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-evenly;
-                flex: 1;
-
-                .capital,
-                .risk {
-                    font-weight: bold;
-                    font-size: 1.2em;
-                }
-            }
-
-            .ui.form textarea:focus {
-                color: rgba(255, 255, 255, 0.767);
-                outline: 0.15em solid #666666 !important;
-                border: none !important;
-            }
         }
 
-        &-setup {
-            width: 49%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-
-            .trade-edit {
-                width: 100%;
-                height: 40px;
-                display: flex;
-                justify-content: flex-end;
-            }
+        .tab {
+            width: 100%;
         }
 
-        &-screenshot {
-            width: 100% !important;
-            margin: 0 auto;
+        .trade-screenshot {
+            margin: auto;
+            width: 100%;
         }
 
-        .label {
-            margin-right: 1em;
-        }
-
-        .note {
-            color: white;
-        }
-
-        .trade-infos__item {
-            margin: 1em 0;
-            padding: 1em 0 !important;
+        .ui.form textarea:focus {
+            color: rgba(255, 255, 255, 0.767);
+            outline: 0.15em solid #666666 !important;
+            border: none !important;
         }
 
         .ui.selection.dropdown .menu > .item {

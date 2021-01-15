@@ -21,6 +21,11 @@ const tradeSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
+    fees: {
+        type: String,
+        required: true,
+        trim: true,
+    },
     entryPrice: {
         type: String,
         required: true,
