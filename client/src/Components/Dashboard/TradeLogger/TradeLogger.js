@@ -6,7 +6,9 @@ import duration from "moment-duration-format";
 import "./tradelogger.scss";
 
 /* Components */
-import AddModal from "./AddModal/AddModal";
+
+import AddTrade from "../../../Containers/Dashboard/AddTrade.container";
+import UpdateTrade from "../../../Containers/Dashboard/UpdateTrade.container";
 
 const formatTimestamps = (timestamps) => {
     const seconds = timestamps;
@@ -37,7 +39,11 @@ const panes = [
                         </div>
                     </div>
                     <div className="session-right">
-                        <Image src={trade.platformLogo} size="big" style={{ display: "block", width: "100%" }} />
+                        <Image
+                            src={`./platform/${trade.platform}.png`}
+                            size="big"
+                            style={{ display: "block", width: "100%" }}
+                        />
                     </div>
                 </div>
                 <Divider />
@@ -111,7 +117,7 @@ const AllDataOfTrade = ({ trade, isAnimate }) => {
 };
 
 const TradeLogger = (props) => {
-    const { trades, fetchTrades, tradeData, addTrade, setTradeData } = props;
+    const { trades, fetchTrades, setTradeUpdateId } = props;
     const [selectedRow, setSelectedRow] = useState({});
     const [showModal, setShowModal] = useState(false);
 
@@ -131,13 +137,7 @@ const TradeLogger = (props) => {
         <Layout title="Trade Logger">
             <div className="tradelogger">
                 <div className="action">
-                    <AddModal
-                        showModal={showModal}
-                        setShowModal={setShowModal}
-                        tradeData={tradeData}
-                        addTrade={addTrade}
-                        setTradeData={setTradeData}
-                    />
+                    <AddTrade showModal={showModal} setShowModal={setShowModal} />
                 </div>
                 <Table basic="very" celled inverted selectable textAlign="center">
                     <Table.Header>
@@ -151,6 +151,7 @@ const TradeLogger = (props) => {
                             <Table.HeaderCell>Leaving Price</Table.HeaderCell>
                             <Table.HeaderCell>PnL ($)</Table.HeaderCell>
                             <Table.HeaderCell>PnL (%)</Table.HeaderCell>
+                            <Table.HeaderCell>Action</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
 
@@ -171,10 +172,17 @@ const TradeLogger = (props) => {
                                     <Table.Cell>{trade.exitPrice}</Table.Cell>
                                     <Table.Cell>{trade.pnl}$</Table.Cell>
                                     <Table.Cell>{trade.pnlPer}%</Table.Cell>
+                                    <Table.Cell style={{ display: "flex" }}>
+                                        <UpdateTrade
+                                            showModal={showModal}
+                                            setShowModal={setShowModal}
+                                            tradeId={trade._id}
+                                        />
+                                    </Table.Cell>
                                 </Table.Row>
                                 {selectedRow && selectedRow._id === trade._id && (
                                     <Table.Row textAlign="left" key={trade._id}>
-                                        <Table.Cell colSpan={9}>
+                                        <Table.Cell colSpan={10}>
                                             <AllDataOfTrade isAnimate={true} trade={trade} />
                                         </Table.Cell>
                                     </Table.Row>

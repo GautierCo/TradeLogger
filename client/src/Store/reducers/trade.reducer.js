@@ -6,6 +6,11 @@ import {
     ADD_TRADE_SUCCESS,
     ADD_TRADE_ERROR,
     SET_TRADE_DATA,
+    SET_TRADE_UPDATE_ID,
+    SET_TRADE_UPDATE_DATA,
+    UPDATE_TRADE,
+    UPDATE_TRADE_SUCCESS,
+    UPDATE_TRADE_ERROR,
 } from "../actions/trade.actions";
 import moment from "moment";
 
@@ -27,8 +32,11 @@ const initialState = {
         entryDate: moment(),
         exitDate: moment(),
     },
+    tradeUpdateId: "",
+    tradeUpdateData: {},
     tradesLoading: false,
     addTradeLoading: false,
+    updateTradeLoading: false,
 };
 
 export const tradeReducer = (state = initialState, action = {}) => {
@@ -72,6 +80,36 @@ export const tradeReducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 addTradeLoading: false,
+            };
+
+        case SET_TRADE_UPDATE_ID:
+            return {
+                ...state,
+                tradeUpdateId: action.payload,
+            };
+        case SET_TRADE_UPDATE_DATA:
+            return {
+                ...state,
+                tradeUpdateData: {
+                    ...state.tradeUpdateData,
+                    ...action.payload,
+                },
+            };
+        case UPDATE_TRADE:
+            return {
+                ...state,
+                updateTradeLoading: true,
+            };
+        case UPDATE_TRADE_SUCCESS:
+            return {
+                ...state,
+                trades: [...state.trades, ...action.payload],
+                updateTradeLoading: false,
+            };
+        case UPDATE_TRADE_ERROR:
+            return {
+                ...state,
+                updateTradeLoading: false,
             };
 
         default:

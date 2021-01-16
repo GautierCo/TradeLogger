@@ -39,3 +39,31 @@ export const addTradeError = (payload) => ({
     type: ADD_TRADE_ERROR,
     payload,
 });
+
+export const SET_TRADE_UPDATE_ID = "SET_TRADE_UPDATE_ID";
+export const SET_TRADE_UPDATE_DATA = "SET_TRADE_UPDATE_DATA";
+export const UPDATE_TRADE = "UPDATE_TRADE";
+export const UPDATE_TRADE_SUCCESS = "UPDATE_TRADE_SUCCESS";
+export const UPDATE_TRADE_ERROR = "UPDATE_TRADE_ERROR";
+
+export const setTradeUpdateId = (payload) => ({
+    type: SET_TRADE_UPDATE_ID,
+    payload,
+});
+
+export const setTradeUpdateData = (payload) => ({
+    type: SET_TRADE_UPDATE_DATA,
+    payload,
+});
+
+export const updateTrade = () => ({
+    type: UPDATE_TRADE,
+});
+
+export const updateTradeSuccess = () => ({
+    type: UPDATE_TRADE_SUCCESS,
+});
+
+export const updateTradeError = () => ({
+    type: UPDATE_TRADE_ERROR,
+});
