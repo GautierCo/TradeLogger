@@ -34,7 +34,7 @@ module.exports.getAllTradesByUserId = async (req, res) => {
                 _id: { $in: tradesId.trades },
             },
             (err, docs) => {
-                if (!err) return res.status(201).json({ trades: docs });
+                if (!err) return res.status(200).json({ trades: docs });
             }
         );
     } catch (error) {
@@ -44,6 +44,8 @@ module.exports.getAllTradesByUserId = async (req, res) => {
 
 module.exports.addTrade = async (req, res) => {
     if (checkId(req.user.id)) return res.status(400).send(`Unknow ID ${req.user.id}.`);
+
+    console.log("req.body", req.body);
 
     const userId = req.user.id;
     const tradeData = req.body;
@@ -75,6 +77,7 @@ module.exports.addTrade = async (req, res) => {
         };
     } else {
         tradeFinalData = {
+            ...tradeData,
             pnl: 0,
             pnlPer: 0,
             status: "In progress",
@@ -93,7 +96,7 @@ module.exports.addTrade = async (req, res) => {
                 },
                 { new: true, upsert: true }
             );
-            res.status(201).json({ tradeId: data._id });
+            res.status(201).json({ ...tradeFinalData, _id: data._id });
         });
     } catch (error) {
         console.error("Adding new Trade error", error);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Image, Button, Icon, Form, Input, Checkbox, Select, Divider } from "semantic-ui-react";
+import { Modal, Image, Button, Icon, Form, Input, Select, Divider } from "semantic-ui-react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import fr from "date-fns/locale/fr";
 import "react-datepicker/dist/react-datepicker.css";
@@ -8,103 +8,166 @@ import "./addmodal.scss";
 registerLocale("fr", fr);
 
 const typeSelect = [
-    { key: "long", value: "long", text: "Long" },
-    { key: "short", value: "short", text: "Short" },
+    { key: "long", value: "Long", text: "Long" },
+    { key: "short", value: "Short", text: "Short" },
 ];
 const platformSelect = [
-    { key: "binance", value: "binance", text: "Binance" },
-    { key: "bittrex", value: "bittrex", text: "Bittrex" },
-    { key: "kraken", value: "kraken", text: "Kraken" },
-    { key: "coinbase", value: "coinbase", text: "Coinbase" },
+    { key: "binance", value: "Binance", text: "Binance" },
+    { key: "ftx", value: "FTX", text: "FTX" },
+    { key: "bittrex", value: "Bittrex", text: "Bittrex" },
+    { key: "kraken", value: "Kraken", text: "Kraken" },
+    { key: "coinbase", value: "Coinbase", text: "Coinbase" },
 ];
 
-const FormModal = ({ setupList }) => {
-    const [leverageValue, setLeverageValue] = useState(1);
+const setupList = [
+    {
+        key: "Ichimoku",
+        text: "Ichimoku",
+        value: "Ichimoku",
+    },
+    {
+        key: "W",
+        text: "W",
+        value: "W",
+    },
+];
 
-    const [startDate, setStartDate] = useState(new Date());
-
-    const handleChangeLeverage = (e) => {
-        setLeverageValue(e.target.value);
+const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
+    const handleChange = (e, data) => {
+        const { name, value } = data ? data : e.target;
+        const dataForm = {
+            ...tradeData,
+            [name]: value,
+        };
+        setTradeData(dataForm);
     };
 
     return (
         <div className="modalform">
-            <Form>
+            <Form onSubmit={handleSubmit}>
                 <Form.Group>
                     <Form.Field>
                         <label>Platform</label>
-                        <Select name="platform" placeholder="Binance" options={platformSelect} />
+                        <Select
+                            placeholder="Choose.."
+                            name="platform"
+                            options={platformSelect}
+                            onChange={handleChange}
+                            value={tradeData.platform}
+                        />
                     </Form.Field>
                     <Form.Field>
                         <label>Type</label>
-                        <Select name="type" placeholder="Short, long" options={typeSelect} />
+                        <Select
+                            placeholder="Choose.."
+                            name="type"
+                            options={typeSelect}
+                            onChange={handleChange}
+                            value={tradeData.type}
+                        />
                     </Form.Field>
                 </Form.Group>
 
                 <Form.Group>
                     <Form.Field>
                         <label>Assets</label>
-                        <Input name="assets" placeholder="BTC/USDT" />
+                        <Input name="assets" placeholder="BTC/USDT" value={tradeData.assets} onChange={handleChange} />
                     </Form.Field>
                     <Form.Field>
                         <label>Capital</label>
-                        <Input name="capital" placeholder="1000" type="text" pattern="^\d*(\.\d{0,2})?$" />
+                        <Input
+                            name="capital"
+                            placeholder="1000"
+                            type="text"
+                            pattern="^\d*(\.\d{0,2})?$"
+                            value={tradeData.capital}
+                            onChange={handleChange}
+                        />
                     </Form.Field>
                 </Form.Group>
                 <Form.Group>
                     <Form.Field>
                         <label>Entry Price</label>
-                        <Input name="entryPrice" placeholder="34589" />
+                        <Input
+                            name="entryPrice"
+                            placeholder="34589"
+                            value={tradeData.entryPrice}
+                            onChange={handleChange}
+                        />
                     </Form.Field>
                     <Form.Field>
                         <label>Stop Loss</label>
-                        <Input name="stopLoss" placeholder="33187" />
+                        <Input name="stopLoss" placeholder="33187" value={tradeData.stopLoss} onChange={handleChange} />
                     </Form.Field>
                 </Form.Group>
 
                 <Form.Group>
                     <Form.Field>
                         <label>Take Profit</label>
-                        <Input name="takeProfit" placeholder="36897" />
+                        <Input
+                            name="takeProfit"
+                            placeholder="36897"
+                            value={tradeData.takeProfit}
+                            onChange={handleChange}
+                        />
                     </Form.Field>
                     <Form.Field>
                         <label>Leaving Price</label>
-                        <Input name="leavingPrice" placeholder="36897" />
+                        <Input
+                            name="exitPrice"
+                            placeholder="36897"
+                            value={tradeData.exitPrice}
+                            onChange={handleChange}
+                        />
                     </Form.Field>
                 </Form.Group>
                 <Form.Group>
                     <Form.Field>
                         <label>Risk Ratio</label>
-                        <Input name="riskRatio" placeholder="2" />
+                        <Input name="riskRatio" placeholder="2" value={tradeData.riskRatio} onChange={handleChange} />
                     </Form.Field>
 
                     <Form.Field>
                         <label>Setup</label>
-                        <Select name="setup" placeholder="Ichimoku" options={setupList} />
+                        <Select
+                            name="setup"
+                            placeholder="Ichimoku"
+                            options={setupList}
+                            value={tradeData.setup}
+                            onChange={handleChange}
+                        />
                     </Form.Field>
                 </Form.Group>
-                <Form.Field>
-                    <Form.Input
-                        label={`Levier: x${leverageValue} `}
-                        min={1}
-                        max={125}
-                        name="leverage"
-                        step={1}
-                        type="range"
-                        onChange={handleChangeLeverage}
-                        value={leverageValue}
-                    />
-                </Form.Field>
-
+                <Form.Group>
+                    <Form.Field>
+                        <Form.Input
+                            label={`Levier: x${tradeData.leverage} `}
+                            min={1}
+                            max={125}
+                            name="leverage"
+                            step={1}
+                            type="range"
+                            onChange={handleChange}
+                            value={tradeData.leverage}
+                        />
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Fees</label>
+                        <Input name="fees" placeholder="1" value={tradeData.fees} onChange={handleChange} />
+                    </Form.Field>
+                </Form.Group>
                 <Form.Group>
                     <Form.Field>
                         <label>Entry Date</label>
                         <DatePicker
                             name="entryDate"
-                            selected={startDate}
+                            selected={Date.parse(tradeData.entryDate)}
                             onChange={(date) => {
-                                setStartDate(date);
                                 console.log(date);
+                                setTradeData({
+                                    ...tradeData,
+                                    entryDate: date,
+                                });
                             }}
                             showTimeSelect
                             locale="fr"
@@ -117,12 +180,12 @@ const FormModal = ({ setupList }) => {
                         <label>Exit Date</label>
                         <DatePicker
                             name="exitDate"
-                            selected={startDate}
+                            selected={Date.parse(tradeData.exitDate)}
                             onChange={(date) => {
-                                console.log(startDate);
-                                setStartDate(date);
-                                console.log(date);
-                                console.log(Date.parse(startDate));
+                                setTradeData({
+                                    ...tradeData,
+                                    exitDate: date,
+                                });
                             }}
                             showTimeSelect
                             locale="fr"
@@ -137,7 +200,12 @@ const FormModal = ({ setupList }) => {
     );
 };
 
-const AddModal = ({ showModal, setShowModal, setupList }) => {
+const AddModal = ({ showModal, setShowModal, tradeData, addTrade, setTradeData }) => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        addTrade();
+    };
+
     return (
         <Modal
             className="addmodal"
@@ -164,11 +232,18 @@ const AddModal = ({ showModal, setShowModal, setupList }) => {
                     <Input label="URL" placeholder="https://www.tradingview.com/x/gFRYCH3B/" />
                 </div>
                 <Modal.Description className="content-description">
-                    <FormModal setupList={setupList} />
+                    <FormModal tradeData={tradeData} setTradeData={setTradeData} handleSubmit={handleSubmit} />
                 </Modal.Description>
             </Modal.Content>
             <Modal.Actions className="addmodal-actions">
-                <Button onClick={() => setShowModal(false)} primary>
+                <Button
+                    type="submit"
+                    onClick={(e) => {
+                        handleSubmit(e);
+                        setShowModal(false);
+                    }}
+                    primary
+                >
                     {/* Submit here */}
                     Ajouter <Icon name="chevron right" />
                 </Button>

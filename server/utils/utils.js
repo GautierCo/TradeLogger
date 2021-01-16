@@ -31,9 +31,9 @@ module.exports.calculProfitPer = (profit, capital) => {
 
 module.exports.knowStatus = (profit) => {
     const nbrSign = Math.sign(profit);
-
-    if (nbrSign === 1 || nbrSign === 0) return "W";
-    if (nbrSign === -1 || nbrSign === -0) return "L";
+    if (profit === 0) return "Even";
+    if (nbrSign === 1 || nbrSign === 0) return "Win";
+    if (nbrSign === -1 || nbrSign === -0) return "Loss";
 };
 
 module.exports.calculSessionDuration = (entryDate, exitDate) => {

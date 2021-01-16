@@ -19,19 +19,6 @@ const formatDate = (date) => {
     return moment(date).format("DD-MM-YYYY HH:mm");
 };
 
-const setupList = [
-    {
-        key: "Ichimoku",
-        text: "Ichimoku",
-        value: "Ichimoku",
-    },
-    {
-        key: "W",
-        text: "W",
-        value: "W",
-    },
-];
-
 const panes = [
     {
         menuItem: "Infos",
@@ -124,7 +111,7 @@ const AllDataOfTrade = ({ trade, isAnimate }) => {
 };
 
 const TradeLogger = (props) => {
-    const { trades, fetchTrades } = props;
+    const { trades, fetchTrades, tradeData, addTrade, setTradeData } = props;
     const [selectedRow, setSelectedRow] = useState({});
     const [showModal, setShowModal] = useState(false);
 
@@ -144,7 +131,13 @@ const TradeLogger = (props) => {
         <Layout title="Trade Logger">
             <div className="tradelogger">
                 <div className="action">
-                    <AddModal showModal={showModal} setShowModal={setShowModal} setupList={setupList} />
+                    <AddModal
+                        showModal={showModal}
+                        setShowModal={setShowModal}
+                        tradeData={tradeData}
+                        addTrade={addTrade}
+                        setTradeData={setTradeData}
+                    />
                 </div>
                 <Table basic="very" celled inverted selectable textAlign="center">
                     <Table.Header>
@@ -167,7 +160,6 @@ const TradeLogger = (props) => {
                                 <Table.Row
                                     style={{ cursor: "pointer" }}
                                     onClick={() => handleShowTrade(trade)}
-                                    key={"s12f5za1ef"}
                                     active={selectedRow && selectedRow._id === trade._id}
                                 >
                                     <Table.Cell>{trade.status}</Table.Cell>
