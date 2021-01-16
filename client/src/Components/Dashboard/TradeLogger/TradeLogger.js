@@ -1,13 +1,23 @@
-import React, { useState } from "react";
-import { Dropdown, Table, Image, Icon, Label, TextArea, Form, List, Button, Tab, Divider } from "semantic-ui-react";
+import React, { useEffect, useState } from "react";
+import { Table, Image, Icon, Label, Form, Button, Tab, Divider } from "semantic-ui-react";
 import Layout from "../../../Containers/Dashboard/Layout.container";
+import moment from "moment";
+import duration from "moment-duration-format";
 import "./tradelogger.scss";
 
-import ReactSlider from "react-slider";
-
-/* fake data */
-import FakeData from "../../../FakeData/tradeLogger.json";
+/* Components */
 import AddModal from "./AddModal/AddModal";
+
+const formatTimestamps = (timestamps) => {
+    const seconds = timestamps;
+    const durationInSeconds = moment.duration(seconds, "seconds");
+    const sessionDuration = durationInSeconds.format(duration, "dd:hh:mm:ss");
+    return sessionDuration;
+};
+
+const formatDate = (date) => {
+    return moment(date).format("DD-MM-YYYY HH:mm");
+};
 
 const setupList = [
     {
@@ -30,13 +40,13 @@ const panes = [
                 <div className="trade-infos_session">
                     <div className="session-left">
                         <div className="session-container">
-                            <div className="session-entrydate">{trade.entryDate}</div>
+                            <div className="session-entrydate">{formatDate(trade.entryDate)}</div>
                             <Icon name="long arrow alternate right" style={{ display: "block", width: "10%" }} />
-                            <div className="session-exitdate">{trade.exitDate}</div>
+                            <div className="session-exitdate">{formatDate(trade.exitDate)}</div>
                         </div>
                         <div className="duration-container">
                             <Icon name="time" />
-                            {trade.sessionDuration}
+                            {formatTimestamps(trade.sessionDuration)}
                         </div>
                     </div>
                     <div className="session-right">
@@ -47,23 +57,23 @@ const panes = [
                 <div className="trade-infos_data">
                     <div className="">
                         <label className="trade-label">Capital</label>
-                        <div className="">1100 $</div>
+                        <div className="">{trade.capital} $</div>
                     </div>
                     <div className="">
                         <label className="trade-label">Leverage</label>
-                        <div className="">x 125</div>
+                        <div className="">x {trade.leverage}</div>
                     </div>
                     <div className="">
                         <label className="trade-label">Setup</label>
-                        <div className="">Ichimoku</div>
+                        <div className="">{trade.setup}</div>
                     </div>
                     <div className="">
                         <label className="trade-label">Risk</label>
-                        <div className="">2.0</div>
+                        <div className="">{trade.riskRatio}</div>
                     </div>
                     <div className="">
                         <label className="trade-label">Fees</label>
-                        <div className="">1%</div>
+                        <div className="">{trade.fees}%</div>
                     </div>
                 </div>
             </Tab.Pane>
@@ -84,6 +94,10 @@ const panes = [
             <Tab.Pane>
                 <Form>
                     <Form.Field>
+                        <label>Feeling :</label>
+                        <Label>Good</Label>
+                    </Form.Field>
+                    <Form.Field>
                         <label>Notes :</label>
                         <Form.TextArea
                             className="note"
@@ -92,7 +106,9 @@ const panes = [
                             placeholder="Dans quel état d'esprit êtes-vous ? Est-ce que vous êtes confiant à l'idée de prendre ce trade ? Ce trade respect-il votre trading plan?"
                         />
                     </Form.Field>
-                    <Button size="mini">Sauvegarder</Button>
+                    <Button size="mini" primary>
+                        Sauvegarder
+                    </Button>
                 </Form>
             </Tab.Pane>
         ),
@@ -107,12 +123,17 @@ const AllDataOfTrade = ({ trade, isAnimate }) => {
     );
 };
 
-const TradeLogger = () => {
+const TradeLogger = (props) => {
+    const { trades, fetchTrades } = props;
     const [selectedRow, setSelectedRow] = useState({});
     const [showModal, setShowModal] = useState(false);
 
+    useEffect(() => {
+        fetchTrades();
+    }, []);
+
     const handleShowTrade = (trade) => {
-        if (selectedRow.id === trade.id) {
+        if (selectedRow._id === trade._id) {
             setSelectedRow({});
         } else {
             setSelectedRow(trade);
@@ -141,13 +162,13 @@ const TradeLogger = () => {
                     </Table.Header>
 
                     <Table.Body>
-                        {FakeData.data.map((trade) => (
+                        {trades.map((trade) => (
                             <>
                                 <Table.Row
                                     style={{ cursor: "pointer" }}
                                     onClick={() => handleShowTrade(trade)}
-                                    key={trade.id}
-                                    active={selectedRow && selectedRow.id === trade.id}
+                                    key={"s12f5za1ef"}
+                                    active={selectedRow && selectedRow._id === trade._id}
                                 >
                                     <Table.Cell>{trade.status}</Table.Cell>
                                     <Table.Cell>{trade.assets}</Table.Cell>
@@ -155,12 +176,12 @@ const TradeLogger = () => {
                                     <Table.Cell>{trade.entryPrice}</Table.Cell>
                                     <Table.Cell>{trade.stopLoss}</Table.Cell>
                                     <Table.Cell>{trade.takeProfit}</Table.Cell>
-                                    <Table.Cell>{trade.leavingProfit}</Table.Cell>
+                                    <Table.Cell>{trade.exitPrice}</Table.Cell>
                                     <Table.Cell>{trade.pnl}$</Table.Cell>
-                                    <Table.Cell>{trade.pnl_per}%</Table.Cell>
+                                    <Table.Cell>{trade.pnlPer}%</Table.Cell>
                                 </Table.Row>
-                                {selectedRow && selectedRow.id === trade.id && (
-                                    <Table.Row textAlign="left">
+                                {selectedRow && selectedRow._id === trade._id && (
+                                    <Table.Row textAlign="left" key={trade._id}>
                                         <Table.Cell colSpan={9}>
                                             <AllDataOfTrade isAnimate={true} trade={trade} />
                                         </Table.Cell>

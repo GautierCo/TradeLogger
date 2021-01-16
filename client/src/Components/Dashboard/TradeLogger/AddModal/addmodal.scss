@@ -13,8 +13,12 @@
         color: white !important;
     }
 
+    .content-description {
+        width: 65%;
+    }
+
     .content-container {
-        width: 50%;
+        width: 35%;
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
@@ -40,6 +44,17 @@
     }
 }
 
+.ui.modal .scrolling.content {
+    overflow: visible !important;
+}
+
 .modalform {
     // app.scss
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.react-datepicker {
+    z-index: 1000 !important;
 }

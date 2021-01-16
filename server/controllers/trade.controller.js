@@ -1,9 +1,23 @@
 const TradeModel = require("../models/trade.model");
 const UserModel = require("../models/user.model");
-const { checkId } = require("../utils/utils");
+const { checkId, calculProfit, calculProfitPer, knowStatus, calculSessionDuration } = require("../utils/utils");
 
-module.exports.getAllTrades = async (req, res) => {
-    return;
+module.exports.getTradeById = async (req, res) => {
+    const userId = req.user.id;
+    const tradeId = req.params.id;
+
+    if (!req.params.id) return res.status(400).json({ message: "Vous devez préciser l'ID du trade en paramètre" });
+
+    try {
+        await TradeModel.findById(tradeId, (err, doc) => {
+            if (err) return res.status(400).json({ message: err });
+            if (doc.userId !== userId)
+                return res.status(403).json({ message: "Vous n'êtes pas le propriétaire de ce trade." });
+            else return res.status(201).json({ trade: doc });
+        });
+    } catch (error) {
+        return res.status(500).json({ message: "Erreur lors de la recherche des trades de l'utilisateur" });
+    }
 };
 
 module.exports.getAllTradesByUserId = async (req, res) => {
@@ -20,7 +34,7 @@ module.exports.getAllTradesByUserId = async (req, res) => {
                 _id: { $in: tradesId.trades },
             },
             (err, docs) => {
-                if (!err) return res.status(201).json(docs);
+                if (!err) return res.status(201).json({ trades: docs });
             }
         );
     } catch (error) {
@@ -29,12 +43,47 @@ module.exports.getAllTradesByUserId = async (req, res) => {
 };
 
 module.exports.addTrade = async (req, res) => {
-    const userId = req.user.id;
+    if (checkId(req.user.id)) return res.status(400).send(`Unknow ID ${req.user.id}.`);
 
-    if (checkId(userId)) return res.status(400).send(`Unknow ID ${userId}.`);
+    const userId = req.user.id;
+    const tradeData = req.body;
+    let tradeFinalData = {};
+
+    if (tradeData.exitPrice) {
+        if (
+            isNaN(tradeData.entryPrice) ||
+            isNaN(tradeData.exitPrice) ||
+            isNaN(tradeData.leverage) ||
+            isNaN(tradeData.capital) ||
+            isNaN(tradeData.fees)
+        )
+            return res.status(400).json({
+                message: `L'une des variables suivante n'est pas un nombre: entryPrice, exitPrice, leverage, capital, fees`,
+            });
+
+        const profit = calculProfit(tradeData);
+        const profitPer = calculProfitPer(profit, tradeData.capital);
+        const status = knowStatus(profit);
+        const sessionDuration = calculSessionDuration(tradeData.entryDate, tradeData.exitDate);
+
+        tradeFinalData = {
+            ...tradeData,
+            pnl: profit,
+            pnlPer: profitPer,
+            status: status,
+            sessionDuration: sessionDuration,
+        };
+    } else {
+        tradeFinalData = {
+            pnl: 0,
+            pnlPer: 0,
+            status: "In progress",
+            sessionDuration: "In progress",
+        };
+    }
 
     try {
-        await TradeModel.create(req.body).then(async (data) => {
+        await TradeModel.create(tradeFinalData).then(async (data) => {
             await UserModel.updateOne(
                 { _id: userId },
                 {

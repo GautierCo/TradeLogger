@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { Modal, Image, Button, Icon, Form, Input, Checkbox, Select, Divider } from "semantic-ui-react";
+import DatePicker, { registerLocale } from "react-datepicker";
+import fr from "date-fns/locale/fr";
+import "react-datepicker/dist/react-datepicker.css";
 import "./addmodal.scss";
+
+registerLocale("fr", fr);
 
 const typeSelect = [
     { key: "long", value: "long", text: "Long" },
@@ -16,6 +21,8 @@ const platformSelect = [
 const FormModal = ({ setupList }) => {
     const [leverageValue, setLeverageValue] = useState(1);
 
+    const [startDate, setStartDate] = useState(new Date());
+
     const handleChangeLeverage = (e) => {
         setLeverageValue(e.target.value);
     };
@@ -26,44 +33,54 @@ const FormModal = ({ setupList }) => {
                 <Form.Group>
                     <Form.Field>
                         <label>Platform</label>
-                        <Select placeholder="Binance" options={platformSelect} />
+                        <Select name="platform" placeholder="Binance" options={platformSelect} />
                     </Form.Field>
                     <Form.Field>
                         <label>Type</label>
-                        <Select placeholder="Short, long" options={typeSelect} />
+                        <Select name="type" placeholder="Short, long" options={typeSelect} />
                     </Form.Field>
                 </Form.Group>
 
                 <Form.Group>
                     <Form.Field>
                         <label>Assets</label>
-                        <Input placeholder="BTC/USDT" />
+                        <Input name="assets" placeholder="BTC/USDT" />
                     </Form.Field>
-
-                    <Form.Field>
-                        <label>Entry Price</label>
-                        <Input placeholder="15.00" />
-                    </Form.Field>
-                </Form.Group>
-                <Form.Group>
-                    <Form.Field>
-                        <label>Stop Loss</label>
-                        <Input placeholder="14.00" />
-                    </Form.Field>
-
-                    <Form.Field>
-                        <label>Take Profit</label>
-                        <Input placeholder="16.00" />
-                    </Form.Field>
-                </Form.Group>
-                <Form.Group>
                     <Form.Field>
                         <label>Capital</label>
-                        <Input placeholder="2" />
+                        <Input name="capital" placeholder="1000" type="text" pattern="^\d*(\.\d{0,2})?$" />
+                    </Form.Field>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Field>
+                        <label>Entry Price</label>
+                        <Input name="entryPrice" placeholder="34589" />
                     </Form.Field>
                     <Form.Field>
+                        <label>Stop Loss</label>
+                        <Input name="stopLoss" placeholder="33187" />
+                    </Form.Field>
+                </Form.Group>
+
+                <Form.Group>
+                    <Form.Field>
+                        <label>Take Profit</label>
+                        <Input name="takeProfit" placeholder="36897" />
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Leaving Price</label>
+                        <Input name="leavingPrice" placeholder="36897" />
+                    </Form.Field>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Field>
                         <label>Risk Ratio</label>
-                        <Input placeholder="2" />
+                        <Input name="riskRatio" placeholder="2" />
+                    </Form.Field>
+
+                    <Form.Field>
+                        <label>Setup</label>
+                        <Select name="setup" placeholder="Ichimoku" options={setupList} />
                     </Form.Field>
                 </Form.Group>
                 <Form.Field>
@@ -79,15 +96,42 @@ const FormModal = ({ setupList }) => {
                     />
                 </Form.Field>
 
-                <Form.Field>
-                    <label>Setup</label>
-                    <Select placeholder="Ichimoku" options={setupList} />
-                </Form.Field>
-
-                <Form.Field>
-                    <label>Entry Date</label>
-                    <Input type="date" />
-                </Form.Field>
+                <Form.Group>
+                    <Form.Field>
+                        <label>Entry Date</label>
+                        <DatePicker
+                            name="entryDate"
+                            selected={startDate}
+                            onChange={(date) => {
+                                setStartDate(date);
+                                console.log(date);
+                            }}
+                            showTimeSelect
+                            locale="fr"
+                            timeFormat="p"
+                            timeIntervals={5}
+                            dateFormat="Pp"
+                        />
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Exit Date</label>
+                        <DatePicker
+                            name="exitDate"
+                            selected={startDate}
+                            onChange={(date) => {
+                                console.log(startDate);
+                                setStartDate(date);
+                                console.log(date);
+                                console.log(Date.parse(startDate));
+                            }}
+                            showTimeSelect
+                            locale="fr"
+                            timeFormat="p"
+                            timeIntervals={5}
+                            dateFormat="Pp"
+                        />
+                    </Form.Field>
+                </Form.Group>
             </Form>
         </div>
     );
@@ -119,7 +163,7 @@ const AddModal = ({ showModal, setShowModal, setupList }) => {
                     </Divider>
                     <Input label="URL" placeholder="https://www.tradingview.com/x/gFRYCH3B/" />
                 </div>
-                <Modal.Description>
+                <Modal.Description className="content-description">
                     <FormModal setupList={setupList} />
                 </Modal.Description>
             </Modal.Content>

@@ -1,12 +1,21 @@
 const mongoose = require("mongoose");
 const { isEmail } = require("validator");
 
+/*
+ Pour moi le profit, le % profit doit être calculer coté backend et stocker dans la db car plus tard pour faire les stats 
+ cela pourra être utile
+ Pareil pour le cacul de la sessionDuration
+ Le status
+ 
+*/
+
 const tradeSchema = new mongoose.Schema({
-    // userId: {
-    //     type: String,
-    //     required: true,
-    // },
+    userId: {
+        type: String,
+        required: true,
+    },
     assets: {
+        /* Trouver une liste de la totalité des assets ? */
         type: String,
         minlength: 1,
         maxlength: 10,
@@ -17,32 +26,32 @@ const tradeSchema = new mongoose.Schema({
         required: true,
     },
     capital: {
-        type: String,
+        type: Number,
         required: true,
         trim: true,
     },
     fees: {
-        type: String,
+        type: Number,
         required: true,
         trim: true,
     },
     entryPrice: {
-        type: String,
+        type: Number,
         required: true,
         trim: true,
     },
     stopLoss: {
-        type: String,
-        required: true,
+        type: Number,
+        required: false,
         trim: true,
     },
     takeProfit: {
-        type: String,
-        required: true,
+        type: Number,
+        required: false,
         trim: true,
     },
-    leavingProfit: {
-        type: String,
+    exitPrice: {
+        type: Number,
         required: false,
         trim: true,
     },
@@ -52,8 +61,8 @@ const tradeSchema = new mongoose.Schema({
         trim: true,
     },
     riskRatio: {
-        type: String,
-        required: true,
+        type: Number,
+        required: false,
         trim: true,
     },
     entryDate: {
@@ -62,11 +71,11 @@ const tradeSchema = new mongoose.Schema({
     },
     exitDate: {
         type: Date,
-        required: true,
+        required: false,
     },
     sessionDuration: {
-        type: Date,
-        required: true,
+        type: String,
+        required: false,
     },
     platform: {
         type: String,
@@ -74,10 +83,15 @@ const tradeSchema = new mongoose.Schema({
     },
     leverage: {
         type: Number,
-        required: true,
+        required: false,
+        default: 1,
         trim: true,
     },
     setup: {
+        type: String,
+        required: false,
+    },
+    feeling: {
         type: String,
         required: false,
     },
@@ -90,12 +104,12 @@ const tradeSchema = new mongoose.Schema({
         required: false,
     },
     pnl: {
-        type: String,
+        type: Number,
         required: false,
         trim: true,
     },
     pnlPer: {
-        type: String,
+        type: Number,
         required: false,
         trim: true,
     },
@@ -108,12 +122,3 @@ const tradeSchema = new mongoose.Schema({
 const TradeModel = mongoose.model("trades", tradeSchema);
 
 module.exports = TradeModel;
-
-/*
-
-    à gérer moi même coté back :
-    status
-    pnl
-    pnlPer
-    platformLogo
-*/
