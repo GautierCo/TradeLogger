@@ -1,6 +1,6 @@
 .addmodal {
     &-header {
-        background-color: #18191ae6 !important;
+        background-color: #2d2e30 !important;
         color: white !important;
     }
 
@@ -9,7 +9,7 @@
         color: white !important;
     }
     &-actions {
-        background-color: #18191ae6 !important;
+        background-color: #2d2e30 !important;
         color: white !important;
     }
 
@@ -21,9 +21,16 @@
         width: 35%;
         display: flex;
         flex-direction: column;
-        justify-content: space-evenly;
-        align-items: center;
-        align-content: center;
+        justify-content: flex-start;
+
+        .upload-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            align-content: center;
+            height: 180px;
+        }
 
         .divider {
             color: white !important;
@@ -45,14 +52,23 @@
 }
 
 .ui.modal .scrolling.content {
-    overflow: visible !important;
+    overflow-x: visible !important;
 }
 
 .modalform {
-    // app.scss
-    align-items: center;
-    display: flex;
-    flex-direction: column;
+    padding: 1em 2em;
+
+    .ui.form {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+
+    .fields {
+        display: flex;
+        justify-content: space-between;
+    }
 }
 
 .react-datepicker {

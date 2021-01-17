@@ -28,12 +28,14 @@ const AddModal = ({ showModal, setShowModal, tradeData, addTrade, setTradeData }
             <Modal.Content image scrolling className="addmodal-content">
                 <div className="content-container">
                     {/* <Image size="medium" src="https://www.tradingview.com/x/gFRYCH3B/" wrapped /> */}
-                    <Input type="file" style={{ display: "none" }} />
-                    <Button secondary>Upload screenshot</Button>
-                    <Divider className="divider" horizontal inverted>
-                        Or
-                    </Divider>
-                    <Input label="URL" placeholder="https://www.tradingview.com/x/gFRYCH3B/" />
+                    <div className="upload-screen">
+                        <Input type="file" style={{ display: "none" }} />
+                        <Button secondary>Upload screenshot</Button>
+                        <Divider className="divider" horizontal inverted>
+                            Or
+                        </Divider>
+                        <Input label="URL" placeholder="https://www.tradingview.com/x/gFRYCH3B/" />
+                    </div>
                 </div>
                 <Modal.Description className="content-description">
                     <FormModal tradeData={tradeData} setTradeData={setTradeData} handleSubmit={handleSubmit} />
@@ -48,7 +50,7 @@ const AddModal = ({ showModal, setShowModal, tradeData, addTrade, setTradeData }
                     }}
                     primary
                 >
-                    Ajouter <Icon name="chevron right" />
+                    Add trade <Icon name="chevron right" />
                 </Button>
             </Modal.Actions>
         </Modal>

@@ -60,10 +60,12 @@ export const updateTrade = () => ({
     type: UPDATE_TRADE,
 });
 
-export const updateTradeSuccess = () => ({
+export const updateTradeSuccess = (payload) => ({
     type: UPDATE_TRADE_SUCCESS,
+    payload,
 });
 
-export const updateTradeError = () => ({
+export const updateTradeError = (payload) => ({
     type: UPDATE_TRADE_ERROR,
+    payload,
 });

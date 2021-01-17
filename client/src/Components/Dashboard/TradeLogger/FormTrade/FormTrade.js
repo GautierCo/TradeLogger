@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Select } from "semantic-ui-react";
+import { Form, Input, Select, TextArea } from "semantic-ui-react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import fr from "date-fns/locale/fr";
 import "react-datepicker/dist/react-datepicker.css";
@@ -138,8 +138,8 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
                 </Form.Group>
                 <Form.Group>
                     <Form.Field>
-                        <Form.Input
-                            label={`Levier: x${tradeData.leverage} `}
+                        <label>{`Levier: x${tradeData.leverage} `}</label>
+                        <Input
                             min={1}
                             max={125}
                             name="leverage"
@@ -193,6 +193,18 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
                         />
                     </Form.Field>
                 </Form.Group>
+                <Form.Field>
+                    <label>Notes :</label>
+                    <TextArea
+                        name="note"
+                        value={tradeData.note}
+                        onChange={handleChange}
+                        className="note"
+                        rows={2}
+                        rows={10}
+                        placeholder="Dans quel état d'esprit êtes-vous ? Est-ce que vous êtes confiant à l'idée de prendre ce trade ? Ce trade respect-il votre trading plan?"
+                    />
+                </Form.Field>
             </Form>
         </div>
     );

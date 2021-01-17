@@ -24,11 +24,12 @@ const initialState = {
         entryPrice: 2500,
         stopLoss: 2000,
         takeProfit: 3000,
-        leavingPrice: "",
+        exitPrice: "",
         riskRatio: 2,
         setup: "Ichimoku",
         leverage: 1,
         fees: 1,
+        note: "",
         entryDate: moment(),
         exitDate: moment(),
     },
@@ -103,7 +104,7 @@ export const tradeReducer = (state = initialState, action = {}) => {
         case UPDATE_TRADE_SUCCESS:
             return {
                 ...state,
-                trades: [...state.trades, ...action.payload],
+                trades: action.payload,
                 updateTradeLoading: false,
             };
         case UPDATE_TRADE_ERROR:

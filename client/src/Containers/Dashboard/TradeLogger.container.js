@@ -5,6 +5,7 @@ import { fetchTrades } from "../../Store/actions/trade.actions";
 const mapStateToProps = (state) => ({
     trades: state.tradeReducer.trades,
     tradeData: state.tradeReducer.tradeData,
+    tradeUpdateId: state.tradeReducer.tradeUpdateId,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -9,6 +9,8 @@ import {
     SET_TRADE_UPDATE_ID,
     setTradeUpdateData,
     UPDATE_TRADE,
+    updateTradeSuccess,
+    updateTradeError,
 } from "../actions/trade.actions";
 
 export const tradeMiddleware = (store) => (next) => (action) => {
@@ -61,23 +63,33 @@ export const tradeMiddleware = (store) => (next) => (action) => {
         }
         case UPDATE_TRADE: {
             console.log("UDAPTE trade");
-            const { tradeUpdateData } = store.getState().tradeReducer;
+            const { tradeUpdateData, trades } = store.getState().tradeReducer;
             const { user } = store.getState().authReducer;
-            /*
+
             axios({
-                method: "POST",
-                url: `${process.env.REACT_APP_API_URL}/trade/${user.id}`,
+                method: "PATCH",
+                url: `${process.env.REACT_APP_API_URL}/trade/${tradeUpdateData._id}`,
                 data: { ...tradeUpdateData, userId: user.id },
             })
                 .then((res) => {
                     console.log(res);
-                    store.dispatch(addTradeSuccess({ ...res.data }));
+
+                    const tradesUpdate = trades.map((trade) => {
+                        if (trade._id === tradeUpdateData._id) {
+                            return res.data.doc;
+                        } else {
+                            return trade;
+                        }
+                    });
+
+                    console.log(tradesUpdate);
+                    store.dispatch(updateTradeSuccess(tradesUpdate));
                 })
                 .catch((err) => {
                     console.log(err);
-                    store.dispatch(addTradeError());
+                    store.dispatch(updateTradeError());
                 });
-*/
+
             break;
         }
     }

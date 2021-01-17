@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Modal, Image, Button, Icon, Form, Input, Select, Divider } from "semantic-ui-react";
+import React from "react";
+import { Modal, Button, Icon, Input, Divider } from "semantic-ui-react";
 import FormModal from "../FormTrade/FormTrade";
 
 import "../AddTrade/addmodal.scss";
@@ -40,12 +40,14 @@ const UpdateTrade = ({
             <Modal.Content image scrolling className="addmodal-content">
                 <div className="content-container">
                     {/* <Image size="medium" src="https://www.tradingview.com/x/gFRYCH3B/" wrapped /> */}
-                    <Input type="file" style={{ display: "none" }} />
-                    <Button secondary>Upload screenshot</Button>
-                    <Divider className="divider" horizontal inverted>
-                        Or
-                    </Divider>
-                    <Input label="URL" placeholder="https://www.tradingview.com/x/gFRYCH3B/" />
+                    <div className="upload-screen">
+                        <Input type="file" style={{ display: "none" }} />
+                        <Button secondary>Upload screenshot</Button>
+                        <Divider className="divider" horizontal inverted>
+                            Or
+                        </Divider>
+                        <Input label="URL" placeholder="https://www.tradingview.com/x/gFRYCH3B/" />
+                    </div>
                 </div>
                 <Modal.Description className="content-description">
                     <FormModal
@@ -64,7 +66,8 @@ const UpdateTrade = ({
                     }}
                     primary
                 >
-                    Ajouter <Icon name="chevron right" />
+                    Save changes
+                    <Icon name="chevron right" />
                 </Button>
             </Modal.Actions>
         </Modal>

@@ -18,14 +18,14 @@ const Auth = (props) => {
                 <div className="auth-selector">
                     <div className="selector__signup">
                         <NavLink to="/signup">
-                            <Button size="big" color={activePage === "signup" ? "green" : ""}>
+                            <Button size="big" color={activePage === "signup" ? "green" : "grey"}>
                                 Signup
                             </Button>
                         </NavLink>
                     </div>
                     <div className="selector__login">
                         <NavLink to="/login">
-                            <Button size="big" color={activePage === "login" ? "green" : ""}>
+                            <Button size="big" color={activePage === "login" ? "green" : "grey"}>
                                 Login
                             </Button>
                         </NavLink>
