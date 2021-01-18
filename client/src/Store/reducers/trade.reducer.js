@@ -30,6 +30,7 @@ const initialState = {
         leverage: 1,
         fees: 1,
         note: "",
+        screenshotUrl: "",
         entryDate: moment(),
         exitDate: moment(),
     },

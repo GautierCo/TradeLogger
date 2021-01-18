@@ -105,7 +105,66 @@ module.exports.addTrade = async (req, res) => {
 };
 
 module.exports.updateTrade = async (req, res) => {
-    return;
+    if (checkId(req.user.id)) return res.status(400).send(`Unknow ID ${req.user.id}.`);
+
+    const tradeId = req.params.id;
+    const tradeUpdateData = req.body;
+
+    let tradeFinalData = {};
+
+    if (tradeUpdateData.exitPrice) {
+        if (
+            isNaN(tradeUpdateData.entryPrice) ||
+            isNaN(tradeUpdateData.exitPrice) ||
+            isNaN(tradeUpdateData.leverage) ||
+            isNaN(tradeUpdateData.capital) ||
+            isNaN(tradeUpdateData.fees)
+        )
+            return res.status(400).json({
+                message: `L'une des variables suivante n'est pas un nombre: entryPrice, exitPrice, leverage, capital, fees`,
+            });
+
+        const profit = calculProfit(tradeUpdateData);
+        const profitPer = calculProfitPer(profit, tradeUpdateData.capital);
+        const status = knowStatus(profit);
+        const sessionDuration = calculSessionDuration(tradeUpdateData.entryDate, tradeUpdateData.exitDate);
+
+        tradeFinalData = {
+            ...tradeUpdateData,
+            pnl: profit,
+            pnlPer: profitPer,
+            status: status,
+            sessionDuration: sessionDuration,
+        };
+    } else {
+        tradeFinalData = {
+            ...tradeUpdateData,
+            pnl: 0,
+            pnlPer: 0,
+            status: "In progress",
+            sessionDuration: "In progress",
+        };
+    }
+
+    // updateOne => Update sans retourner le doc, findOneAndUpdate => update et retourne le doc
+    try {
+        await TradeModel.findOneAndUpdate(
+            { _id: tradeId },
+            {
+                $set: {
+                    ...tradeFinalData,
+                },
+            },
+            { new: true, upsert: true },
+            (err, doc) => {
+                if (!err) return res.status(200).json({ doc });
+                else return res.status(500).json(err);
+            }
+        );
+    } catch (error) {
+        console.error("Update new Trade error", error);
+        res.status(200).send({ error });
+    }
 };
 
 module.exports.deleteTrade = async (req, res) => {

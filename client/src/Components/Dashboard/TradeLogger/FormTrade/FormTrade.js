@@ -43,6 +43,16 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
     return (
         <div className="modalform">
             <Form onSubmit={handleSubmit}>
+                <Form.Field>
+                    <label>Screenshot</label>
+                    <Input
+                        name="screenshotUrl"
+                        onChange={handleChange}
+                        label="URL"
+                        placeholder="https://www.tradingview.com/x/gFRYCH3B/"
+                        value={tradeData.screenshotUrl}
+                    />
+                </Form.Field>
                 <Form.Group>
                     <Form.Field>
                         <label>Platform</label>

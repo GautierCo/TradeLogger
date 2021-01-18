@@ -38,17 +38,16 @@ const UpdateTrade = ({
         >
             <Modal.Header className="addmodal-header">Update Trade</Modal.Header>
             <Modal.Content image scrolling className="addmodal-content">
-                <div className="content-container">
-                    {/* <Image size="medium" src="https://www.tradingview.com/x/gFRYCH3B/" wrapped /> */}
+                {/* <div className="content-container">
+                    <Image size="medium" src="https://www.tradingview.com/x/gFRYCH3B/" wrapped />
                     <div className="upload-screen">
                         <Input type="file" style={{ display: "none" }} />
                         <Button secondary>Upload screenshot</Button>
                         <Divider className="divider" horizontal inverted>
                             Or
                         </Divider>
-                        <Input label="URL" placeholder="https://www.tradingview.com/x/gFRYCH3B/" />
                     </div>
-                </div>
+                </div> */}
                 <Modal.Description className="content-description">
                     <FormModal
                         tradeData={tradeUpdateData}
@@ -58,6 +57,16 @@ const UpdateTrade = ({
                 </Modal.Description>
             </Modal.Content>
             <Modal.Actions className="addmodal-actions">
+                <Button
+                    type="submit"
+                    onClick={(e) => {
+                        //setShowModal(false);
+                    }}
+                    color="red"
+                >
+                    Delete
+                    <Icon name="chevron right" />
+                </Button>
                 <Button
                     type="submit"
                     onClick={(e) => {

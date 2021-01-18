@@ -59,15 +59,14 @@
     padding: 1em 2em;
 
     .ui.form {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
+        width: 85%;
         flex-direction: column;
+        margin: auto;
     }
 
     .fields {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
     }
 }
 

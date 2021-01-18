@@ -80,7 +80,7 @@
 
         .trade-screenshot {
             margin: auto;
-            width: 100%;
+            width: 55%;
         }
 
         /* Tailles des tabs */
@@ -191,18 +191,19 @@
     display: flex;
     align-content: center;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    margin: 1em 0;
 
     .tradestats_container {
         background-color: #242526;
-        width: 200px;
-        height: 110px;
+        width: 230px;
+        height: 130px;
         border-radius: 10px;
         //border: 1px solid white;
         display: flex;
         align-items: center;
         align-content: center;
-        justify-content: space-between;
+        justify-content: space-around;
         padding: 1em;
 
         .tradestats-left {
@@ -218,15 +219,15 @@
             }
 
             .tradestats-number {
-                font-size: 2.3rem;
+                font-size: 2.63rem;
                 font-weight: bold;
             }
         }
     }
     .tradestats-profit_container {
         background-color: #242526;
-        width: 200px;
-        height: 110px;
+        width: 230px;
+        height: 130px;
         border-radius: 10px;
         //border: 1px solid white;
         display: flex;

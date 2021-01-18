@@ -18,7 +18,7 @@ const AddModal = ({ showModal, setShowModal, tradeData, addTrade, setTradeData }
             onClose={() => setShowModal(false)}
             onOpen={() => setShowModal(true)}
             trigger={
-                <Button icon labelPosition="left" size="small" secondary>
+                <Button icon labelPosition="left" size="small" primary>
                     <Icon name="add" />
                     Add trade
                 </Button>
@@ -26,8 +26,8 @@ const AddModal = ({ showModal, setShowModal, tradeData, addTrade, setTradeData }
         >
             <Modal.Header className="addmodal-header">Add a new Trade</Modal.Header>
             <Modal.Content image scrolling className="addmodal-content">
-                <div className="content-container">
-                    {/* <Image size="medium" src="https://www.tradingview.com/x/gFRYCH3B/" wrapped /> */}
+                {/* <div className="content-container">
+                   <Image size="medium" src="https://www.tradingview.com/x/gFRYCH3B/" wrapped /> 
                     <div className="upload-screen">
                         <Input type="file" style={{ display: "none" }} />
                         <Button secondary>Upload screenshot</Button>
@@ -36,7 +36,7 @@ const AddModal = ({ showModal, setShowModal, tradeData, addTrade, setTradeData }
                         </Divider>
                         <Input label="URL" placeholder="https://www.tradingview.com/x/gFRYCH3B/" />
                     </div>
-                </div>
+                </div> */}
                 <Modal.Description className="content-description">
                     <FormModal tradeData={tradeData} setTradeData={setTradeData} handleSubmit={handleSubmit} />
                 </Modal.Description>

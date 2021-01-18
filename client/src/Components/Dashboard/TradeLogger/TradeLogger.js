@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Image, Icon, Label, Form, Button, Tab, Divider } from "semantic-ui-react";
+import { Table, Image, Icon, Label, Form, Tab, Divider, Popup } from "semantic-ui-react";
 import Layout from "../../../Containers/Dashboard/Layout.container";
 import "./tradelogger.scss";
 
@@ -12,7 +12,103 @@ import AddTrade from "../../../Containers/Dashboard/AddTrade.container";
 import UpdateTrade from "../../../Containers/Dashboard/UpdateTrade.container";
 
 /* Utils */
-import { statusColor, formatTimestamps, formatDate } from "../../../Utils/trade.utils";
+import {
+    statusColor,
+    formatTimestamps,
+    formatDate,
+    calculNbrOfTrades,
+    calculTotalProfit,
+    calculPerProfit,
+    profitColor,
+} from "../../../Utils/trade.utils";
+
+const ToolTip = (trigger) => (
+    <Popup trigger={trigger} content="The default theme's basic popup removes the pointing arrow." basic />
+);
+
+const StatsContainer = ({ totalProfit, type }) => {
+    return (
+        <>
+            <div className="tradestats-profit_container">
+                <Label style={{ display: "block", textTransform: "uppercase" }} color={"blue"}>
+                    {type}
+                </Label>
+                <div className="tradestats-totalprofit">
+                    <span style={{ color: profitColor(totalProfit) }}>{totalProfit && totalProfit} $</span>
+                </div>
+            </div>
+        </>
+    );
+};
+
+const StatsContainerWithPer = ({ percentage, nbrTrades, type }) => {
+    return (
+        <>
+            <div className="tradestats_container">
+                <div className="tradestats-left">
+                    {nbrTrades !== "undefined" && (
+                        <Label
+                            style={{ display: "block", textTransform: "uppercase" }}
+                            color={
+                                (type === "Long" && "green") ||
+                                (type === "Short" && "red") ||
+                                (type === "Profit" && "orange")
+                            }
+                        >
+                            {type}
+                        </Label>
+                    )}
+                    {/* <h3 className="tradestats-title">TOTAL</h3> */}
+                    <div className="tradestats-number">{nbrTrades && nbrTrades}</div>
+                </div>
+                {nbrTrades !== "undefined" && (
+                    <CircularProgressbar
+                        value={percentage}
+                        text={`${percentage}%`}
+                        styles={{
+                            // Customize the root svg element
+                            root: { width: "45%" },
+                            // Customize the path, i.e. the "completed progress"
+                            path: {
+                                // Path color
+                                stroke: "#21ba45",
+                                //stroke: `rgba(255, 255, 255, ${percentage / 100})`,
+                                //stroke: `rgba(255, 255, 255)`,
+                                // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+                                strokeLinecap: "butt",
+                                // Customize transition animation
+                                transition: "stroke-dashoffset 0.5s ease 0s",
+                                // Rotate the path
+                                transform: "rotate(0turn)",
+                                transformOrigin: "center center",
+                            },
+                            // Customize the circle behind the path, i.e. the "total progress"
+                            trail: {
+                                // Trail color
+                                stroke: `rgb(187 187 187)`,
+                                // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+                                strokeLinecap: "butt",
+                                // Rotate the trail
+                                transform: "rotate(0.25turn)",
+                                transformOrigin: "center center",
+                            },
+                            // Customize the text
+                            text: {
+                                fill: "#21ba45",
+                                fontSize: "18px",
+                                fontWeight: "bold",
+                            },
+                            // Customize background - only used when the `background` prop is true
+                            background: {
+                                fill: "#3e98c7",
+                            },
+                        }}
+                    />
+                )}
+            </div>
+        </>
+    );
+};
 
 const panes = [
     {
@@ -103,84 +199,6 @@ const panes = [
     },
 ];
 
-const StatsContainer = ({ percentage, nbrTrades, totalProfit, title, type }) => {
-    return (
-        <>
-            {totalProfit ? (
-                <div className="tradestats-profit_container">
-                    <Label style={{ display: "block", textTransform: "uppercase" }} color={"blue"}>
-                        {type}
-                    </Label>
-                    <div className="tradestats-totalprofit">{totalProfit && totalProfit + "$"}</div>
-                </div>
-            ) : (
-                <div className="tradestats_container">
-                    <div className="tradestats-left">
-                        {nbrTrades && (
-                            <Label
-                                style={{ display: "block", textTransform: "uppercase" }}
-                                color={
-                                    (type === "Long" && "green") ||
-                                    (type === "Short" && "red") ||
-                                    (type === "Profit" && "orange")
-                                }
-                            >
-                                {type}
-                            </Label>
-                        )}
-                        {/* <h3 className="tradestats-title">TOTAL</h3> */}
-                        <div className="tradestats-number">{nbrTrades && nbrTrades}</div>
-                    </div>
-                    {nbrTrades && (
-                        <CircularProgressbar
-                            value={percentage}
-                            text={`${percentage}%`}
-                            styles={{
-                                // Customize the root svg element
-                                root: { width: "45%" },
-                                // Customize the path, i.e. the "completed progress"
-                                path: {
-                                    // Path color
-                                    stroke: "#21ba45",
-                                    //stroke: `rgba(255, 255, 255, ${percentage / 100})`,
-                                    //stroke: `rgba(255, 255, 255)`,
-                                    // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
-                                    strokeLinecap: "butt",
-                                    // Customize transition animation
-                                    transition: "stroke-dashoffset 0.5s ease 0s",
-                                    // Rotate the path
-                                    transform: "rotate(0turn)",
-                                    transformOrigin: "center center",
-                                },
-                                // Customize the circle behind the path, i.e. the "total progress"
-                                trail: {
-                                    // Trail color
-                                    stroke: `rgb(187 187 187)`,
-                                    // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
-                                    strokeLinecap: "butt",
-                                    // Rotate the trail
-                                    transform: "rotate(0.25turn)",
-                                    transformOrigin: "center center",
-                                },
-                                // Customize the text
-                                text: {
-                                    fill: "#21ba45",
-                                    fontSize: "18px",
-                                    fontWeight: "bold",
-                                },
-                                // Customize background - only used when the `background` prop is true
-                                background: {
-                                    fill: "#3e98c7",
-                                },
-                            }}
-                        />
-                    )}
-                </div>
-            )}
-        </>
-    );
-};
-
 const AllDataOfTrade = ({ trade, isAnimate }) => {
     return (
         <div className={`trade ${isAnimate ? "animate-trade" : "animate-exit-trade"}`}>
@@ -207,22 +225,26 @@ const TradeLogger = (props) => {
         }
     };
 
-    const percentage = 55;
-    const nbrTrades = 3;
-
     return (
         <Layout title="Trade Logger">
             <div className="tradelogger">
                 <div className="tradestats">
-                    <StatsContainer percentage={percentage} nbrTrades={nbrTrades} title={"LONG TRADE"} type={"Long"} />
-                    <StatsContainer
-                        percentage={percentage}
-                        nbrTrades={nbrTrades}
-                        title={"SHORT TRADE"}
+                    <StatsContainerWithPer
+                        percentage={calculPerProfit(trades, "Long")}
+                        nbrTrades={calculNbrOfTrades(trades, "Long")}
+                        type={"Long"}
+                    />
+                    <StatsContainerWithPer
+                        percentage={calculPerProfit(trades, "Short")}
+                        nbrTrades={calculNbrOfTrades(trades, "Short")}
                         type={"Short"}
                     />
-                    <StatsContainer percentage={60} nbrTrades={50} title={"Win rate"} type={"Global"} />
-                    <StatsContainer percentage={60} totalProfit={5580} title={"Win rate"} type={"Profit"} />
+                    <StatsContainerWithPer
+                        percentage={calculPerProfit(trades, "Global")}
+                        nbrTrades={calculNbrOfTrades(trades, "Global")}
+                        type={"Global"}
+                    />
+                    <StatsContainer totalProfit={calculTotalProfit(trades)} type={"Profit"} />
                 </div>
                 <div className="action">
                     <AddTrade showModal={showAddTradeModal} setShowModal={setShowAddTradeModal} />
@@ -261,7 +283,9 @@ const TradeLogger = (props) => {
                                         <Table.Cell>{trade.stopLoss}</Table.Cell>
                                         <Table.Cell>{trade.takeProfit}</Table.Cell>
                                         <Table.Cell>{trade.exitPrice}</Table.Cell>
-                                        <Table.Cell>{trade.pnl}$</Table.Cell>
+                                        <Table.Cell>
+                                            <span style={{ color: profitColor(trade.pnl) }}>{trade.pnl} $</span>
+                                        </Table.Cell>
                                         <Table.Cell>{trade.pnlPer}%</Table.Cell>
                                         <Table.Cell style={{ display: "flex" }}>
                                             <UpdateTrade
@@ -271,13 +295,16 @@ const TradeLogger = (props) => {
                                             />
                                         </Table.Cell>
                                     </Table.Row>
-                                    {selectedRow && selectedRow._id === trade._id && (
-                                        <Table.Row textAlign="left">
-                                            <Table.Cell colSpan={10}>
-                                                <AllDataOfTrade isAnimate={true} trade={trade} />
-                                            </Table.Cell>
-                                        </Table.Row>
-                                    )}
+                                    {selectedRow &&
+                                        selectedRow._id === trade._id &&
+                                        !showAddTradeModal &&
+                                        !showUpdateTradeModal && (
+                                            <Table.Row textAlign="left">
+                                                <Table.Cell colSpan={10}>
+                                                    <AllDataOfTrade isAnimate={true} trade={trade} />
+                                                </Table.Cell>
+                                            </Table.Row>
+                                        )}
                                 </React.Fragment>
                             ))}
                     </Table.Body>
@@ -286,17 +313,5 @@ const TradeLogger = (props) => {
         </Layout>
     );
 };
-
-/*
-
-Un bouton qui switch entre $ et %
-
-Nombre de trade Long  + Win rate || gain
-Nombre de trade Short + Win rate || gain
-
-Profit Global 
-Win rates Global
-
-*/
 
 export default TradeLogger;
