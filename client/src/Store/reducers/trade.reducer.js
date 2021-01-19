@@ -19,6 +19,8 @@ const initialState = {
     tradeData: {
         platform: "Binance",
         type: "Long",
+        format: "USDT",
+        priceBtcVsUsd: "",
         assets: "BTC/USDT",
         capital: 1000,
         entryPrice: 2500,

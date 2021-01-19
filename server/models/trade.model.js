@@ -25,6 +25,14 @@ const tradeSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    format: {
+        // BTC / EUR / USD
+        type: String,
+        required: true,
+    },
+    priceBtcVsUsd: {
+        type: Number,
+    },
     capital: {
         type: Number,
         required: true,

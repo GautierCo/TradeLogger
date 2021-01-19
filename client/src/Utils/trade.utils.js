@@ -38,7 +38,11 @@ export const calculTotalProfit = (trades) => {
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
     trades.forEach((trade) => {
-        totalProfit.push(trade.pnl);
+        if (trade.format === "BTC" && trade.priceBtcVsUsd) {
+            totalProfit.push(parseFloat(Math.round(trade.priceBtcVsUsd * trade.pnl).toFixed(2)));
+        } else {
+            totalProfit.push(trade.pnl);
+        }
     });
 
     return Math.round(totalProfit.reduce(reducer));
@@ -76,4 +80,9 @@ export const profitColor = (profit) => {
     if (profit === 0) return "white";
     else if (profit > 0) return "#21ba45";
     else return "rgb(219, 40, 40)";
+};
+
+/* 1234567 -> 1 234 567 */
+export const formatNumber = (number) => {
+    return Number(number.toFixed(1)).toLocaleString();
 };

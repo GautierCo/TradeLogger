@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Select, TextArea } from "semantic-ui-react";
+import { Form, Input, Select, TextArea, Checkbox } from "semantic-ui-react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import fr from "date-fns/locale/fr";
 import "react-datepicker/dist/react-datepicker.css";
@@ -30,6 +30,19 @@ const setupList = [
     },
 ];
 
+const formatList = [
+    {
+        key: "USDT",
+        text: "USDT",
+        value: "USDT",
+    },
+    {
+        key: "BTC",
+        text: "BTC",
+        value: "BTC",
+    },
+];
+
 const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
     const handleChange = (e, data) => {
         const { name, value } = data ? data : e.target;
@@ -43,16 +56,44 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
     return (
         <div className="modalform">
             <Form onSubmit={handleSubmit}>
-                <Form.Field>
-                    <label>Screenshot</label>
-                    <Input
-                        name="screenshotUrl"
-                        onChange={handleChange}
-                        label="URL"
-                        placeholder="https://www.tradingview.com/x/gFRYCH3B/"
-                        value={tradeData.screenshotUrl}
-                    />
-                </Form.Field>
+                <Form.Group>
+                    <Form.Field>
+                        <label>Format</label>
+                        <Select
+                            name="format"
+                            placeholder="USDT"
+                            options={formatList}
+                            value={tradeData.format}
+                            onChange={handleChange}
+                        />
+                    </Form.Field>
+                    {tradeData.format === "BTC" && (
+                        <Form.Field>
+                            <label>Price BTC vs USD</label>
+                            <Input
+                                name="priceBtcVsUsd"
+                                type="text"
+                                onChange={handleChange}
+                                placeholder="35200"
+                                label="$"
+                                labelPosition={"right corner"}
+                                pos
+                                value={tradeData.priceBtcVsUsd}
+                            />
+                        </Form.Field>
+                    )}
+                    <Form.Field>
+                        <label>Screenshot URL</label>
+                        <Input
+                            name="screenshotUrl"
+                            type="text"
+                            onChange={handleChange}
+                            placeholder="https://www.tradingview.com/x/gFRYCH3B/"
+                            value={tradeData.screenshotUrl}
+                        />
+                    </Form.Field>
+                </Form.Group>
+
                 <Form.Group>
                     <Form.Field>
                         <label>Platform</label>
