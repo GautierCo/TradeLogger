@@ -244,6 +244,17 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
                         />
                     </Form.Field>
                 </Form.Group>
+
+                <Form.Field>
+                    <label>Feeling</label>
+                    <Input
+                        name="feeling"
+                        onChange={handleChange}
+                        value={tradeData.feeling}
+                        placeholder="Feeling about this trade"
+                    />
+                </Form.Field>
+
                 <Form.Field>
                     <label>Notes :</label>
                     <TextArea

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Table, Image, Icon, Label, Form, Tab, Divider } from "semantic-ui-react";
+import _ from "lodash";
+import { Table, Image, Icon, Label, Form, Tab, Divider, Button } from "semantic-ui-react";
 import Layout from "../../../Containers/Dashboard/Layout.container";
 import "./tradelogger.scss";
 
@@ -92,10 +93,12 @@ const AllDataOfTrade = ({ trade, isAnimate }) => {
             render: ({ trade }) => (
                 <Tab.Pane>
                     <Form>
-                        <Form.Field>
-                            <label>Feeling :</label>
-                            <Label>Good</Label>
-                        </Form.Field>
+                        {trade.feeling && (
+                            <Form.Field>
+                                <label>Feeling :</label>
+                                <Label>{trade.feeling}</Label>
+                            </Form.Field>
+                        )}
                         <Form.Field>
                             <label>Notes :</label>
                             <Form.TextArea
@@ -128,8 +131,50 @@ const TradeLogger = (props) => {
     const [showAddTradeModal, setShowAddTradeModal] = useState(false);
     const [showUpdateTradeModal, setShowUpdateTradeModal] = useState(false);
 
-    useEffect(() => {
-        fetchTrades();
+    const sortReducer = (state, action) => {
+        switch (action.type) {
+            case "CHANGE_SORT":
+                if (state.column === action.column) {
+                    return {
+                        ...state,
+                        data: state.data.slice().reverse(),
+                        direction: state.direction === "ascending" ? "descending" : "ascending",
+                    };
+                }
+                return {
+                    column: action.column,
+                    data: _.sortBy(state.data, [action.column]),
+                    direction: "ascending",
+                };
+
+            case "SET_DATA":
+                return {
+                    column: null,
+                    data: action.data,
+                    direction: null,
+                };
+            case "SORT_RESET":
+                return {
+                    column: null,
+                    data: action.data,
+                    direction: null,
+                };
+            default:
+                throw new Error();
+        }
+    };
+
+    const [state, dispatch] = React.useReducer(sortReducer, {
+        column: null,
+        data: [],
+        direction: null,
+    });
+
+    const { column, data, direction } = state;
+
+    useEffect(async () => {
+        await fetchTrades();
+        dispatch({ type: "SET_DATA", data: trades });
     }, []);
 
     const handleShowTrade = (trade) => {
@@ -162,27 +207,76 @@ const TradeLogger = (props) => {
                     <StatsContainer totalProfit={calculTotalProfit(trades)} type={"Profit"} />
                 </div>
                 <div className="action">
+                    {column !== null && (
+                        <Button onClick={() => dispatch({ type: "SORT_RESET", data: trades })}>Sort reset</Button>
+                    )}
                     <AddTrade showModal={showAddTradeModal} setShowModal={setShowAddTradeModal} />
                 </div>
-                <Table basic="very" celled inverted selectable textAlign="center">
+                <Table basic="very" sortable celled inverted selectable textAlign="center">
                     <Table.Header>
                         <Table.Row>
-                            <Table.HeaderCell>Status</Table.HeaderCell>
-                            <Table.HeaderCell>Assets</Table.HeaderCell>
-                            <Table.HeaderCell>Type</Table.HeaderCell>
-                            <Table.HeaderCell>Entry Price</Table.HeaderCell>
-                            <Table.HeaderCell>Stop Loss</Table.HeaderCell>
-                            <Table.HeaderCell>Take Profit</Table.HeaderCell>
-                            <Table.HeaderCell>Leaving Price</Table.HeaderCell>
-                            <Table.HeaderCell>PnL ($)</Table.HeaderCell>
-                            <Table.HeaderCell>PnL (%)</Table.HeaderCell>
+                            <Table.HeaderCell
+                                sorted={column === "status" ? direction : null}
+                                onClick={() => dispatch({ type: "CHANGE_SORT", column: "status" })}
+                            >
+                                Status
+                            </Table.HeaderCell>
+                            <Table.HeaderCell
+                                sorted={column === "assets" ? direction : null}
+                                onClick={() => dispatch({ type: "CHANGE_SORT", column: "assets" })}
+                            >
+                                Assets
+                            </Table.HeaderCell>
+                            <Table.HeaderCell
+                                sorted={column === "type" ? direction : null}
+                                onClick={() => dispatch({ type: "CHANGE_SORT", column: "type" })}
+                            >
+                                Type
+                            </Table.HeaderCell>
+                            <Table.HeaderCell
+                                sorted={column === "entryPrice" ? direction : null}
+                                onClick={() => dispatch({ type: "CHANGE_SORT", column: "entryPrice" })}
+                            >
+                                Entry Price
+                            </Table.HeaderCell>
+                            <Table.HeaderCell
+                                sorted={column === "stopLoss" ? direction : null}
+                                onClick={() => dispatch({ type: "CHANGE_SORT", column: "stopLoss" })}
+                            >
+                                Stop Loss
+                            </Table.HeaderCell>
+                            <Table.HeaderCell
+                                sorted={column === "takeProfit" ? direction : null}
+                                onClick={() => dispatch({ type: "CHANGE_SORT", column: "takeProfit" })}
+                            >
+                                Take Profit
+                            </Table.HeaderCell>
+                            <Table.HeaderCell
+                                sorted={column === "exitPrice" ? direction : null}
+                                onClick={() => dispatch({ type: "CHANGE_SORT", column: "exitPrice" })}
+                            >
+                                Leaving Price
+                            </Table.HeaderCell>
+                            <Table.HeaderCell
+                                sorted={column === "pnl" ? direction : null}
+                                onClick={() => dispatch({ type: "CHANGE_SORT", column: "pnl" })}
+                            >
+                                PnL
+                            </Table.HeaderCell>
+                            <Table.HeaderCell
+                                sorted={column === "pnlPer" ? direction : null}
+                                onClick={() => dispatch({ type: "CHANGE_SORT", column: "pnlPer" })}
+                            >
+                                PnL (%)
+                            </Table.HeaderCell>
                             <Table.HeaderCell>Action</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
 
                     <Table.Body>
-                        {trades &&
-                            trades.map((trade) => (
+                        {data &&
+                            data.length &&
+                            data.map((trade) => (
                                 <React.Fragment key={trade._id}>
                                     <Table.Row
                                         style={{ cursor: "pointer" }}

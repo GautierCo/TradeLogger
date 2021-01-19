@@ -31,6 +31,7 @@ const initialState = {
         setup: "Ichimoku",
         leverage: 1,
         fees: 1,
+        feeling: "",
         note: "",
         screenshotUrl: "",
         entryDate: moment(),
