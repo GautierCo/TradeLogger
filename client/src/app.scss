@@ -35,9 +35,8 @@ a:hover {
 }
 
 /* Semantic UI modification */
-
-label {
-    color: white !important;
+.ui.form .field > label {
+    color: white;
 }
 
 input {

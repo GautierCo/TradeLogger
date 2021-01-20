@@ -1,9 +1,17 @@
 import UpdateTrade from "../../Components/Dashboard/TradeLogger/UpdateTrade/UpdateTrade";
 import { connect } from "react-redux";
-import { setTradeUpdateData, setTradeUpdateId, updateTrade, deleteTrade } from "../../Store/actions/trade.actions";
+import {
+    setTradeUpdateData,
+    setTradeUpdateId,
+    updateTrade,
+    deleteTrade,
+    setShowUpdateModal,
+} from "../../Store/actions/trade.actions";
 
 const mapStateToProps = (state) => ({
     tradeUpdateData: state.tradeReducer.tradeUpdateData,
+    errors: state.tradeReducer.errorsForm,
+    showUpdateModal: state.tradeReducer.showUpdateModal,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -18,6 +26,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     deleteTrade: () => {
         dispatch(deleteTrade());
+    },
+    setShowUpdateModal: (bool) => {
+        dispatch(setShowUpdateModal(bool));
     },
 });
 

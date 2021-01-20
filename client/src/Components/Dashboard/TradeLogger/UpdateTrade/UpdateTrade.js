@@ -5,13 +5,15 @@ import FormModal from "../FormTrade/FormTrade";
 import "../AddTrade/addmodal.scss";
 
 const UpdateTrade = ({
-    showModal,
-    setShowModal,
+    showUpdateModal,
+    setShowUpdateModal,
     tradeUpdateData,
     updateTrade,
     setTradeUpdateId,
     setTradeUpdateData,
     tradeId,
+    tradeUpdateId,
+    errors,
     deleteTrade,
 }) => {
     const handleSubmit = (e) => {
@@ -23,9 +25,9 @@ const UpdateTrade = ({
         <Modal
             className="addmodal"
             style={{ backgroundColor: "#bbb" }}
-            open={showModal}
-            onClose={() => setShowModal(false)}
-            onOpen={() => setShowModal(true)}
+            open={showUpdateModal && tradeId === tradeUpdateId}
+            onClose={() => setShowUpdateModal(false)}
+            onOpen={() => setShowUpdateModal(true)}
             trigger={
                 <Icon
                     name="edit"
@@ -54,6 +56,7 @@ const UpdateTrade = ({
                         tradeData={tradeUpdateData}
                         setTradeData={setTradeUpdateData}
                         handleSubmit={handleSubmit}
+                        errors={errors}
                     />
                 </Modal.Description>
             </Modal.Content>
@@ -61,7 +64,7 @@ const UpdateTrade = ({
                 <Button
                     type="submit"
                     onClick={(e) => {
-                        setShowModal(false);
+                        setShowUpdateModal(false);
                         deleteTrade();
                     }}
                     color="red"
@@ -73,7 +76,6 @@ const UpdateTrade = ({
                     type="submit"
                     onClick={(e) => {
                         handleSubmit(e);
-                        setShowModal(false);
                     }}
                     primary
                 >

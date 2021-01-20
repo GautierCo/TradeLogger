@@ -5,7 +5,7 @@ import "./layout.scss";
 import Logo from "../../Assets/logo.png";
 
 const Layout = (props) => {
-    const { children, title = "NoTitle", logout } = props;
+    const { children, title = "NoTitle", logout, pseudo } = props;
 
     useEffect(() => {
         document.title = title;
@@ -36,7 +36,7 @@ const Layout = (props) => {
                         </NavLink>
                         <NavLink
                             exact
-                            to="/dashboard/tradelogger"
+                            to="/dashboard/trades"
                             activeClassName="active-link"
                             className="layout-menu--link"
                         >
@@ -69,8 +69,10 @@ const Layout = (props) => {
                         </Dropdown>
                     </div>
                     <div className="layout-right_container">
-                        <Icon name="btc" color="orange" size="large" className="icon-sold" />
-                        <div className="layout-right--sold">115.000000</div>
+                        <div className="layout-right--pseudo">{pseudo}</div>
+
+                        {/* <Icon name="btc" color="orange" size="large" className="icon-sold" />
+                        <div className="layout-right--sold">115.000000</div> */}
                     </div>
 
                     <div className="layout-right_container">

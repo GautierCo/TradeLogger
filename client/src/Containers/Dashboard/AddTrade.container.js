@@ -1,9 +1,11 @@
 import AddTrade from "../../Components/Dashboard/TradeLogger/AddTrade/AddTrade";
 import { connect } from "react-redux";
-import { addTrade, setTradeData } from "../../Store/actions/trade.actions";
+import { addTrade, setTradeData, setShowAddModal } from "../../Store/actions/trade.actions";
 
 const mapStateToProps = (state) => ({
     tradeData: state.tradeReducer.tradeData,
+    errors: state.tradeReducer.errorsForm,
+    showAddModal: state.tradeReducer.showAddModal,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -12,6 +14,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     addTrade: () => {
         dispatch(addTrade());
+    },
+    setShowAddModal: (bool) => {
+        dispatch(setShowAddModal(bool));
     },
 });
 

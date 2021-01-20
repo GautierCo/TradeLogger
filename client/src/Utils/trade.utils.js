@@ -1,5 +1,6 @@
 import moment from "moment";
 import duration from "moment-duration-format";
+import _ from "lodash";
 
 /* Color status in rows of trades */
 export const statusColor = (status) => {
@@ -88,3 +89,21 @@ export const profitColor = (profit) => {
 export const formatNumber = (number) => {
     return Number(number.toFixed(1)).toLocaleString();
 };
+
+export const validateForm = (trade) => {
+    let errors = {};
+
+    if (!trade.format) errors.format = "Requis";
+    if (!trade.platform) errors.platform = "Requis";
+    if (!trade.type) errors.type = "Requis";
+    if (!trade.capital) errors.capital = "Requis";
+    if (!trade.assets) errors.assets = "Requis";
+    if (!trade.entryPrice) errors.entryPrice = "Requis";
+
+    console.log("errorsFn", errors);
+    console.log("_.isEmpty(errors)", _.isEmpty(errors));
+
+    return _.isEmpty(errors) ? null : errors;
+};
+
+// On retourne un objet avec les erreurs ou null

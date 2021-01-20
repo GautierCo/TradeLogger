@@ -102,7 +102,13 @@ module.exports.login = async (req, res) => {
         );
 
         res.setHeader("Authorization", accessToken); // Utile ?
-        res.status(201).json({ id: user._id, accessToken: accessToken, refreshToken: refreshToken, connected: true });
+        res.status(201).json({
+            id: user._id,
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+            pseudo: user.pseudo,
+            connected: true,
+        });
 
         console.log("Client connected " + user._id);
     } catch (error) {

@@ -122,9 +122,9 @@ const AllDataOfTrade = ({ trade, isAnimate }) => {
 };
 
 const TradeLogger = (props) => {
-    const { trades, fetchTrades, tradeUpdateId } = props;
+    const { trades, fetchTrades, tradeUpdateId, showAddModal, showUpdateModal } = props;
     const [selectedRow, setSelectedRow] = useState({});
-    const [showAddTradeModal, setShowAddTradeModal] = useState(false);
+
     const [showUpdateTradeModal, setShowUpdateTradeModal] = useState(false);
 
     const sortReducer = (state, action) => {
@@ -220,7 +220,7 @@ const TradeLogger = (props) => {
                             Sort reset
                         </Button>
                     )}
-                    <AddTrade showModal={showAddTradeModal} setShowModal={setShowAddTradeModal} />
+                    <AddTrade />
                 </div>
                 <Table basic="very" sortable celled inverted selectable textAlign="center">
                     <Table.Header>
@@ -310,22 +310,19 @@ const TradeLogger = (props) => {
                                         <Table.Cell>{trade.pnlPer}%</Table.Cell>
                                         <Table.Cell style={{ display: "flex" }}>
                                             <UpdateTrade
-                                                showModal={showUpdateTradeModal && trade._id === tradeUpdateId}
                                                 setShowModal={setShowUpdateTradeModal}
                                                 tradeId={trade._id}
+                                                tradeUpdateId={tradeUpdateId}
                                             />
                                         </Table.Cell>
                                     </Table.Row>
-                                    {selectedRow &&
-                                        selectedRow._id === trade._id &&
-                                        !showAddTradeModal &&
-                                        !showUpdateTradeModal && (
-                                            <Table.Row textAlign="left">
-                                                <Table.Cell colSpan={10}>
-                                                    <AllDataOfTrade isAnimate={true} trade={trade} />
-                                                </Table.Cell>
-                                            </Table.Row>
-                                        )}
+                                    {selectedRow && selectedRow._id === trade._id && !showAddModal && !showUpdateModal && (
+                                        <Table.Row textAlign="left" style={{ background: "#242526" }}>
+                                            <Table.Cell colSpan={10}>
+                                                <AllDataOfTrade isAnimate={true} trade={trade} />
+                                            </Table.Cell>
+                                        </Table.Row>
+                                    )}
                                 </React.Fragment>
                             ))}
                         </Table.Body>

@@ -14,11 +14,35 @@ import {
     DELETE_TRADE,
     DELETE_TRADE_SUCCESS,
     DELETE_TRADE_ERROR,
+    SET_SHOW_ADD_MODAL,
+    SET_SHOW_UPDATE_MODAL,
 } from "../actions/trade.actions";
 import moment from "moment";
 
 const initialState = {
     trades: [],
+    tradeData: {
+        platform: "",
+        type: "",
+        format: "",
+        priceBtcVsUsd: "",
+        assets: "",
+        capital: "",
+        entryPrice: "",
+        stopLoss: "",
+        takeProfit: "",
+        exitPrice: "",
+        riskRatio: "",
+        setup: "",
+        leverage: 1,
+        fees: "",
+        feeling: "",
+        note: "",
+        screenshotUrl: "",
+        entryDate: moment(),
+        exitDate: moment(),
+    },
+    /*
     tradeData: {
         platform: "Binance",
         type: "Long",
@@ -40,6 +64,10 @@ const initialState = {
         entryDate: moment(),
         exitDate: moment(),
     },
+    */
+    errorsForm: null,
+    showAddModal: false,
+    showUpdateModal: false,
     tradeUpdateId: "",
     tradeUpdateData: {},
     tradesLoading: false,
@@ -84,10 +112,12 @@ export const tradeReducer = (state = initialState, action = {}) => {
                 ...state,
                 trades: [...state.trades, action.payload],
                 addTradeLoading: false,
+                errorsForm: null,
             };
         case ADD_TRADE_ERROR:
             return {
                 ...state,
+                errorsForm: action.payload,
                 addTradeLoading: false,
             };
         case SET_TRADE_UPDATE_ID:
@@ -113,10 +143,12 @@ export const tradeReducer = (state = initialState, action = {}) => {
                 ...state,
                 trades: action.payload,
                 updateTradeLoading: false,
+                errorsForm: null,
             };
         case UPDATE_TRADE_ERROR:
             return {
                 ...state,
+                errorsForm: {},
                 updateTradeLoading: false,
             };
         case DELETE_TRADE:
@@ -134,6 +166,16 @@ export const tradeReducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 deleteTradeLoading: false,
+            };
+        case SET_SHOW_ADD_MODAL:
+            return {
+                ...state,
+                showAddModal: action.payload,
+            };
+        case SET_SHOW_UPDATE_MODAL:
+            return {
+                ...state,
+                showUpdateModal: action.payload,
             };
         default:
             return state;

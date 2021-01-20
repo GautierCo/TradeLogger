@@ -14,7 +14,10 @@ import {
     DELETE_TRADE,
     deleteTradeSuccess,
     deleteTradeError,
+    setShowAddModal,
+    setShowUpdateModal,
 } from "../actions/trade.actions";
+import { validateForm } from "../../Utils/trade.utils";
 
 export const tradeMiddleware = (store) => (next) => (action) => {
     next(action);
@@ -37,6 +40,14 @@ export const tradeMiddleware = (store) => (next) => (action) => {
             const { tradeData } = store.getState().tradeReducer;
             const { user } = store.getState().authReducer;
 
+            const errors = validateForm(tradeData);
+
+            console.log("errors", errors);
+
+            if (errors) {
+                store.dispatch(addTradeError(errors));
+                break;
+            }
             axios({
                 method: "POST",
                 url: `${process.env.REACT_APP_API_URL}/trade/${user.id}`,
@@ -44,6 +55,7 @@ export const tradeMiddleware = (store) => (next) => (action) => {
             })
                 .then((res) => {
                     store.dispatch(addTradeSuccess({ ...res.data }));
+                    store.dispatch(setShowAddModal(false));
                 })
                 .catch((err) => {
                     console.log(err);
@@ -81,6 +93,7 @@ export const tradeMiddleware = (store) => (next) => (action) => {
                     });
 
                     store.dispatch(updateTradeSuccess(tradesUpdate));
+                    store.dispatch(setShowUpdateModal(false));
                 })
                 .catch((err) => {
                     console.log(err);

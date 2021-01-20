@@ -66,6 +66,14 @@
         &--sold {
         }
 
+        &--pseudo {
+            font-weight: bold;
+        }
+
+        &--pseudo::first-letter {
+            text-transform: uppercase;
+        }
+
         &--avatar {
             max-width: 25px;
         }

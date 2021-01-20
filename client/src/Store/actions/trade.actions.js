@@ -85,3 +85,15 @@ export const deleteTradeError = (payload) => ({
     type: DELETE_TRADE_ERROR,
     payload,
 });
+
+export const SET_SHOW_ADD_MODAL = "SET_SHOW_ADD_MODAL";
+export const SET_SHOW_UPDATE_MODAL = "SET_SHOW_UPDATE_MODAL";
+
+export const setShowAddModal = (payload) => ({
+    type: SET_SHOW_ADD_MODAL,
+    payload,
+});
+export const setShowUpdateModal = (payload) => ({
+    type: SET_SHOW_UPDATE_MODAL,
+    payload,
+});

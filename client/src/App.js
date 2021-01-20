@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 /* Styles */
 import "semantic-ui-less/semantic.less";
@@ -33,11 +33,14 @@ const App = ({ user }) => {
                     <Signup />
                 </Route>
                 <ProtectedRoute isAuth={user.connected} exact path="/dashboard" component={HomeDashboard} />
-                <ProtectedRoute isAuth={user.connected} exact path="/dashboard/tradelogger" component={TradeLogger} />
+                <ProtectedRoute isAuth={user.connected} exact path="/dashboard/trades" component={TradeLogger} />
                 <ProtectedRoute isAuth={user.connected} exact path="/dashboard/market" component={Market} />
                 <ProtectedRoute isAuth={user.connected} exact path="/dashboard/journal" component={Journal} />
                 <ProtectedRoute isAuth={user.connected} exact path="/dashboard/invest" component={Invest} />
                 <ProtectedRoute isAuth={user.connected} exact path="/dashboard/plan" component={Plan} />
+                <Route path="*">
+                    <Redirect to="/dashboard" />
+                </Route>
             </Switch>
         </div>
     );

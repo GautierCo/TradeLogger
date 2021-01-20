@@ -4,19 +4,19 @@ import FormModal from "../FormTrade/FormTrade";
 
 import "./addmodal.scss";
 
-const AddModal = ({ showModal, setShowModal, tradeData, addTrade, setTradeData }) => {
-    const handleSubmit = (e) => {
+const AddModal = ({ tradeData, addTrade, setTradeData, errors, showAddModal, setShowAddModal }) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        addTrade();
+        await addTrade();
     };
 
     return (
         <Modal
             className="addmodal"
             style={{ backgroundColor: "#bbb" }}
-            open={showModal}
-            onClose={() => setShowModal(false)}
-            onOpen={() => setShowModal(true)}
+            open={showAddModal}
+            onClose={() => setShowAddModal(false)}
+            onOpen={() => setShowAddModal(true)}
             trigger={
                 <Button icon labelPosition="left" size="small" primary>
                     <Icon name="add" />
@@ -38,7 +38,12 @@ const AddModal = ({ showModal, setShowModal, tradeData, addTrade, setTradeData }
                     </div>
                 </div> */}
                 <Modal.Description className="content-description">
-                    <FormModal tradeData={tradeData} setTradeData={setTradeData} handleSubmit={handleSubmit} />
+                    <FormModal
+                        tradeData={tradeData}
+                        setTradeData={setTradeData}
+                        handleSubmit={handleSubmit}
+                        errors={errors}
+                    />
                 </Modal.Description>
             </Modal.Content>
             <Modal.Actions className="addmodal-actions">
@@ -46,7 +51,6 @@ const AddModal = ({ showModal, setShowModal, tradeData, addTrade, setTradeData }
                     type="submit"
                     onClick={(e) => {
                         handleSubmit(e);
-                        setShowModal(false);
                     }}
                     primary
                 >

@@ -1,5 +1,6 @@
-import React from "react";
-import { Form, Input, Select, TextArea, Popup } from "semantic-ui-react";
+import React, { useEffect } from "react";
+import { Form, Input, Select, TextArea, Popup, Label } from "semantic-ui-react";
+
 import DatePicker, { registerLocale } from "react-datepicker";
 import fr from "date-fns/locale/fr";
 import "react-datepicker/dist/react-datepicker.css";
@@ -43,7 +44,10 @@ const formatList = [
     },
 ];
 
-const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
+const errorLabelColor = "#fc4136";
+const errorBorderColor = "1px solid rgb(252 65 54 / 64%)";
+
+const FormModal = ({ tradeData, setTradeData, errors }) => {
     const handleChange = (e, data) => {
         const { name, value } = data ? data : e.target;
         const dataForm = {
@@ -53,9 +57,11 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
         setTradeData(dataForm);
     };
 
+    console.log("errorsformmodal", errors);
+
     return (
         <div className="modalform">
-            <Form onSubmit={handleSubmit}>
+            <Form>
                 <Form.Group>
                     <Form.Field>
                         <Popup
@@ -83,7 +89,6 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
                                 placeholder="35200"
                                 label="$"
                                 labelPosition={"right corner"}
-                                pos
                                 value={tradeData.priceBtcVsUsd}
                             />
                         </Form.Field>
@@ -91,9 +96,15 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
                     <Form.Field>
                         <Popup
                             content="If you want, you can add screenshot for your trade. (URL)"
-                            trigger={<label>Screenshot URL</label>}
+                            trigger={
+                                <label style={errors && errors.screenshotUrl && { color: errorLabelColor }}>
+                                    Screenshot URL
+                                </label>
+                            }
                         />
+
                         <Input
+                            style={errors && errors.screenshotUrl && { border: errorBorderColor }}
                             name="screenshotUrl"
                             type="text"
                             onChange={handleChange}
@@ -105,8 +116,9 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
 
                 <Form.Group>
                     <Form.Field>
-                        <label>Platform</label>
+                        <label style={errors && errors.platform && { color: errorLabelColor }}>Platform</label>
                         <Select
+                            style={errors && errors.platform && { border: errorBorderColor }}
                             placeholder="Choose.."
                             name="platform"
                             options={platformSelect}
@@ -115,8 +127,9 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
                         />
                     </Form.Field>
                     <Form.Field>
-                        <label>Type</label>
+                        <label style={errors && errors.type && { color: errorLabelColor }}>Type</label>
                         <Select
+                            style={errors && errors.type && { border: errorBorderColor }}
                             placeholder="Choose.."
                             name="type"
                             options={typeSelect}
@@ -128,15 +141,24 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
 
                 <Form.Group>
                     <Form.Field>
-                        <label>Assets</label>
-                        <Input name="assets" placeholder="BTC/USDT" value={tradeData.assets} onChange={handleChange} />
+                        <label style={errors && errors.assets && { color: errorLabelColor }}>Assets</label>
+                        <Input
+                            style={errors && errors.assets && { border: errorBorderColor }}
+                            name="assets"
+                            placeholder="BTC/USDT"
+                            value={tradeData.assets}
+                            onChange={handleChange}
+                        />
                     </Form.Field>
                     <Form.Field>
                         <Popup
                             content="With what amount will you make this trade? If you are against the BTC, you must indicate an amount in Bitcoin."
-                            trigger={<label>Capital</label>}
+                            trigger={
+                                <label style={errors && errors.capital && { color: errorLabelColor }}>Capital</label>
+                            }
                         />
                         <Input
+                            style={errors && errors.capital && { border: errorBorderColor }}
                             name="capital"
                             placeholder="1000"
                             type="text"
@@ -148,8 +170,9 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
                 </Form.Group>
                 <Form.Group>
                     <Form.Field>
-                        <label>Entry Price</label>
+                        <label style={errors && errors.entryPrice && { color: errorLabelColor }}>Entry Price</label>
                         <Input
+                            style={errors && errors.entryPrice && { border: errorBorderColor }}
                             name="entryPrice"
                             placeholder="34589"
                             value={tradeData.entryPrice}
@@ -157,15 +180,22 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
                         />
                     </Form.Field>
                     <Form.Field>
-                        <label>Stop Loss</label>
-                        <Input name="stopLoss" placeholder="33187" value={tradeData.stopLoss} onChange={handleChange} />
+                        <label style={errors && errors.stopLoss && { color: errorLabelColor }}>Stop Loss</label>
+                        <Input
+                            style={errors && errors.stopLoss && { border: errorBorderColor }}
+                            name="stopLoss"
+                            placeholder="33187"
+                            value={tradeData.stopLoss}
+                            onChange={handleChange}
+                        />
                     </Form.Field>
                 </Form.Group>
 
                 <Form.Group>
                     <Form.Field>
-                        <label>Take Profit</label>
+                        <label style={errors && errors.takeProfit && { color: errorLabelColor }}>Take Profit</label>
                         <Input
+                            style={errors && errors.takeProfit && { border: errorBorderColor }}
                             name="takeProfit"
                             placeholder="36897"
                             value={tradeData.takeProfit}
@@ -175,9 +205,14 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
                     <Form.Field>
                         <Popup
                             content="You can leave this box blank while waiting for your trade to be closed."
-                            trigger={<label>Leaving Price</label>}
+                            trigger={
+                                <label style={errors && errors.exitPrice && { color: errorLabelColor }}>
+                                    Leaving Price
+                                </label>
+                            }
                         />
                         <Input
+                            style={errors && errors.exitPrice && { border: errorBorderColor }}
                             name="exitPrice"
                             placeholder="36897"
                             value={tradeData.exitPrice}
@@ -187,8 +222,14 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
                 </Form.Group>
                 <Form.Group>
                     <Form.Field>
-                        <label>Risk Ratio</label>
-                        <Input name="riskRatio" placeholder="2" value={tradeData.riskRatio} onChange={handleChange} />
+                        <label style={errors && errors.riskRatio && { color: errorLabelColor }}>Risk Ratio</label>
+                        <Input
+                            style={errors && errors.riskRatio && { border: errorBorderColor }}
+                            name="riskRatio"
+                            placeholder="2"
+                            value={tradeData.riskRatio}
+                            onChange={handleChange}
+                        />
                     </Form.Field>
 
                     <Form.Field>
@@ -218,15 +259,22 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
                     <Form.Field>
                         <Popup
                             content="Your fee percentage (%). If you have 1% fee, write only 1."
-                            trigger={<label>Fees</label>}
+                            trigger={<label style={errors && errors.fees && { color: errorLabelColor }}>Fees</label>}
                         />
-                        <Input name="fees" placeholder="1" value={tradeData.fees} onChange={handleChange} />
+                        <Input
+                            style={errors && errors.fees && { border: errorBorderColor }}
+                            name="fees"
+                            placeholder="1"
+                            value={tradeData.fees}
+                            onChange={handleChange}
+                        />
                     </Form.Field>
                 </Form.Group>
                 <Form.Group>
                     <Form.Field>
-                        <label>Entry Date</label>
+                        <label style={errors && errors.entryDate && { color: errorLabelColor }}>Entry Date</label>
                         <DatePicker
+                            style={errors && errors.entryDate && { border: errorBorderColor }}
                             name="entryDate"
                             selected={Date.parse(tradeData.entryDate)}
                             onChange={(date) => {
@@ -244,8 +292,9 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
                         />
                     </Form.Field>
                     <Form.Field>
-                        <label>Exit Date</label>
+                        <label style={errors && errors.exitDate && { color: errorLabelColor }}>Exit Date</label>
                         <DatePicker
+                            style={errors && errors.exitDate && { border: errorBorderColor }}
                             name="exitDate"
                             selected={Date.parse(tradeData.exitDate)}
                             onChange={(date) => {
@@ -264,8 +313,9 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
                 </Form.Group>
 
                 <Form.Field>
-                    <label>Feeling</label>
+                    <label style={errors && errors.feeling && { color: errorLabelColor }}>Feeling</label>
                     <Input
+                        style={errors && errors.feeling && { border: errorBorderColor }}
                         name="feeling"
                         onChange={handleChange}
                         value={tradeData.feeling}
@@ -274,8 +324,9 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
                 </Form.Field>
 
                 <Form.Field>
-                    <label>Notes :</label>
+                    <label style={errors && errors.notes && { color: errorLabelColor }}>Notes :</label>
                     <TextArea
+                        style={errors && errors.notes && { border: errorBorderColor }}
                         name="note"
                         value={tradeData.note}
                         onChange={handleChange}
