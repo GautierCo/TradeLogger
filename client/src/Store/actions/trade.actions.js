@@ -69,3 +69,19 @@ export const updateTradeError = (payload) => ({
     type: UPDATE_TRADE_ERROR,
     payload,
 });
+
+export const DELETE_TRADE = "DELETE_TRADE";
+export const DELETE_TRADE_SUCCESS = "DELETE_TRADE_SUCCESS";
+export const DELETE_TRADE_ERROR = "DELETE_TRADE_ERROR";
+
+export const deleteTrade = () => ({
+    type: DELETE_TRADE,
+});
+export const deleteTradeSuccess = (payload) => ({
+    type: DELETE_TRADE_SUCCESS,
+    payload,
+});
+export const deleteTradeError = (payload) => ({
+    type: DELETE_TRADE_ERROR,
+    payload,
+});

@@ -11,6 +11,9 @@ import {
     UPDATE_TRADE,
     UPDATE_TRADE_SUCCESS,
     UPDATE_TRADE_ERROR,
+    DELETE_TRADE,
+    DELETE_TRADE_SUCCESS,
+    DELETE_TRADE_ERROR,
 } from "../actions/trade.actions";
 import moment from "moment";
 
@@ -42,6 +45,7 @@ const initialState = {
     tradesLoading: false,
     addTradeLoading: false,
     updateTradeLoading: false,
+    deleteTradeLoading: false,
 };
 
 export const tradeReducer = (state = initialState, action = {}) => {
@@ -86,7 +90,6 @@ export const tradeReducer = (state = initialState, action = {}) => {
                 ...state,
                 addTradeLoading: false,
             };
-
         case SET_TRADE_UPDATE_ID:
             return {
                 ...state,
@@ -116,7 +119,22 @@ export const tradeReducer = (state = initialState, action = {}) => {
                 ...state,
                 updateTradeLoading: false,
             };
-
+        case DELETE_TRADE:
+            return {
+                ...state,
+                deleteTradeLoading: true,
+            };
+        case DELETE_TRADE_SUCCESS:
+            return {
+                ...state,
+                trades: action.payload,
+                deleteTradeLoading: false,
+            };
+        case DELETE_TRADE_ERROR:
+            return {
+                ...state,
+                deleteTradeLoading: false,
+            };
         default:
             return state;
     }

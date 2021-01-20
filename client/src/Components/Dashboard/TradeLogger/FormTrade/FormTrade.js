@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Select, TextArea, Checkbox } from "semantic-ui-react";
+import { Form, Input, Select, TextArea, Popup } from "semantic-ui-react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import fr from "date-fns/locale/fr";
 import "react-datepicker/dist/react-datepicker.css";
@@ -58,7 +58,10 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
             <Form onSubmit={handleSubmit}>
                 <Form.Group>
                     <Form.Field>
-                        <label>Format</label>
+                        <Popup
+                            content="Calculations are different when you trade against BTC or USD"
+                            trigger={<label>Format</label>}
+                        />
                         <Select
                             name="format"
                             placeholder="USDT"
@@ -69,7 +72,10 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
                     </Form.Field>
                     {tradeData.format === "BTC" && (
                         <Form.Field>
-                            <label>Price BTC vs USD</label>
+                            <Popup
+                                content="The price of Bitcoin at the time you close your trade. So we can calculate your profit."
+                                trigger={<label>Price BTC vs USD</label>}
+                            />
                             <Input
                                 name="priceBtcVsUsd"
                                 type="text"
@@ -83,7 +89,10 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
                         </Form.Field>
                     )}
                     <Form.Field>
-                        <label>Screenshot URL</label>
+                        <Popup
+                            content="If you want, you can add screenshot for your trade. (URL)"
+                            trigger={<label>Screenshot URL</label>}
+                        />
                         <Input
                             name="screenshotUrl"
                             type="text"
@@ -123,7 +132,10 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
                         <Input name="assets" placeholder="BTC/USDT" value={tradeData.assets} onChange={handleChange} />
                     </Form.Field>
                     <Form.Field>
-                        <label>Capital</label>
+                        <Popup
+                            content="With what amount will you make this trade? If you are against the BTC, you must indicate an amount in Bitcoin."
+                            trigger={<label>Capital</label>}
+                        />
                         <Input
                             name="capital"
                             placeholder="1000"
@@ -161,7 +173,10 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
                         />
                     </Form.Field>
                     <Form.Field>
-                        <label>Leaving Price</label>
+                        <Popup
+                            content="You can leave this box blank while waiting for your trade to be closed."
+                            trigger={<label>Leaving Price</label>}
+                        />
                         <Input
                             name="exitPrice"
                             placeholder="36897"
@@ -201,7 +216,10 @@ const FormModal = ({ tradeData, setTradeData, handleSubmit }) => {
                         />
                     </Form.Field>
                     <Form.Field>
-                        <label>Fees</label>
+                        <Popup
+                            content="Your fee percentage (%). If you have 1% fee, write only 1."
+                            trigger={<label>Fees</label>}
+                        />
                         <Input name="fees" placeholder="1" value={tradeData.fees} onChange={handleChange} />
                     </Form.Field>
                 </Form.Group>

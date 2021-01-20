@@ -15,7 +15,7 @@ const StatsContainerWithPer = ({ percentage, nbrTrades, type }) => {
                             color={
                                 (type === "Long" && "green") ||
                                 (type === "Short" && "red") ||
-                                (type === "Profit" && "orange")
+                                (type === "Global" && "grey")
                             }
                         >
                             {type}

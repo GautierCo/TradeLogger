@@ -1,4 +1,5 @@
 import axios from "axios";
+import { persistor } from "../store";
 import {
     loginSubmitError,
     loginSubmitSuccess,
@@ -55,7 +56,8 @@ export const authMiddleware = (store) => (next) => (action) => {
                 .then((res) => {
                     console.log(res);
                     store.dispatch(logoutSuccess(res.data));
-                    //store.dispatch(push("/login"));
+
+                    persistor.purge();
                 })
                 .catch((err) => {
                     console.log(err);

@@ -11,6 +11,9 @@ import {
     UPDATE_TRADE,
     updateTradeSuccess,
     updateTradeError,
+    DELETE_TRADE,
+    deleteTradeSuccess,
+    deleteTradeError,
 } from "../actions/trade.actions";
 
 export const tradeMiddleware = (store) => (next) => (action) => {
@@ -22,7 +25,6 @@ export const tradeMiddleware = (store) => (next) => (action) => {
                 url: `${process.env.REACT_APP_API_URL}/trade/`,
             })
                 .then((res) => {
-                    console.log(res);
                     store.dispatch(fetchTradesSuccess(res.data.trades));
                 })
                 .catch((err) => {
@@ -32,7 +34,6 @@ export const tradeMiddleware = (store) => (next) => (action) => {
             break;
         }
         case ADD_TRADE: {
-            console.log("add trade");
             const { tradeData } = store.getState().tradeReducer;
             const { user } = store.getState().authReducer;
 
@@ -42,7 +43,6 @@ export const tradeMiddleware = (store) => (next) => (action) => {
                 data: { ...tradeData, userId: user.id },
             })
                 .then((res) => {
-                    console.log(res);
                     store.dispatch(addTradeSuccess({ ...res.data }));
                 })
                 .catch((err) => {
@@ -72,8 +72,6 @@ export const tradeMiddleware = (store) => (next) => (action) => {
                 data: { ...tradeUpdateData, userId: user.id },
             })
                 .then((res) => {
-                    console.log(res);
-
                     const tradesUpdate = trades.map((trade) => {
                         if (trade._id === tradeUpdateData._id) {
                             return res.data.doc;
@@ -82,12 +80,30 @@ export const tradeMiddleware = (store) => (next) => (action) => {
                         }
                     });
 
-                    console.log(tradesUpdate);
                     store.dispatch(updateTradeSuccess(tradesUpdate));
                 })
                 .catch((err) => {
                     console.log(err);
                     store.dispatch(updateTradeError());
+                });
+
+            break;
+        }
+        case DELETE_TRADE: {
+            console.log("delete trade");
+            const { trades, tradeUpdateId } = store.getState().tradeReducer;
+
+            axios({
+                method: "DELETE",
+                url: `${process.env.REACT_APP_API_URL}/trade/${tradeUpdateId}`,
+            })
+                .then((res) => {
+                    let removeTrade = trades.filter((trade) => trade._id !== tradeUpdateId);
+                    store.dispatch(deleteTradeSuccess(removeTrade));
+                })
+                .catch((err) => {
+                    console.log(err);
+                    store.dispatch(deleteTradeError());
                 });
 
             break;

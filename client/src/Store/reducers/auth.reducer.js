@@ -63,7 +63,7 @@ export const authReducer = (state = initialState, action = {}) => {
                 },
                 loginErrors: {},
                 loginLoading: false,
-                //loginData: { email: "", password: "" }, ACTIVER AVANT MISE EN PROD
+                loginData: { email: "", password: "" },
             };
         case LOGIN_SUBMIT_ERROR:
             return {
@@ -111,14 +111,12 @@ export const authReducer = (state = initialState, action = {}) => {
             return {
                 ...state,
                 signupLoading: false,
-                /*
                 signupData: {
                     email: "",
                     pseudo: "",
                     password: "",
                     confirmPassword: "",
                 },
-                */
             };
         }
         case SIGNUP_SUBMIT_ERROR: {

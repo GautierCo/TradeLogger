@@ -3,6 +3,8 @@ const UserModel = require("../models/user.model");
 const { checkId, calculProfit, calculProfitPer, knowStatus, calculSessionDuration } = require("../utils/utils");
 
 module.exports.getTradeById = async (req, res) => {
+    if (!req.user.id) return res.status(403).send(`You can't access to this user`);
+
     const userId = req.user.id;
     const tradeId = req.params.id;
 
@@ -21,7 +23,8 @@ module.exports.getTradeById = async (req, res) => {
 };
 
 module.exports.getAllTradesByUserId = async (req, res) => {
-    //if (userId !== req.user.id) return res.status(403).json({ message: "Vous ne pouvez pas accèder à ce contenu" });
+    if (!req.user.id) return res.status(403).send(`You can't access to this user`);
+
     const userId = req.user.id;
 
     try {
@@ -43,9 +46,9 @@ module.exports.getAllTradesByUserId = async (req, res) => {
 };
 
 module.exports.addTrade = async (req, res) => {
-    if (checkId(req.user.id)) return res.status(400).send(`Unknow ID ${req.user.id}.`);
+    if (req.user.id !== req.body.userId) return res.status(403).send(`You can't access to this user`);
 
-    console.log("req.body", req.body);
+    if (checkId(req.user.id)) return res.status(400).send(`Unknow ID ${req.user.id}.`);
 
     const userId = req.user.id;
     const tradeData = req.body;
@@ -105,6 +108,8 @@ module.exports.addTrade = async (req, res) => {
 };
 
 module.exports.updateTrade = async (req, res) => {
+    if (req.user.id !== req.body.userId) return res.status(403).send(`You can't access to this user`);
+
     if (checkId(req.user.id)) return res.status(400).send(`Unknow ID ${req.user.id}.`);
 
     const tradeId = req.params.id;
@@ -168,5 +173,31 @@ module.exports.updateTrade = async (req, res) => {
 };
 
 module.exports.deleteTrade = async (req, res) => {
-    return;
+    if (!req.user.id) return res.status(403).send(`You can't access to this user`);
+
+    const tradeId = req.params.id;
+    const userId = req.user.id;
+
+    try {
+        await TradeModel.findByIdAndDelete(tradeId).then(async () => {
+            await UserModel.updateOne(
+                { _id: userId },
+                {
+                    $pull: {
+                        trades: tradeId,
+                    },
+                },
+                { new: true },
+                (err, doc) => {
+                    console.log(err);
+
+                    if (!err) {
+                        return res.status(200).json({ message: "Success" });
+                    }
+                }
+            );
+        });
+    } catch (error) {
+        res.status(400).json(error);
+    }
 };

@@ -50,6 +50,8 @@ export const calculTotalProfit = (trades) => {
 
 /* Calcul % of trades by type (ex: Long, Short, Global) */
 export const calculPerProfit = (trades, type) => {
+    if (trades.length === 0) return 0;
+
     const tradesWithoutInProgress = trades.filter((trade) => trade.status !== "In progress");
 
     if (tradesWithoutInProgress.length <= 0) {

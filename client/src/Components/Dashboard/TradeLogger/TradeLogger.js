@@ -105,14 +105,10 @@ const AllDataOfTrade = ({ trade, isAnimate }) => {
                                 readOnly
                                 value={trade.note}
                                 className="note"
-                                rows={2}
                                 rows={10}
                                 placeholder="Edit this trade for add note"
                             />
                         </Form.Field>
-                        {/* <Button size="mini" primary>
-                            Sauvegarder
-                        </Button> */}
                     </Form>
                 </Tab.Pane>
             ),
@@ -172,10 +168,16 @@ const TradeLogger = (props) => {
 
     const { column, data, direction } = state;
 
-    useEffect(async () => {
-        await fetchTrades();
+    useEffect(() => {
+        async function fetchData() {
+            await fetchTrades();
+        }
+        fetchData();
+    }, [fetchTrades]);
+
+    useEffect(() => {
         dispatch({ type: "SET_DATA", data: trades });
-    }, []);
+    }, [trades]);
 
     const handleShowTrade = (trade) => {
         if (selectedRow._id === trade._id) {
@@ -208,7 +210,15 @@ const TradeLogger = (props) => {
                 </div>
                 <div className="action">
                     {column !== null && (
-                        <Button onClick={() => dispatch({ type: "SORT_RESET", data: trades })}>Sort reset</Button>
+                        <Button
+                            icon
+                            labelPosition="left"
+                            size="small"
+                            onClick={() => dispatch({ type: "SORT_RESET", data: trades })}
+                        >
+                            <Icon name="undo" />
+                            Sort reset
+                        </Button>
                     )}
                     <AddTrade showModal={showAddTradeModal} setShowModal={setShowAddTradeModal} />
                 </div>
@@ -272,11 +282,9 @@ const TradeLogger = (props) => {
                             <Table.HeaderCell>Action</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
-
-                    <Table.Body>
-                        {data &&
-                            data.length &&
-                            data.map((trade) => (
+                    {data && data !== [] && (
+                        <Table.Body>
+                            {data.map((trade) => (
                                 <React.Fragment key={trade._id}>
                                     <Table.Row
                                         style={{ cursor: "pointer" }}
@@ -320,7 +328,8 @@ const TradeLogger = (props) => {
                                         )}
                                 </React.Fragment>
                             ))}
-                    </Table.Body>
+                        </Table.Body>
+                    )}
                 </Table>
             </div>
         </Layout>

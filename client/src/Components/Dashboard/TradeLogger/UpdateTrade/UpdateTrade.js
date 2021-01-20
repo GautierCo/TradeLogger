@@ -12,6 +12,7 @@ const UpdateTrade = ({
     setTradeUpdateId,
     setTradeUpdateData,
     tradeId,
+    deleteTrade,
 }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -60,7 +61,8 @@ const UpdateTrade = ({
                 <Button
                     type="submit"
                     onClick={(e) => {
-                        //setShowModal(false);
+                        setShowModal(false);
+                        deleteTrade();
                     }}
                     color="red"
                 >

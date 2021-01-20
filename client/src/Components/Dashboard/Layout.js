@@ -75,11 +75,7 @@ const Layout = (props) => {
 
                     <div className="layout-right_container">
                         <div className="layout-right--avatar">
-                            <Image
-                                src="https://media-exp1.licdn.com/dms/image/C4D03AQF31WZEADth2g/profile-displayphoto-shrink_200_200/0/1583532662962?e=1616025600&v=beta&t=inXlvv0G0yKcz5hnx5vDM6GzstQTN5nJ5t62C0SMvN8"
-                                avatar
-                                size="small"
-                            />
+                            <Image src="/dashboard/default-avatar.png" avatar size="small" />
                         </div>
                     </div>
                 </div>
