@@ -15,7 +15,7 @@ const tradeRoutes = require("./routes/trade.routes");
 // Middlewares
 app.use(
     cors({
-        origin: process.env.CLIENT_URL,
+        origin: process.env.NODE_ENV === "DEV" ? process.env.CLIENT_DEV_URL : process.env.CLIENT_PROD_URL,
         credentials: true,
         //allowedHeaders: ["sessionId", "Content-Type", "Access-Control-Allow-Methods"],
         //exposedHeaders: ["sessionId"],
