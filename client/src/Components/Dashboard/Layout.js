@@ -8,7 +8,7 @@ const Layout = (props) => {
     const { children, title = "NoTitle", logout, pseudo } = props;
 
     useEffect(() => {
-        document.title = title;
+        document.title = process.env.REACT_APP_NODE_ENV === "DEV" ? `[DEV] ${title}` : title;
     }, [title]);
 
     return (

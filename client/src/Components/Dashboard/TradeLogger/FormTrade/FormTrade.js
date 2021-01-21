@@ -71,9 +71,12 @@ const FormModal = ({ tradeData, setTradeData, errors }) => {
                     <Form.Field>
                         <Popup
                             content="Calculations are different when you trade against BTC or USD"
-                            trigger={<label>Format *</label>}
+                            trigger={
+                                <label style={errors && errors.format && { color: errorLabelColor }}>Format *</label>
+                            }
                         />
                         <Select
+                            style={errors && errors.format && { border: errorBorderColor }}
                             name="format"
                             placeholder="Choose.."
                             options={formatList}
