@@ -18,10 +18,16 @@ const initialState = {
         refreshToken: "",
         connected: false,
     },
-    loginData: {
-        email: "",
-        password: "",
-    },
+    loginData:
+        process.env.REACT_APP_NODE_ENV === "DEV"
+            ? {
+                  email: "test@gmail.com",
+                  password: "123456",
+              }
+            : {
+                  email: "",
+                  password: "",
+              },
     loginLoading: false,
     loginErrors: {
         message: "",

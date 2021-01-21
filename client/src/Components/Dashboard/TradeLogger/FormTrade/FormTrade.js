@@ -235,7 +235,7 @@ const FormModal = ({ tradeData, setTradeData, errors }) => {
                             style={errors && errors.exitPrice && { border: errorBorderColor }}
                             name="exitPrice"
                             placeholder="36897"
-                            value={tradeData.exitPrice}
+                            value={tradeData.exitPrice && tradeData.exitPrice}
                             onChange={handleChange}
                         />
                     </Form.Field>

@@ -105,7 +105,7 @@ export const validateForm = (trade) => {
     if (!trade.capital) errors.capital = "Requis";
     if (!trade.assets) errors.assets = "Requis";
     if (!trade.entryPrice) errors.entryPrice = "Requis";
-    if (!trade.fees) errors.entryPrice = "Requis";
+    if (!trade.fees) errors.fees = "Requis";
 
     if (trade.assets !== "" && !trade.assets.match(regAssets)) errors.assets = "Format incorrect"; //  -> BTC/USD
     if (trade.capital !== "" && String(!trade.capital).match(regFloatNbr)) errors.capital = "Format incorrect";

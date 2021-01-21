@@ -21,8 +21,55 @@ import moment from "moment";
 
 const initialState = {
     trades: [],
-    /*
-    tradeData: {
+    tradeData:
+        process.env.REACT_APP_NODE_ENV === "DEV"
+            ? {
+                  platform: "Binance",
+                  type: "Long",
+                  format: "USDT",
+                  priceBtcVsUsd: "",
+                  assets: "BTC/USDT",
+                  capital: 1000,
+                  entryPrice: 2500,
+                  stopLoss: 2000,
+                  takeProfit: 3000,
+                  exitPrice: "",
+                  riskRatio: 2,
+                  setup: "Ichimoku",
+                  leverage: 1,
+                  fees: 1,
+                  feeling: "",
+                  note: "",
+                  screenshotUrl: "",
+                  entryDate: moment(),
+                  exitDate: moment(),
+              }
+            : {
+                  platform: "",
+                  type: "",
+                  format: "",
+                  priceBtcVsUsd: "",
+                  assets: "",
+                  capital: "",
+                  entryPrice: "",
+                  stopLoss: "",
+                  takeProfit: "",
+                  exitPrice: "",
+                  riskRatio: "",
+                  setup: "",
+                  leverage: 1,
+                  fees: "",
+                  feeling: "",
+                  note: "",
+                  screenshotUrl: "",
+                  entryDate: moment(),
+                  exitDate: moment(),
+              },
+    errorsForm: null,
+    showAddModal: false,
+    showUpdateModal: false,
+    tradeUpdateId: "",
+    tradeUpdateData: {
         platform: "",
         type: "",
         format: "",
@@ -42,35 +89,7 @@ const initialState = {
         screenshotUrl: "",
         entryDate: moment(),
         exitDate: moment(),
-    },*/
-
-    tradeData: {
-        platform: "Binance",
-        type: "Long",
-        format: "USDT",
-        priceBtcVsUsd: "",
-        assets: "BTC/USDT",
-        capital: 1000,
-        entryPrice: 2500,
-        stopLoss: 2000,
-        takeProfit: 3000,
-        exitPrice: "",
-        riskRatio: 2,
-        setup: "Ichimoku",
-        leverage: 1,
-        fees: 1,
-        feeling: "",
-        note: "",
-        screenshotUrl: "",
-        entryDate: moment(),
-        exitDate: moment(),
     },
-
-    errorsForm: null,
-    showAddModal: false,
-    showUpdateModal: false,
-    tradeUpdateId: "",
-    tradeUpdateData: {},
     tradesLoading: false,
     addTradeLoading: false,
     updateTradeLoading: false,
@@ -149,7 +168,7 @@ export const tradeReducer = (state = initialState, action = {}) => {
         case UPDATE_TRADE_ERROR:
             return {
                 ...state,
-                errorsForm: {},
+                errorsForm: action.payload,
                 updateTradeLoading: false,
             };
         case DELETE_TRADE:

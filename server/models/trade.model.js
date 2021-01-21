@@ -1,13 +1,7 @@
 const mongoose = require("mongoose");
-const { isEmail } = require("validator");
-
-/*
- Pour moi le profit, le % profit doit être calculer coté backend et stocker dans la db car plus tard pour faire les stats 
- cela pourra être utile
- Pareil pour le cacul de la sessionDuration
- Le status
- 
-*/
+const { isEmail, equals } = require("validator");
+const regAssets = "^([A-Z]{2,4})?(/)([A-Z]{2,4}$)";
+const regFloatNbr = /^[+-]?\d+(\.\d+)?$/;
 
 const tradeSchema = new mongoose.Schema(
     {
@@ -18,51 +12,58 @@ const tradeSchema = new mongoose.Schema(
         assets: {
             /* Trouver une liste de la totalité des assets ? */
             type: String,
-            minlength: 1,
             maxlength: 10,
             required: false,
+            //validate: [equals()]
+            //match: ["^([A-Z]{2,4})?(/)([A-Z]{2,4}$)", "Regex fail"],
         },
         type: {
             type: String,
             required: true,
         },
         format: {
-            // BTC / EUR / USD
             type: String,
             required: true,
         },
         priceBtcVsUsd: {
             type: Number,
+            match: [regFloatNbr, "Regex fail"],
         },
         capital: {
             type: Number,
             required: true,
             trim: true,
+            match: [regFloatNbr, "Regex fail"],
         },
         fees: {
             type: Number,
             required: true,
             trim: true,
+            match: [regFloatNbr, "Regex fail"],
         },
         entryPrice: {
             type: Number,
             required: true,
             trim: true,
+            match: [regFloatNbr, "Regex fail"],
         },
         stopLoss: {
             type: Number,
             required: false,
             trim: true,
+            match: [regFloatNbr, "Regex fail"],
         },
         takeProfit: {
             type: Number,
             required: false,
             trim: true,
+            match: [regFloatNbr, "Regex fail"],
         },
         exitPrice: {
             type: Number,
             required: false,
             trim: true,
+            match: [regFloatNbr, "Regex fail"],
         },
         screenshotUrl: {
             type: String,
@@ -73,6 +74,7 @@ const tradeSchema = new mongoose.Schema(
             type: Number,
             required: false,
             trim: true,
+            match: [regFloatNbr, "Regex fail"],
         },
         entryDate: {
             type: Date,
@@ -116,11 +118,13 @@ const tradeSchema = new mongoose.Schema(
             type: Number,
             required: false,
             trim: true,
+            match: [regFloatNbr, "Regex fail"],
         },
         pnlPer: {
             type: Number,
             required: false,
             trim: true,
+            match: [regFloatNbr, "Regex fail"],
         },
         platformLogo: {
             type: String,

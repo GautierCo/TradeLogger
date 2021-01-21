@@ -55,17 +55,6 @@ module.exports.addTrade = async (req, res) => {
     let tradeFinalData = {};
 
     if (tradeData.exitPrice) {
-        if (
-            isNaN(tradeData.entryPrice) ||
-            isNaN(tradeData.exitPrice) ||
-            isNaN(tradeData.leverage) ||
-            isNaN(tradeData.capital) ||
-            isNaN(tradeData.fees)
-        )
-            return res.status(400).json({
-                message: `L'une des variables suivante n'est pas un nombre: entryPrice, exitPrice, leverage, capital, fees`,
-            });
-
         const profit = calculProfit(tradeData);
         const profitPer = calculProfitPer(profit, tradeData.capital);
         const status = knowStatus(profit);
@@ -118,17 +107,6 @@ module.exports.updateTrade = async (req, res) => {
     let tradeFinalData = {};
 
     if (tradeUpdateData.exitPrice) {
-        if (
-            isNaN(tradeUpdateData.entryPrice) ||
-            isNaN(tradeUpdateData.exitPrice) ||
-            isNaN(tradeUpdateData.leverage) ||
-            isNaN(tradeUpdateData.capital) ||
-            isNaN(tradeUpdateData.fees)
-        )
-            return res.status(400).json({
-                message: `L'une des variables suivante n'est pas un nombre: entryPrice, exitPrice, leverage, capital, fees`,
-            });
-
         const profit = calculProfit(tradeUpdateData);
         const profitPer = calculProfitPer(profit, tradeUpdateData.capital);
         const status = knowStatus(profit);
@@ -163,7 +141,7 @@ module.exports.updateTrade = async (req, res) => {
             { new: true, upsert: true },
             (err, doc) => {
                 if (!err) return res.status(200).json({ doc });
-                else return res.status(500).json(err);
+                else res.status(200).send({ error: err });
             }
         );
     } catch (error) {

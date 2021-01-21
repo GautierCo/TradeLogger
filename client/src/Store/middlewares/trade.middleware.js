@@ -40,7 +40,7 @@ export const tradeMiddleware = (store) => (next) => (action) => {
             const { tradeData } = store.getState().tradeReducer;
             const { user } = store.getState().authReducer;
 
-            const errors = validateForm(tradeData);
+            let errors = validateForm(tradeData);
 
             console.log("errors", errors);
 
@@ -54,8 +54,18 @@ export const tradeMiddleware = (store) => (next) => (action) => {
                 data: { ...tradeData, userId: user.id },
             })
                 .then((res) => {
-                    store.dispatch(addTradeSuccess({ ...res.data }));
-                    store.dispatch(setShowAddModal(false));
+                    console.log(res);
+                    if (!res.data.error) {
+                        store.dispatch(addTradeSuccess({ ...res.data }));
+                        store.dispatch(setShowAddModal(false));
+                    } else {
+                        const errorsRes = res.data.error.errors;
+                        for (const err in errorsRes) {
+                            errors = { ...errors, [err]: "Erreur" };
+                        }
+                        store.dispatch(addTradeError(errors));
+                        console.log(errors);
+                    }
                 })
                 .catch((err) => {
                     console.log(err);
@@ -78,8 +88,7 @@ export const tradeMiddleware = (store) => (next) => (action) => {
             const { tradeUpdateData, trades } = store.getState().tradeReducer;
             const { user } = store.getState().authReducer;
 
-            console.log("tradeUpdateData", tradeUpdateData);
-            const errors = validateForm(tradeUpdateData);
+            let errors = validateForm(tradeUpdateData);
 
             if (errors) {
                 store.dispatch(updateTradeError(errors));
@@ -92,16 +101,26 @@ export const tradeMiddleware = (store) => (next) => (action) => {
                 data: { ...tradeUpdateData, userId: user.id },
             })
                 .then((res) => {
-                    const tradesUpdate = trades.map((trade) => {
-                        if (trade._id === tradeUpdateData._id) {
-                            return res.data.doc;
-                        } else {
-                            return trade;
-                        }
-                    });
+                    console.log(res);
+                    if (res.data.error) {
+                        const errorRes = res.data.error;
 
-                    store.dispatch(updateTradeSuccess(tradesUpdate));
-                    store.dispatch(setShowUpdateModal(false));
+                        errors = { ...errors, [errorRes.path]: "Erreur" };
+
+                        store.dispatch(updateTradeError(errors));
+                        console.log(errors);
+                    } else {
+                        const tradesUpdate = trades.map((trade) => {
+                            if (trade._id === tradeUpdateData._id) {
+                                return res.data.doc;
+                            } else {
+                                return trade;
+                            }
+                        });
+
+                        store.dispatch(updateTradeSuccess(tradesUpdate));
+                        store.dispatch(setShowUpdateModal(false));
+                    }
                 })
                 .catch((err) => {
                     console.log(err);

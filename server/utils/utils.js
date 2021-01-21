@@ -9,6 +9,12 @@ module.exports.checkId = (id) => {
 module.exports.calculProfit = (trade) => {
     const { type, entryPrice, exitPrice, leverage, capital, fees = 0, format } = trade;
 
+    if (isNaN(entryPrice)) return 0;
+    if (isNaN(exitPrice)) return 0;
+    if (isNaN(leverage)) return 0;
+    if (isNaN(capital)) return 0;
+    if (isNaN(fees)) return 0;
+
     if (format === "BTC") {
         if (type === "Long") {
             const result = parseFloat(Number((exitPrice / entryPrice - 1) * leverage * capital).toFixed(8), 10);
@@ -33,7 +39,9 @@ module.exports.calculProfit = (trade) => {
 };
 
 module.exports.calculProfitPer = (profit, capital) => {
+    if (isNaN(profit)) return 0;
     const result = parseFloat(Number((profit / capital) * 100).toFixed(2), 10);
+    if (isNaN(result)) return 0;
     return result;
 };
 
