@@ -78,6 +78,14 @@ export const tradeMiddleware = (store) => (next) => (action) => {
             const { tradeUpdateData, trades } = store.getState().tradeReducer;
             const { user } = store.getState().authReducer;
 
+            console.log("tradeUpdateData", tradeUpdateData);
+            const errors = validateForm(tradeUpdateData);
+
+            if (errors) {
+                store.dispatch(updateTradeError(errors));
+                break;
+            }
+
             axios({
                 method: "PATCH",
                 url: `${process.env.REACT_APP_API_URL}/trade/${tradeUpdateData._id}`,

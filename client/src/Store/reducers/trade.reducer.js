@@ -21,6 +21,7 @@ import moment from "moment";
 
 const initialState = {
     trades: [],
+    /*
     tradeData: {
         platform: "",
         type: "",
@@ -41,8 +42,8 @@ const initialState = {
         screenshotUrl: "",
         entryDate: moment(),
         exitDate: moment(),
-    },
-    /*
+    },*/
+
     tradeData: {
         platform: "Binance",
         type: "Long",
@@ -64,7 +65,7 @@ const initialState = {
         entryDate: moment(),
         exitDate: moment(),
     },
-    */
+
     errorsForm: null,
     showAddModal: false,
     showUpdateModal: false,
