@@ -128,3 +128,14 @@ textarea {
 .field {
     min-width: 234px;
 }
+
+/* Confirm */
+.ui.modal > .content {
+    color: white;
+    background-color: #18191a;
+}
+
+.ui.modal > .actions {
+    background-color: #2d2e30;
+    color: white;
+}

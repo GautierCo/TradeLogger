@@ -1,5 +1,5 @@
-import React from "react";
-import { Modal, Button, Icon, Input, Divider } from "semantic-ui-react";
+import React, { useState } from "react";
+import { Modal, Button, Icon, Confirm } from "semantic-ui-react";
 import FormModal from "../FormTrade/FormTrade";
 
 import "../AddTrade/addmodal.scss";
@@ -16,6 +16,7 @@ const UpdateTrade = ({
     errors,
     deleteTrade,
 }) => {
+    const [confirm, setConfirm] = useState(false);
     const handleSubmit = (e) => {
         e.preventDefault();
         updateTrade();
@@ -52,6 +53,20 @@ const UpdateTrade = ({
                     </div>
                 </div> */}
                 <Modal.Description className="content-description">
+                    <Confirm
+                        style={{ backgroundColor: "black" }}
+                        open={confirm && tradeId === tradeUpdateId}
+                        onCancel={() => setConfirm(false)}
+                        onConfirm={() => {
+                            deleteTrade();
+                            setConfirm(false);
+                            setShowUpdateModal(false);
+                        }}
+                        cancelButton="Cancel"
+                        confirmButton="Yes"
+                        content="Are you sure you want to delete this trade?"
+                        size="small"
+                    />
                     <FormModal
                         tradeData={tradeUpdateData}
                         setTradeData={setTradeUpdateData}
@@ -64,8 +79,7 @@ const UpdateTrade = ({
                 <Button
                     type="submit"
                     onClick={(e) => {
-                        setShowUpdateModal(false);
-                        deleteTrade();
+                        setConfirm(true);
                     }}
                     color="red"
                 >

@@ -19,8 +19,8 @@ const initialState = {
         connected: false,
     },
     loginData: {
-        email: "gautiear.colasse@gmail.com",
-        password: "123456",
+        email: "",
+        password: "",
     },
     loginLoading: false,
     loginErrors: {

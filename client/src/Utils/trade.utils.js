@@ -91,19 +91,31 @@ export const formatNumber = (number) => {
 };
 
 export const validateForm = (trade) => {
+    const regAssets = "^([A-Z]{2,4})?(/)([A-Z]{2,4}$)";
+    const regFloatNbr = /^[+-]?\d+(\.\d+)?$/;
+
     let errors = {};
 
     if (!trade.format) errors.format = "Requis";
+    if (trade.format === "BTC" && !trade.priceBtcVsUsd) errors.priceBtcVsUsd = "Requis";
     if (!trade.platform) errors.platform = "Requis";
     if (!trade.type) errors.type = "Requis";
     if (!trade.capital) errors.capital = "Requis";
     if (!trade.assets) errors.assets = "Requis";
     if (!trade.entryPrice) errors.entryPrice = "Requis";
+    if (!trade.fees) errors.entryPrice = "Requis";
 
-    console.log("errorsFn", errors);
-    console.log("_.isEmpty(errors)", _.isEmpty(errors));
+    if (!trade.assets.match(regAssets)) errors.assets = "Format incorrect"; //  -> BTC/USD
+    if (!trade.capital.match(regFloatNbr)) errors.capital = "Format incorrect";
+    if (!trade.entryPrice.match(regFloatNbr)) errors.entryPrice = "Format incorrect";
+
+    if (trade.priceBtcVsUsd !== "" && !trade.priceBtcVsUsd.match(regFloatNbr))
+        errors.priceBtcVsUsd = "Format incorrect";
+    if (trade.stopLoss !== "" && !trade.stopLoss.match(regFloatNbr)) errors.stopLoss = "Format incorrect";
+    if (trade.takeProfit !== "" && !trade.takeProfit.match(regFloatNbr)) errors.takeProfit = "Format incorrect";
+    if (trade.exitPrice !== "" && !trade.exitPrice.match(regFloatNbr)) errors.exitPrice = "Format incorrect";
+    if (trade.riskRatio !== "" && !trade.riskRatio.match(regFloatNbr)) errors.riskRatio = "Format incorrect";
+    if (!trade.fees.match(regFloatNbr)) errors.fees = "Format incorrect";
 
     return _.isEmpty(errors) ? null : errors;
 };
-
-// On retourne un objet avec les erreurs ou null

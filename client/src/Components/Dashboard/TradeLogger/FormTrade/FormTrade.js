@@ -38,6 +38,11 @@ const formatList = [
         value: "USDT",
     },
     {
+        key: "USD",
+        text: "USD",
+        value: "USD",
+    },
+    {
         key: "BTC",
         text: "BTC",
         value: "BTC",
@@ -66,11 +71,11 @@ const FormModal = ({ tradeData, setTradeData, errors }) => {
                     <Form.Field>
                         <Popup
                             content="Calculations are different when you trade against BTC or USD"
-                            trigger={<label>Format</label>}
+                            trigger={<label>Format *</label>}
                         />
                         <Select
                             name="format"
-                            placeholder="USDT"
+                            placeholder="Choose.."
                             options={formatList}
                             value={tradeData.format}
                             onChange={handleChange}
@@ -80,9 +85,14 @@ const FormModal = ({ tradeData, setTradeData, errors }) => {
                         <Form.Field>
                             <Popup
                                 content="The price of Bitcoin at the time you close your trade. So we can calculate your profit."
-                                trigger={<label>Price BTC vs USD</label>}
+                                trigger={
+                                    <label style={errors && errors.priceBtcVsUsd && { color: errorLabelColor }}>
+                                        Price BTC vs USD
+                                    </label>
+                                }
                             />
                             <Input
+                                style={errors && errors.priceBtcVsUsd && { border: errorBorderColor }}
                                 name="priceBtcVsUsd"
                                 type="text"
                                 onChange={handleChange}
@@ -108,7 +118,7 @@ const FormModal = ({ tradeData, setTradeData, errors }) => {
                             name="screenshotUrl"
                             type="text"
                             onChange={handleChange}
-                            placeholder="https://www.tradingview.com/x/gFRYCH3B/"
+                            placeholder="https://tradingview.com/x/gFRYCH3B/"
                             value={tradeData.screenshotUrl}
                         />
                     </Form.Field>
@@ -116,7 +126,7 @@ const FormModal = ({ tradeData, setTradeData, errors }) => {
 
                 <Form.Group>
                     <Form.Field>
-                        <label style={errors && errors.platform && { color: errorLabelColor }}>Platform</label>
+                        <label style={errors && errors.platform && { color: errorLabelColor }}>Platform *</label>
                         <Select
                             style={errors && errors.platform && { border: errorBorderColor }}
                             placeholder="Choose.."
@@ -127,7 +137,7 @@ const FormModal = ({ tradeData, setTradeData, errors }) => {
                         />
                     </Form.Field>
                     <Form.Field>
-                        <label style={errors && errors.type && { color: errorLabelColor }}>Type</label>
+                        <label style={errors && errors.type && { color: errorLabelColor }}>Type *</label>
                         <Select
                             style={errors && errors.type && { border: errorBorderColor }}
                             placeholder="Choose.."
@@ -141,11 +151,21 @@ const FormModal = ({ tradeData, setTradeData, errors }) => {
 
                 <Form.Group>
                     <Form.Field>
-                        <label style={errors && errors.assets && { color: errorLabelColor }}>Assets</label>
+                        <Popup
+                            content={
+                                <>
+                                    <p>If the format is USDT : Example : EGLD/USD ou BTC/USD.</p>
+                                    <p>If the format is BTC : Example : EGLD/BTC</p>
+                                </>
+                            }
+                            trigger={
+                                <label style={errors && errors.assets && { color: errorLabelColor }}>Assets *</label>
+                            }
+                        />
                         <Input
                             style={errors && errors.assets && { border: errorBorderColor }}
                             name="assets"
-                            placeholder="BTC/USDT"
+                            placeholder={tradeData.format !== "BTC" ? `BTC/USDT` : `EGLD/BTC`}
                             value={tradeData.assets}
                             onChange={handleChange}
                         />
@@ -154,7 +174,7 @@ const FormModal = ({ tradeData, setTradeData, errors }) => {
                         <Popup
                             content="With what amount will you make this trade? If you are against the BTC, you must indicate an amount in Bitcoin."
                             trigger={
-                                <label style={errors && errors.capital && { color: errorLabelColor }}>Capital</label>
+                                <label style={errors && errors.capital && { color: errorLabelColor }}>Capital *</label>
                             }
                         />
                         <Input
@@ -170,7 +190,7 @@ const FormModal = ({ tradeData, setTradeData, errors }) => {
                 </Form.Group>
                 <Form.Group>
                     <Form.Field>
-                        <label style={errors && errors.entryPrice && { color: errorLabelColor }}>Entry Price</label>
+                        <label style={errors && errors.entryPrice && { color: errorLabelColor }}>Entry Price *</label>
                         <Input
                             style={errors && errors.entryPrice && { border: errorBorderColor }}
                             name="entryPrice"
@@ -236,7 +256,7 @@ const FormModal = ({ tradeData, setTradeData, errors }) => {
                         <label>Setup</label>
                         <Select
                             name="setup"
-                            placeholder="Ichimoku"
+                            placeholder="Choose.."
                             options={setupList}
                             value={tradeData.setup}
                             onChange={handleChange}
@@ -259,7 +279,7 @@ const FormModal = ({ tradeData, setTradeData, errors }) => {
                     <Form.Field>
                         <Popup
                             content="Your fee percentage (%). If you have 1% fee, write only 1."
-                            trigger={<label style={errors && errors.fees && { color: errorLabelColor }}>Fees</label>}
+                            trigger={<label style={errors && errors.fees && { color: errorLabelColor }}>Fees *</label>}
                         />
                         <Input
                             style={errors && errors.fees && { border: errorBorderColor }}
@@ -333,7 +353,7 @@ const FormModal = ({ tradeData, setTradeData, errors }) => {
                         className="note"
                         rows={2}
                         rows={10}
-                        placeholder="Dans quel état d'esprit êtes-vous ? Est-ce que vous êtes confiant à l'idée de prendre ce trade ? Ce trade respect-il votre trading plan?"
+                        placeholder="What is your state of mind? Are you confident about taking this trade? Is this trade in accordance with your trading plan?"
                     />
                 </Form.Field>
             </Form>
