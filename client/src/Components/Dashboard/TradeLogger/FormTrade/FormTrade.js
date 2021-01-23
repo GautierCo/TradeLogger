@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Form, Input, Select, TextArea, Popup, Label } from "semantic-ui-react";
 
 import DatePicker, { registerLocale } from "react-datepicker";
@@ -61,8 +61,6 @@ const FormModal = ({ tradeData, setTradeData, errors }) => {
         };
         setTradeData(dataForm);
     };
-
-    console.log("errorsformmodal", errors);
 
     return (
         <div className="modalform">

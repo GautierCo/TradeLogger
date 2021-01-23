@@ -5,7 +5,6 @@ import Layout from "../../../Containers/Dashboard/Layout.container";
 import "./tradelogger.scss";
 
 /* Components */
-
 import AddTrade from "../../../Containers/Dashboard/AddTrade.container";
 import UpdateTrade from "../../../Containers/Dashboard/UpdateTrade.container";
 
@@ -124,8 +123,6 @@ const AllDataOfTrade = ({ trade, isAnimate }) => {
 const TradeLogger = (props) => {
     const { trades, fetchTrades, tradeUpdateId, showAddModal, showUpdateModal } = props;
     const [selectedRow, setSelectedRow] = useState({});
-
-    const [showUpdateTradeModal, setShowUpdateTradeModal] = useState(false);
 
     const sortReducer = (state, action) => {
         switch (action.type) {
@@ -309,11 +306,7 @@ const TradeLogger = (props) => {
                                         </Table.Cell>
                                         <Table.Cell>{trade.pnlPer}%</Table.Cell>
                                         <Table.Cell style={{ display: "flex" }}>
-                                            <UpdateTrade
-                                                setShowModal={setShowUpdateTradeModal}
-                                                tradeId={trade._id}
-                                                tradeUpdateId={tradeUpdateId}
-                                            />
+                                            <UpdateTrade tradeId={trade._id} tradeUpdateId={tradeUpdateId} />
                                         </Table.Cell>
                                     </Table.Row>
                                     {selectedRow && selectedRow._id === trade._id && !showAddModal && !showUpdateModal && (

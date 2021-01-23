@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { Divider, Icon, Image, Dropdown } from "semantic-ui-react";
+import { Divider, Image, Dropdown } from "semantic-ui-react";
 import "./layout.scss";
 import Logo from "../../Assets/logo.png";
 
