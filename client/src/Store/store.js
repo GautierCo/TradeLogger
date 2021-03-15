@@ -11,6 +11,7 @@ import storage from "redux-persist/lib/storage";
 import { authMiddleware } from "./middlewares/auth.middleware";
 import { refreshTokenMiddleware } from "./middlewares/refreshToken.middleware";
 import { tradeMiddleware } from "./middlewares/trade.middleware";
+import { noteMiddleware } from "./middlewares/note.middleware";
 
 const persistConfig = {
     key: "root",
@@ -24,7 +25,7 @@ export const history = createBrowserHistory();
 const composeEnhancers = (typeof window !== "undefined" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
 const enhancers = composeEnhancers(
-    applyMiddleware(routerMiddleware(history), authMiddleware, refreshTokenMiddleware, tradeMiddleware)
+    applyMiddleware(routerMiddleware(history), authMiddleware, refreshTokenMiddleware, tradeMiddleware, noteMiddleware)
 );
 
 const persistedReducer = persistReducer(persistConfig, rootReducer(history));

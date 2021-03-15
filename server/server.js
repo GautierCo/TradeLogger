@@ -11,14 +11,13 @@ const cookieParser = require("cookie-parser");
 const userRoutes = require("./routes/user.routes");
 const authRoutes = require("./routes/auth.routes");
 const tradeRoutes = require("./routes/trade.routes");
+const noteRoutes = require("./routes/note.routes");
 
 // Middlewares
 app.use(
     cors({
         origin: process.env.NODE_ENV === "DEV" ? process.env.CLIENT_DEV_URL : process.env.CLIENT_PROD_URL,
         credentials: true,
-        //allowedHeaders: ["sessionId", "Content-Type", "Access-Control-Allow-Methods"],
-        //exposedHeaders: ["sessionId"],
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
         preflightContinue: false,
     })
@@ -32,10 +31,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Routes
-
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/trade", tradeRoutes);
+app.use("/api/note", noteRoutes);
 
 // Server
 app.listen(process.env.PORT, () => console.log(`Server started at port ${process.env.PORT}`));

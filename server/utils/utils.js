@@ -1,5 +1,4 @@
 const moment = require("moment");
-const duration = require("moment-duration-format");
 const ObjectID = require("mongoose").Types.ObjectId; // Permet de vérifier l'ID
 
 module.exports.checkId = (id) => {

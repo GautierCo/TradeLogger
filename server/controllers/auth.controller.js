@@ -10,9 +10,8 @@ const createToken = (id) => {
 
 // Refresh accessToken
 module.exports.refresh = async (req, res) => {
-    console.log("Refresh Access Token", Date.now() / 1000);
     const { refreshToken, id } = req.body; // Le client nous envoie le refreshToken et l'ID de l'utilisateur
-
+    console.log("Refresh Access Token", id);
     const refreshTokenIsEqual = await UserModel.findById(id, (err, doc) => {
         if (err) {
             console.log(err);
@@ -95,7 +94,6 @@ module.exports.login = async (req, res) => {
                     refreshToken: refreshToken,
                 },
             },
-            { new: true, multi: true },
             (err, docs) => {
                 if (err) return res.status(403).json({ id: "", accessToken: "", refreshToken: "", connected: false });
             }

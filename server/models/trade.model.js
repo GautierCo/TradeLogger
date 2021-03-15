@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { isEmail, equals } = require("validator");
 const regAssets = "^([A-Z]{2,4})?(/)([A-Z]{2,4}$)";
 const regFloatNbr = /^[+-]?\d+(\.\d+)?$/;
 
