@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Icon, Modal } from "semantic-ui-react";
 import FormNote from "../FormNote/FormNote";
 import "./style.scss";
 
-const AddNote = ({ showAddModal, setShowAddModal }) => {
+const AddNote = ({ showAddModal, setShowAddModal, addNote, setNoteData, noteData }) => {
     return (
         <div className="modal">
             <Modal
@@ -21,7 +21,12 @@ const AddNote = ({ showAddModal, setShowAddModal }) => {
             >
                 <Modal.Content>
                     <h1>Add your note</h1>
-                    <FormNote />
+                    <FormNote
+                        setShowModal={setShowAddModal}
+                        setNoteData={setNoteData}
+                        noteData={noteData}
+                        submitForm={addNote}
+                    />
                 </Modal.Content>
             </Modal>
         </div>

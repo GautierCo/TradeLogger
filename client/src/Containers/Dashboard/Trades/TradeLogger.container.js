@@ -1,6 +1,6 @@
-import TradeLogger from "../../Components/Dashboard/TradeLogger/TradeLogger";
+import TradeLogger from "../../../Components/Dashboard/TradeLogger/TradeLogger";
 import { connect } from "react-redux";
-import { fetchTrades } from "../../Store/actions/trade.actions";
+import { fetchTrades } from "../../../Store/actions/trade.actions";
 
 const mapStateToProps = (state) => ({
     trades: state.tradeReducer.trades,

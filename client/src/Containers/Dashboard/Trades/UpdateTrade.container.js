@@ -1,4 +1,4 @@
-import UpdateTrade from "../../Components/Dashboard/TradeLogger/UpdateTrade/UpdateTrade";
+import UpdateTrade from "../../../Components/Dashboard/TradeLogger/UpdateTrade/UpdateTrade";
 import { connect } from "react-redux";
 import {
     setTradeUpdateData,
@@ -6,7 +6,7 @@ import {
     updateTrade,
     deleteTrade,
     setShowUpdateModal,
-} from "../../Store/actions/trade.actions";
+} from "../../../Store/actions/trade.actions";
 
 const mapStateToProps = (state) => ({
     tradeUpdateData: state.tradeReducer.tradeUpdateData,

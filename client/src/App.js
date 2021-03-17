@@ -10,9 +10,9 @@ import ProtectedRoute from "./Routes/protected.routes";
 
 /* Containers */
 import HomeDashboard from "./Containers/Dashboard/HomeDashboard.container";
-import TradeLogger from "./Containers/Dashboard/TradeLogger.container";
+import TradeLogger from "./Containers/Dashboard/Trades/TradeLogger.container";
 import Market from "./Containers/Dashboard/Market.container";
-import Journal from "./Containers/Dashboard/Journal.container";
+import Journal from "./Containers/Dashboard/Notes/Journal.container";
 import Invest from "./Containers/Dashboard/Invest.container";
 import Plan from "./Containers/Dashboard/Plan.container";
 import HomeSite from "./Containers/Site/HomeSite.container";

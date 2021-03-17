@@ -4,9 +4,9 @@ import { Table, Image, Icon, Label, Form, Tab, Divider, Button } from "semantic-
 import Layout from "../../../Containers/Dashboard/Layout.container";
 import "./tradelogger.scss";
 
-/* Components */
-import AddTrade from "../../../Containers/Dashboard/AddTrade.container";
-import UpdateTrade from "../../../Containers/Dashboard/UpdateTrade.container";
+/* Containers */
+import AddTrade from "../../../Containers/Dashboard/Trades/AddTrade.container";
+import UpdateTrade from "../../../Containers/Dashboard/Trades/UpdateTrade.container";
 
 /* Utils */
 import {

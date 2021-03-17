@@ -36,7 +36,7 @@ module.exports.addNote = async (req, res) => {
                     },
                 },
                 (err, doc) => {
-                    if (!err) return res.status(201).json(data);
+                    if (!err) return res.status(201).json({ note: data });
                 }
             );
         });
