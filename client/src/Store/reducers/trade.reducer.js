@@ -36,11 +36,12 @@ const initialState = {
                   exitPrice: "",
                   riskRatio: 2,
                   setup: "Ichimoku",
-                  leverage: 1,
+                  leverage: 3,
                   fees: 1,
                   feeling: "",
-                  note: "",
-                  screenshotUrl: "",
+                  note:
+                      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, fuga amet a reprehenderit consequuntur placeat nisi animi quasi, dicta possimus quidem! Adipisci excepturi qui, dolorum ea voluptatem iusto voluptate enim.",
+                  screenshotUrl: "https://www.tradingview.com/x/SmAFIBVz/",
                   entryDate: moment(),
                   exitDate: moment(),
               }

@@ -9,7 +9,6 @@ const tradeSchema = new mongoose.Schema(
             required: true,
         },
         assets: {
-            /* Trouver une liste de la totalité des assets ? */
             type: String,
             maxlength: 10,
             required: false,

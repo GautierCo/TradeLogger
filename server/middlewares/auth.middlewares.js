@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 // On vérifie si l'utilisateur qui effectue la requête est bien authentifié avec un jeton valide
 module.exports.checkAuth = async (req, res, next) => {
     let accessToken = req.headers.authorization;
-    if (!accessToken) return res.status(403).json({ message: "You need a valid token to continue." });
+    if (!accessToken) return res.status(403).json({ message: "You need a token to continue." });
     accessToken = accessToken.split("Bearer ")[1];
 
     jwt.verify(accessToken, process.env.JWT_SECRET_TOKEN, async (err, user) => {
@@ -13,7 +13,7 @@ module.exports.checkAuth = async (req, res, next) => {
             next();
         } else {
             console.log(err);
-            return res.status(403).json({ err, message: "User not authenticated" });
+            return res.status(403).json({ err, message: "User not authenticated, you need a valid token" });
         }
     });
 };

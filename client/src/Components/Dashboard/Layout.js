@@ -31,9 +31,9 @@ const Layout = (props) => {
                         >
                             Journal
                         </NavLink>
-                        <NavLink exact to="/dashboard/plan" activeClassName="active-link" className="layout-menu--link">
+                        {/* <NavLink exact to="/dashboard/plan" activeClassName="active-link" className="layout-menu--link">
                             Plan
-                        </NavLink>
+                        </NavLink> */}
                         <NavLink
                             exact
                             to="/dashboard/trades"
@@ -42,7 +42,7 @@ const Layout = (props) => {
                         >
                             Trades
                         </NavLink>
-                        <NavLink
+                        {/* <NavLink
                             exact
                             to="/dashboard/invest"
                             activeClassName="active-link"
@@ -57,7 +57,7 @@ const Layout = (props) => {
                             className="layout-menu--link"
                         >
                             Market
-                        </NavLink>
+                        </NavLink> */}
                     </div>
                 </div>
                 <div className="layout-right">

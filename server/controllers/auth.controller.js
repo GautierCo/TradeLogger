@@ -2,12 +2,6 @@ const UserModel = require("../models/user.model");
 const { signupErrors } = require("../utils/errors.utils");
 const jwt = require("jsonwebtoken");
 
-const createToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET_TOKEN, {
-        expiresIn: process.env.JWT_EXPIRES_IN,
-    });
-};
-
 // Refresh accessToken
 module.exports.refresh = async (req, res) => {
     const { refreshToken, id } = req.body; // Le client nous envoie le refreshToken et l'ID de l'utilisateur
@@ -83,7 +77,9 @@ module.exports.login = async (req, res) => {
     try {
         const user = await UserModel.login(email, password);
 
-        const accessToken = createToken(user._id);
+        const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET_TOKEN, {
+            expiresIn: process.env.JWT_EXPIRES_IN,
+        });
         const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET_REFRESH_TOKEN);
 
         await UserModel.updateOne(
@@ -99,7 +95,7 @@ module.exports.login = async (req, res) => {
             }
         );
 
-        res.setHeader("Authorization", accessToken); // Utile ?
+        // res.setHeader("Authorization", accessToken); // Utile ?
         res.status(201).json({
             id: user._id,
             accessToken: accessToken,

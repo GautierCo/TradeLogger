@@ -46,9 +46,7 @@ module.exports.getAllTradesByUserId = async (req, res) => {
 };
 
 module.exports.addTrade = async (req, res) => {
-    if (req.user.id !== req.body.userId) return res.status(403).send(`You can't access to this user`);
-
-    if (checkId(req.user.id)) return res.status(400).send(`Unknow ID ${req.user.id}.`);
+    // if (checkId(req.user.id)) return res.status(400).send(`Unknow ID ${req.user.id}.`);
 
     const userId = req.user.id;
     const tradeData = req.body;

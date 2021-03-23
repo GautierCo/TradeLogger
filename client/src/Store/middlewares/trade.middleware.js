@@ -50,7 +50,7 @@ export const tradeMiddleware = (store) => (next) => (action) => {
             }
             axios({
                 method: "POST",
-                url: `${process.env.REACT_APP_API_URL}/trade/${user.id}`,
+                url: `${process.env.REACT_APP_API_URL}/trade/`,
                 data: { ...tradeData, userId: user.id },
             })
                 .then((res) => {

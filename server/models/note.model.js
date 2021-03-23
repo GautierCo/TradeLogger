@@ -18,10 +18,6 @@ const noteSchema = new mongoose.Schema(
             type: Number,
             required: true,
         },
-        date: {
-            type: Date,
-            // Auto
-        },
     },
     {
         timestamps: true,
