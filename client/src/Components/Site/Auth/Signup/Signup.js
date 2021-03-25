@@ -147,20 +147,3 @@ const Signup = (props) => {
 };
 
 export default Signup;
-
-/*
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-
-        const data = {
-            ...signupData,
-            [name]: value,
-        };
-
-        setSignupData(data);
-    };
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    };
-    */

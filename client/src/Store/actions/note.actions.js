@@ -69,3 +69,19 @@ export const updateNoteError = (payload) => ({
     type: UPDATE_NOTE_ERROR,
     payload,
 });
+
+export const DELETE_NOTE = "DELETE_NOTE";
+export const DELETE_NOTE_SUCCESS = "DELETE_NOTE_SUCCESS";
+export const DELETE_NOTE_ERROR = "DELETE_NOTE_ERROR";
+
+export const deleteNote = () => ({
+    type: DELETE_NOTE,
+});
+export const deleteNoteSuccess = (payload) => ({
+    type: DELETE_NOTE_SUCCESS,
+    payload,
+});
+export const deleteNoteError = (payload) => ({
+    type: DELETE_NOTE_ERROR,
+    payload,
+});

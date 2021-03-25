@@ -1,8 +1,8 @@
 import React from "react";
-import { Form, Icon } from "semantic-ui-react";
+import { Button, Form, Icon } from "semantic-ui-react";
 import "./style.scss";
 
-const FormNote = ({ setShowModal, setNoteData, noteData, submitForm }) => {
+const FormNote = ({ setShowModal, setNoteData, noteData, submitForm, update, deleteNote }) => {
     const handleChange = (e, data) => {
         const { name, value } = data ? data : e.target;
         const dataForm = {
@@ -52,8 +52,17 @@ const FormNote = ({ setShowModal, setNoteData, noteData, submitForm }) => {
                             onClick={() => setNoteData({ ...noteData, feeling: 3 })}
                         />
                     </div>
-                    <Form.Button>Save</Form.Button>
                 </Form.Field>
+                <div className="btn-container">
+                    {update && (
+                        <Button color="red" onClick={() => deleteNote()} type="button">
+                            Delete
+                        </Button>
+                    )}
+                    <Button secondary type="submit">
+                        Save
+                    </Button>
+                </div>
             </Form>
         </div>
     );

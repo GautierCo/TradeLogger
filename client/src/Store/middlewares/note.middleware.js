@@ -9,6 +9,9 @@ import {
     UPDATE_NOTE,
     updateNoteSuccess,
     updateNoteError,
+    DELETE_NOTE,
+    deleteNoteSuccess,
+    deleteNoteError,
 } from "../actions/note.actions";
 
 export const noteMiddleware = (store) => (next) => (action) => {
@@ -67,6 +70,26 @@ export const noteMiddleware = (store) => (next) => (action) => {
                     console.log(err);
                     store.dispatch(updateNoteError("error"));
                 });
+            break;
+        }
+        case DELETE_NOTE: {
+            console.log("delete NOTE");
+            const { notes, noteUpdateId } = store.getState().noteReducer;
+
+            axios({
+                method: "DELETE",
+                url: `${process.env.REACT_APP_API_URL}/note/${noteUpdateId}`,
+            })
+                .then((res) => {
+                    let removeNote = notes.filter((note) => note._id !== noteUpdateId);
+                    console.log("removeNote", removeNote);
+                    store.dispatch(deleteNoteSuccess(removeNote));
+                })
+                .catch((err) => {
+                    console.log(err);
+                    store.dispatch(deleteNoteError());
+                });
+
             break;
         }
     }

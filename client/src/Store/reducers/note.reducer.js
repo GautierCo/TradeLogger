@@ -11,6 +11,9 @@ import {
     UPDATE_NOTE,
     UPDATE_NOTE_SUCCESS,
     UPDATE_NOTE_ERROR,
+    DELETE_NOTE,
+    DELETE_NOTE_SUCCESS,
+    DELETE_NOTE_ERROR,
 } from "../actions/note.actions";
 
 const initialState = {
@@ -24,6 +27,7 @@ const initialState = {
     notesLoading: false,
     addNoteLoading: false,
     updateNoteLoading: false,
+    deleteNoteLoading: false,
     noteUpdateId: "",
     noteUpdateData: {},
 };
@@ -99,7 +103,22 @@ export const noteReducer = (state = initialState, action = {}) => {
                 ...state,
                 updateNoteLoading: false,
             };
-
+        case DELETE_NOTE:
+            return {
+                ...state,
+                deleteNoteLoading: true,
+            };
+        case DELETE_NOTE_SUCCESS:
+            return {
+                ...state,
+                notes: action.payload,
+                deleteNoteLoading: false,
+            };
+        case DELETE_NOTE_ERROR:
+            return {
+                ...state,
+                deleteNoteLoading: false,
+            };
         default:
             return state;
     }

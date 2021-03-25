@@ -18,8 +18,6 @@ app.use(
     cors({
         origin: process.env.NODE_ENV === "DEV" ? process.env.CLIENT_DEV_URL : process.env.CLIENT_PROD_URL,
         credentials: true,
-        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-        preflightContinue: false,
     })
 );
 

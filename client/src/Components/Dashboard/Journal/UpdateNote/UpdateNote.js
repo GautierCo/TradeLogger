@@ -3,7 +3,14 @@ import { Modal } from "semantic-ui-react";
 import FormNote from "../FormNote/FormNote";
 import "../AddNote/style.scss";
 
-const UpdateNote = ({ showUpdateModal, setShowUpdateModal, updateNote, setNoteUpdateData, noteUpdateData }) => {
+const UpdateNote = ({
+    showUpdateModal,
+    setShowUpdateModal,
+    updateNote,
+    setNoteUpdateData,
+    noteUpdateData,
+    deleteNote,
+}) => {
     console.log(showUpdateModal);
     return (
         <div className="modal">
@@ -20,6 +27,8 @@ const UpdateNote = ({ showUpdateModal, setShowUpdateModal, updateNote, setNoteUp
                         setNoteData={setNoteUpdateData}
                         noteData={noteUpdateData}
                         submitForm={updateNote}
+                        update={true}
+                        deleteNote={deleteNote}
                     />
                 </Modal.Content>
             </Modal>

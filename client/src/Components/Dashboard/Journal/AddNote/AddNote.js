@@ -26,6 +26,7 @@ const AddNote = ({ showAddModal, setShowAddModal, addNote, setNoteData, noteData
                         setNoteData={setNoteData}
                         noteData={noteData}
                         submitForm={addNote}
+                        update={false}
                     />
                 </Modal.Content>
             </Modal>
