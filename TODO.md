@@ -13,3 +13,6 @@
     -   Que fait le marché ? Evenements ?
     -   Qu'est ce que je fais ? J'agis dans mon interet ? Est-ce que je suis mon plan ?
     -   Qu'est ce que j'ai appris aujourd'hui ?
+
+SELECT \* FROM student
+JOIN promo ON student.promo_id = promo.id;

@@ -13,7 +13,7 @@ module.exports.checkAuth = async (req, res, next) => {
             next();
         } else {
             console.log(err);
-            return res.status(403).json({ err, message: "User not authenticated, you need a valid token" });
+            return res.status(401).json({ err, message: "User not authenticated, you need a valid token" });
         }
     });
 };

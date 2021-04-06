@@ -1,10 +1,7 @@
-// Ce model sers a déclarer à quoi va ressembler notre base de donnée, quels sont les caractères obligatoires etc.
-
 const mongoose = require("mongoose");
 const { isEmail } = require("validator");
 const bcrypt = require("bcrypt");
 
-// REPRENDRE UN SCREEN ICI pour lkes notes
 const userSchema = new mongoose.Schema(
     {
         pseudo: {

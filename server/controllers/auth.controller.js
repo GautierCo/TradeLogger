@@ -136,28 +136,3 @@ module.exports.logout = async (req, res) => {
         res.status(500).json(error);
     }
 };
-
-// Ressources intéressante sur JWT, il est préfèrable d'utililiser les headers couplé avec le local storage plutôt que les cookies
-// Pour ce protéger des deux types d'attaques :  CSRF & XSS
-// Source : https://www.youtube.com/watch?t=2100&v=67mezK3NzpU
-/*
-
-
-On utilise le refreshToken pour se prémunir d'une attaque d'un hacker, qui pourrais posséder notre accessToken, et l'utiliser 
-En métant une expiration de 10min par exemple sur notre accessToken, une fois que les 10 minutes sont passées on utilise le refreshToken
-pour generer un nouveau accessToken
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*/
